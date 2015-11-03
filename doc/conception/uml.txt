@@ -1,0 +1,33 @@
+@startuml
+
+package "spark.Spark" {
+  class Route {
+    String handle(Request req, Response res)
+  }
+}
+
+package "fr.enseirb.t2.it340.modeles" {
+  class Laboratoire {
+    String idLaboratoire
+  }
+  class Atelier {
+    String idAtelier
+    void ajoutCreneau(Date date, int capacite)
+    void modifierCreneau(String idCreneau, Date date, int capacite)
+    void supprimerCreneau(String idCreneau)
+  }
+  class Creneau {
+    String idCreneau
+    int capacite
+    Date date
+    Date getDate()
+    void setDate(Date date)
+    int getCapacite()
+    void setCapacite(int capacite)
+  }
+}
+
+package "fr.enseirb.t2.it340.vues" {
+}
+
+@enduml
