@@ -1,33 +1,84 @@
 @startuml
 
 package "spark.Spark" {
-  class Route {
-    String handle(Request req, Response res)
-  }
+	interface Route {
+		String handle(Request req, Response res)
+	}
+}
+
+package "fr.enseirb.t2.it340.routes" {
+	
+	class Accueil ..|> Route
+
+	package "authentification" {
+		class Authentification ..|> Route
+	}
+
+	package "laboratoire" {
+		class GestionInscriptionAtelier ..|> Route
+		class GestionAtelier ..|> Route
+	}
+
+	package "atelier" {
+		class AteliersParLaboratoire ..|> Route
+		class InscriptionAtelier ..|> Route
+		class VisualisationAteliers ..|> Route
+		class VisualisationAtelier ..|> Route
+	}
 }
 
 package "fr.enseirb.t2.it340.modeles" {
-  class Laboratoire {
-    String idLaboratoire
-  }
-  class Atelier {
-    String idAtelier
-    void ajoutCreneau(Date date, int capacite)
-    void modifierCreneau(String idCreneau, Date date, int capacite)
-    void supprimerCreneau(String idCreneau)
-  }
-  class Creneau {
-    String idCreneau
-    int capacite
-    Date date
-    Date getDate()
-    void setDate(Date date)
-    int getCapacite()
-    void setCapacite(int capacite)
-  }
+	class Utilisateur {
+		String idUtilisateur
+		String email
+		String password
+	}
+
+	class Laboratoire {
+		String idLaboratoire
+	}
+
+	class Atelier {
+		String idAtelier
+		void ajoutCreneau(Date date, int capacite)
+		void modifierCreneau(String idCreneau, Date date, int capacite)
+		void supprimerCreneau(String idCreneau)
+	}
+
+	class Creneau {
+		String idCreneau
+		int capacite
+		Date date
+		Date getDate()
+		void setDate(Date date)
+		int getCapacite()
+		void setCapacite(int capacite)
+	}
+
+	Atelier o-- "0:✻" Creneau
+	Laboratoire o-- "0:✻" Atelier
+	Utilisateur --|> Laboratoire
 }
 
 package "fr.enseirb.t2.it340.vues" {
+
+	class VueAccueil
+	class VueAtelier
+	class VueConnexion
+	class VueEditionAtelier
+	class EspaceMembreLaboratoire
+	class VueListeAteliers
+	class VueHeader
+	class VueFooter
+
+}
+
+package "fr.enseirb.t2.it340.bdd" {
+
+	class BddUtilisateur --> Utilisateur
+	class BddLaboratoire --> Laboratoire
+	class BddAtelier --> Atelier
+	class BddCreneau --> Creneau
 }
 
 @enduml
