@@ -29,24 +29,24 @@ package "fr.enseirb.t2.it340.servlets" {
 
 package "fr.enseirb.t2.it340.modeles" {
 	class Utilisateur {
-		String idUtilisateur
+		int idUtilisateur
 		String email
 		String password
 	}
 
 	class Laboratoire {
-		String idLaboratoire
+		int idLaboratoire
 	}
 
 	class Atelier {
-		String idAtelier
+		int idAtelier
 		void ajoutCreneau(Date date, int capacite)
-		void modifierCreneau(String idCreneau, Date date, int capacite)
-		void supprimerCreneau(String idCreneau)
+		void modifierCreneau(int idCreneau, Date date, int capacite)
+		void supprimerCreneau(int idCreneau)
 	}
 
 	class Creneau {
-		String idCreneau
+		int idCreneau
 		int capacite
 		Date date
 		Date getDate()
