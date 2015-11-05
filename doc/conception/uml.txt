@@ -6,7 +6,7 @@ package "spark.Spark" {
 	}
 }
 
-package "fr.enseirb.t2.it340.routes" {
+package "fr.enseirb.t2.it340.servlets" {
 	
 	class Accueil ..|> Route
 
