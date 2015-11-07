@@ -36,13 +36,28 @@ package "fr.enseirb.t2.it340.modeles" {
 
 	class Laboratoire {
 		int idLaboratoire
+		String nom
 	}
 
 	class Atelier {
 		int idAtelier
+		String titre
+		Set<String> themes
+		String zone
+		Set<String> orateurs
+		Set<String> partenaires
+		Set<String> cibles
+		String remarques
+
 		void ajoutCreneau(Date date, int capacite)
 		void modifierCreneau(int idCreneau, Date date, int capacite)
 		void supprimerCreneau(int idCreneau)
+	}
+
+	enum Statut {
+		PROPOSE
+		VALIDE
+		CLOTURE
 	}
 
 	class Creneau {
@@ -55,6 +70,7 @@ package "fr.enseirb.t2.it340.modeles" {
 		void setCapacite(int capacite)
 	}
 
+	Atelier o-- "1" Statut
 	Atelier o-- "0:✻" Creneau
 	Laboratoire o-- "0:✻" Atelier
 	Utilisateur --|> Laboratoire
@@ -75,6 +91,9 @@ package "fr.enseirb.t2.it340.vues" {
 
 package "fr.enseirb.t2.it340.bdd" {
 
+	class BddConnecteur {
+		Connection getConnexion()
+	}
 	class BddUtilisateur --> Utilisateur
 	class BddLaboratoire --> Laboratoire
 	class BddAtelier --> Atelier
