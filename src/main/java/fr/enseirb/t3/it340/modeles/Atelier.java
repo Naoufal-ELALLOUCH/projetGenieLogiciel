@@ -2,14 +2,14 @@ package fr.enseirb.t3.it340.modeles;
 
 public class Atelier {
 
-	private int idAtelier;
-	
-	public int getIdAtelier() {
-		return idAtelier;
+	final private int idAtelier;
+
+	public Atelier(int idAtelier) {
+		this.idAtelier = idAtelier;
 	}
 
-	public void setIdAtelier(int idAtelier) {
-		this.idAtelier = idAtelier;
+	public int getIdAtelier() {
+		return idAtelier;
 	}
 	
 }

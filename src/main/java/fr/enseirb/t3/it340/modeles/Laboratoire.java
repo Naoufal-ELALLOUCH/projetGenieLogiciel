@@ -3,19 +3,15 @@ package fr.enseirb.t3.it340.modeles;
 
 public class Laboratoire extends Utilisateur {
 
-	private int idLaboratoire;
+	final private int idLaboratoire;
 	
-	public Laboratoire(int idLaboratoire , Utilisateur utilisateur){
-		super(utilisateur.getIdUtilisateur() , utilisateur.getEmail() , utilisateur.getPassword());
+	public Laboratoire(int idUtilisateur, int idLaboratoire, String email, String password) {
+		super(idUtilisateur, email, password);
 		this.idLaboratoire = idLaboratoire;
 	}
-	
 	
 	public int getIdLaboratoire() {
 		return idLaboratoire;
-	}
-	public void setIdLaboratoire(int idLaboratoire) {
-		this.idLaboratoire = idLaboratoire;
 	}
 
 }
