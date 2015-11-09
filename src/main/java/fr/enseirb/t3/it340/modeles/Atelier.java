@@ -1,24 +1,35 @@
 package fr.enseirb.t3.it340.modeles;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.Set;
 
 public class Atelier {
 	
 	private int idAtelier;
-	String titre;
-	Set<String> themes;
-	String zone;
-	Set<String> orateurs;
-	Set<String> partenaires;
-	Set<String> cibles;
-	String remarques; 
-	private ArrayList<Creneau> myList = new ArrayList<Creneau>();
+	private String titre;
+	private Set<String> themes;
+	private String zone;
+	private Set<String> orateurs;
+	private Set<String> partenaires;
+	private Set<String> cibles;
+	private String remarques; 
+	private Set<Creneau> creneaux;
+	
+	public Atelier(String titre, Set<String> themes, String zone, Set<String> orateurs,
+			Set<String> partenaires, Set<String> cibles, String remarques, Set<Creneau> creneaux) {
+		this.titre = titre;
+		this.themes = themes;
+		this.zone = zone;
+		this.orateurs = orateurs;
+		this.partenaires = partenaires;
+		this.cibles = cibles;
+		this.remarques = remarques;
+		this.creneaux = creneaux;
+	}
 	
 	public int getIdAtelier() {
 		return idAtelier;
 	}
+	
 	public void setIdAtelier(int idAtelier) {
 		this.idAtelier = idAtelier;
 	}
@@ -63,6 +74,14 @@ public class Atelier {
 	}
 	public void setRemarques(String remarques) {
 		this.remarques = remarques;
+	}
+
+	public Set<Creneau> getCreneaux() {
+		return creneaux;
+	}
+
+	public void setCreneaux(Set<Creneau> creneaux) {
+		this.creneaux = creneaux;
 	}	
 	
 	
