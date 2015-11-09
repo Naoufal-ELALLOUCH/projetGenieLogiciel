@@ -1,5 +1,34 @@
 package fr.enseirb.t3.it340.modeles;
 
-public class Creneau {
+import java.util.Date;
 
+public class Creneau {
+	int idCreneau;
+	int capacite;
+	Date date;
+	public Creneau (int idCreneau , Date date, int capacite) {
+		this.idCreneau = idCreneau;
+		this.date= date; 
+		this.capacite=capacite;	
+	}
+	public int getIdCreneau() {
+		return idCreneau;
+	}
+	public void setIdCreneau(int idCreneau) {
+		this.idCreneau = idCreneau;
+	}
+	public int getCapacite() {
+		return capacite;
+	}
+	public void setCapacite(int capacite) {
+		this.capacite = capacite;
+	}
+	public Date getDate() {
+		return date;
+	}
+	public void setDate(Date date) {
+		this.date = date;
+	}
+	
+	
 }
