@@ -1,6 +1,7 @@
 package fr.enseirb.t3.it340.modeles;
 
 import java.sql.Date;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -8,13 +9,13 @@ public class Atelier {
 	
 	private int idAtelier;
 	private String titre;
-	private Set<String> themes;
+	private Set<String> themes = new HashSet<String>();
 	private String zone;
-	private Set<String> orateurs;
-	private Set<String> partenaires;
-	private Set<String> cibles;
-	private String remarques; 
-	private Set<Creneau> creneaux;
+	private Set<String> orateurs = new HashSet<String>();
+	private Set<String> partenaires = new HashSet<String>();
+	private Set<String> cibles = new HashSet<String>();
+	private String remarques ;
+	private Set<Creneau> creneaux = new HashSet<Creneau>();
 	private enum Status {PROPOSE , VALIDE , CLOTURE} ;
 	
 	public Atelier(String titre, Set<String> themes, String zone, Set<String> orateurs,

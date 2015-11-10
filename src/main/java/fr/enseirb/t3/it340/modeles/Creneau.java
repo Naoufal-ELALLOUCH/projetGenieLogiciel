@@ -7,11 +7,6 @@ public class Creneau {
 	int capacite;
 	Date date;
 	
-	public Creneau(Date date , int capacite){
-		this.date = date;
-		this.capacite = capacite;
-	}
-	
 	public Creneau (int idCreneau , Date date, int capacite) {
 		this.idCreneau = idCreneau;
 		this.date= date; 
