@@ -6,6 +6,12 @@ public class Creneau {
 	int idCreneau;
 	int capacite;
 	Date date;
+	
+	public Creneau(Date date , int capacite){
+		this.date = date;
+		this.capacite = capacite;
+	}
+	
 	public Creneau (int idCreneau , Date date, int capacite) {
 		this.idCreneau = idCreneau;
 		this.date= date; 
@@ -14,9 +20,7 @@ public class Creneau {
 	public int getIdCreneau() {
 		return idCreneau;
 	}
-	public void setIdCreneau(int idCreneau) {
-		this.idCreneau = idCreneau;
-	}
+
 	public int getCapacite() {
 		return capacite;
 	}
