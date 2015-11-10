@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.sql.*;
 import java.util.Properties;
 
+import static org.junit.Assert.assertEquals;
+
 public class TestBddUtilisateur {
 
 	public static Connection getConnection() throws IOException, SQLException {
@@ -40,16 +42,27 @@ public class TestBddUtilisateur {
 		Connection connection = getConnection();
 
 		// Insertion
-		bddUtilisateur.insert(connection, "charlie@heloise.com", "falleri");
+		String email =  "charlie@heloise.com";
+		String motDePasseOriginal = "falleri";
+		bddUtilisateur.insert(connection, email, motDePasseOriginal);
 
 		// Vérification
-		String sql = "SELECT COUNT(*) FROM Utilisateur WHERE email=?";
+		String sql = "SELECT email, motDePasse FROM Utilisateur WHERE email='"+ email +"'";
+		Statement statement = connection.createStatement();
+		ResultSet rs = statement.executeQuery(sql);
 
-		PreparedStatement statement = connection.prepareStatement(sql);
-		statement.setString(1, "charlie@heloise.com");
+		int count = 0;
+		String motDePasse = "";
+		while(rs.next()) {
+			motDePasse = rs.getString("motDePasse");
+			count++;
+		}
 
-		ResultSet rs = statement.executeQuery();
-		System.out.println(rs);
+		assertEquals(count, 1);
+		assertEquals(motDePasse, motDePasseOriginal);
+
+		// Fermeture
+		statement.execute("DROP TABLE Utilisateur");
 		statement.close();
 	}
 
