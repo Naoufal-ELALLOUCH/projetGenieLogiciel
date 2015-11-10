@@ -1,5 +1,6 @@
 package fr.enseirb.t3.it340.bdd;
 
+import fr.enseirb.t3.it340.modeles.Utilisateur;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,6 +38,10 @@ public class BddUtilisateur {
 		} catch (Exception e) {
 			log.error("Impossible d'insérer un utilisateur dans la base de données : {}", e);
 		}
+	}
+
+	public Utilisateur getUtilisateurByEmail(String email) {
+
 	}
 
 }
