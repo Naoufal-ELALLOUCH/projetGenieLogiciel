@@ -1,18 +1,22 @@
 package fr.enseirb.t3.it340.modeles;
 
+import java.sql.Date;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 public class Atelier {
 	
 	private int idAtelier;
 	private String titre;
-	private Set<String> themes;
+	private Set<String> themes = new HashSet<String>();
 	private String zone;
-	private Set<String> orateurs;
-	private Set<String> partenaires;
-	private Set<String> cibles;
-	private String remarques; 
-	private Set<Creneau> creneaux;
+	private Set<String> orateurs = new HashSet<String>();
+	private Set<String> partenaires = new HashSet<String>();
+	private Set<String> cibles = new HashSet<String>();
+	private String remarques ;
+	private Set<Creneau> creneaux = new HashSet<Creneau>();
+	private enum Status {PROPOSE , VALIDE , CLOTURE} ;
 	
 	public Atelier(String titre, Set<String> themes, String zone, Set<String> orateurs,
 			Set<String> partenaires, Set<String> cibles, String remarques, Set<Creneau> creneaux) {
@@ -26,13 +30,47 @@ public class Atelier {
 		this.creneaux = creneaux;
 	}
 	
+	void AjoutCreneau(Date date , int capacite){
+		int id = creneaux.size() +1;
+		Creneau creneau = new Creneau(id , date , capacite);
+		creneaux.add(creneau);
+	}
+	
+	void modifierCreneau(int idCreneau , Date date , int capacite){
+		Iterator<Creneau> iterator = creneaux.iterator();
+		
+		while(iterator.hasNext()){
+			
+			Creneau creneau = iterator.next();
+			
+			if(creneau.getIdCreneau() == idCreneau){
+			creneau.setCapacite(capacite);
+			creneau.setDate(date);
+			break;
+			}
+		}
+		
+	}
+	
+	void supprimerCreneau(int idCreneau ){
+		Iterator<Creneau> iterator = creneaux.iterator();
+		
+		while(iterator.hasNext()){
+			
+			Creneau creneau = iterator.next();
+			
+			if(creneau.getIdCreneau() == idCreneau){
+			iterator.remove();
+			break;
+			}
+		}
+		
+	}
+	
 	public int getIdAtelier() {
 		return idAtelier;
 	}
 	
-	public void setIdAtelier(int idAtelier) {
-		this.idAtelier = idAtelier;
-	}
 	public String getTitre() {
 		return titre;
 	}
