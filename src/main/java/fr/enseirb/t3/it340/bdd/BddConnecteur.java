@@ -11,6 +11,7 @@ import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Properties;
 
 public class BddConnecteur {
@@ -20,7 +21,7 @@ public class BddConnecteur {
 	private static BddConnecteur bddConnecteur = null;
 	private static JdbcConnectionPool pool;
 
-	private String propertiesFile = "bdd.properties";
+	private String propertiesFile = "bddProduction.properties";
 
 	public BddConnecteur() throws ClassNotFoundException, SQLException, IOException {
 
@@ -36,7 +37,15 @@ public class BddConnecteur {
 
 		// Génération d'une "connection pool"
 		pool = JdbcConnectionPool.create("jdbc:h2:" + url, login, password);
+
 		log.info("Création d'un groupe de connexions à la base de données réussie");
+
+		// Exécution du script SQL d'initialisation
+		Connection connection = pool.getConnection();
+		Statement stat = connection.createStatement();
+
+		stat.execute("runscript from 'init.sql'");
+		connection.close();
 	}
 
 	private Properties getProperties() throws IOException {

@@ -10,7 +10,7 @@ import java.sql.SQLException;
 public class App {
 
 	public static void main(String[] args) throws SQLException, ClassNotFoundException, IOException {
-		BddConnecteur bddConnecteur = new BddConnecteur();
+		BddConnecteur bddConnecteur = BddConnecteur.getInstance();
 		get("/ateliers", new VisualisationAteliers());
 	}
 

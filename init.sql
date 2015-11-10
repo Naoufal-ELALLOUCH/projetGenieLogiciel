@@ -1,12 +1,6 @@
-DROP DATABASE FeteDeLaScience;
-CREATE DATABASE IF NOT EXISTS FeteDeLaScience CHARACTER SET 'utf8';
-USE FeteDeLaScience ;
-
-
-
 CREATE TABLE IF NOT EXISTS Utilisateur (
     idUtilisateur INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    email VARCHAR(100),
+    email VARCHAR(100) UNIQUE,
     motDePasse VARCHAR(100),
     PRIMARY KEY (idUtilisateur)
 );
