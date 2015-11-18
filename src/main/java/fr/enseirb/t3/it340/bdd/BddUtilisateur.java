@@ -18,7 +18,7 @@ public class BddUtilisateur {
 		return BddConnecteur.getInstance().getConnexion();
 	}
 
-	public void insert(Connection connection, String email, String motDePasse) throws SQLException {
+	public void ajout(Connection connection, String email, String motDePasse) throws SQLException {
 
 		String sql = "INSERT INTO Utilisateur(email, motDePasse) VALUES(?,?)";
 
@@ -31,17 +31,17 @@ public class BddUtilisateur {
 
 	}
 
-	public void insert(String email, String password) {
+	public void ajout(String email, String password) {
 		try {
 			Connection connection = getConnexion();
-			insert(connection, email, password);
+			ajout(connection, email, password);
 		} catch (Exception e) {
 			log.error("Impossible d'insérer un utilisateur dans la base de données : {}", e);
 		}
 	}
 
-	public Utilisateur getUtilisateurByEmail(String email) {
-
-	}
+//	public Utilisateur getUtilisateurByEmail(String email) {
+//
+//	}
 
 }

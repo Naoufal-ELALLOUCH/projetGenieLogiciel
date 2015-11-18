@@ -43,8 +43,8 @@ public class TestBddUtilisateur {
 
 		// Insertion
 		String email =  "charlie@heloise.com";
-		String motDePasseOriginal = "falleri";
-		bddUtilisateur.insert(connection, email, motDePasseOriginal);
+		String motDePasseOriginal = "mdp";
+		bddUtilisateur.ajout(connection, email, motDePasseOriginal);
 
 		// Vérification
 		String sql = "SELECT email, motDePasse FROM Utilisateur WHERE email='"+ email +"'";
