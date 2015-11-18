@@ -33,7 +33,7 @@ public class Atelier {
 		this.creneaux = creneaux;
 	}*/
 
-	void ajoutCreneau(Creneau creneau) {
+	public void ajoutCreneau(Creneau creneau) {
 		creneaux.put(creneau.getIdCreneau(), creneau);
 	}
 	
@@ -43,7 +43,7 @@ public class Atelier {
 		creneaux.add(creneau);
 	}*/
 
-	void modifierCreneau(int idCreneau, Creneau creneau) {
+	public void modifierCreneau(int idCreneau, Creneau creneau) {
 		Creneau c = creneaux.get(idCreneau);
 		if (idCreneau == creneau.getIdCreneau() || c == null)
 			creneaux.put(idCreneau, creneau);
@@ -65,7 +65,7 @@ public class Atelier {
 		
 	}*/
 
-	void supprimerCreneau(int idCreneau) {
+	public void supprimerCreneau(int idCreneau) {
 		creneaux.remove(idCreneau);
 	}
 	/*void supprimerCreneau(int idCreneau ){

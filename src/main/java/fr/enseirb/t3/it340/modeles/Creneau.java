@@ -3,7 +3,7 @@ package fr.enseirb.t3.it340.modeles;
 import java.util.Date;
 
 public class Creneau {
-	int idCreneau;
+	private final int idCreneau;
 	int capacite;
 	Date date;
 	
