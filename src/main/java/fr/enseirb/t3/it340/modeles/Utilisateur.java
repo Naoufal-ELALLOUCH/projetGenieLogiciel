@@ -4,12 +4,12 @@ public class Utilisateur {
 	
 	final private int idUtilisateur;
 	private String email;
-	private String password;
+	private String motDePasse;
 	
-	public Utilisateur(int idUtilisateur, String email, String password) {
+	public Utilisateur(int idUtilisateur, String email, String motDePasse) {
 		this.idUtilisateur = idUtilisateur;
 		this.email = email;
-		this.password = password;
+		this.motDePasse = motDePasse;
 	}
 	
 	public int getIdUtilisateur() {
@@ -25,10 +25,10 @@ public class Utilisateur {
 	}
 
 	public String getPassword() {
-		return password;
+		return motDePasse;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public void setPassword(String motDePasse) {
+		this.motDePasse = motDePasse;
 	}
 }
