@@ -1,20 +1,19 @@
 package fr.enseirb.t3.it340.modeles;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 public class Laboratoire extends Utilisateur {
 
 	final private int idLaboratoire;
-	String nom;
-	private Set<Atelier> ateliers;
+	private String nom;
+	private Map<Integer, Atelier> ateliers = new HashMap<Integer, Atelier>();
 	
-	
-	public Laboratoire(int idUtilisateur, String email, String password, int idLaboratoire, String nom,
-			Set<Atelier> ateliers) {
+	public Laboratoire(int idUtilisateur, String email, String password, int idLaboratoire, String nom) {
 		super(idUtilisateur, email, password);
 		this.idLaboratoire = idLaboratoire;
 		this.nom = nom;
-		this.ateliers = ateliers;
 	}
 
 	public int getIdLaboratoire() {
@@ -28,11 +27,16 @@ public class Laboratoire extends Utilisateur {
 	public void setNom(String nom) {
 		this.nom = nom;
 	}
-	public Set<Atelier> getAtelier(int idLaboratoire) {	
+
+	public Map<Integer, Atelier> getAteliers() {
 		return ateliers;
 	}
 
-	public void setAtelier(Set<Atelier> atelier) {
-		this.ateliers = atelier;
+	public void addAtelier(Atelier atelier) {
+		ateliers.put(atelier.getIdAtelier(), atelier);
+	}
+
+	public void removeAtelier(int idAtelier) {
+		ateliers.remove(idAtelier);
 	}
 }
