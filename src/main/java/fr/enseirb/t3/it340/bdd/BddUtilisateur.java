@@ -63,6 +63,18 @@ public class BddUtilisateur {
 		return false;
 
 	}
+	
+	public boolean authentification(String email, String password) {
+		boolean authentification = false;
+		try {
+			Connection connection = getConnexion();
+			authentification = authentification(connection, email, password);
+		} catch (Exception e) {
+			log.error("Impossible d'insérer un utilisateur dans la base de données : {}", e);
+		}
+		return authentification;
+	}
+	
 //	public Utilisateur getUtilisateurByEmail(String email) {
 //
 //	}
