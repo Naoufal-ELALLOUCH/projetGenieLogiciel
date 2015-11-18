@@ -24,11 +24,11 @@ public class Utilisateur {
 		this.email = email;
 	}
 
-	public String getPassword() {
+	public String getMotDePasse() {
 		return motDePasse;
 	}
 
-	public void setPassword(String motDePasse) {
+	public void setMotDePasse(String motDePasse) {
 		this.motDePasse = motDePasse;
 	}
 }
