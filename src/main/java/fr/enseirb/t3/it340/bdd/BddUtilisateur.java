@@ -70,21 +70,43 @@ public class BddUtilisateur {
 			Connection connection = getConnexion();
 			authentification = authentification(connection, email, motDePasse);
 		} catch (Exception e) {
-			log.error("Impossible d'insérer un utilisateur dans la base de données : {}", e);
+			log.error("Impossible d'authentifier un utilisateur à partir de la base de données : {}", e);
 		}
 		return authentification;
 	}
 	
-	public Utilisateur getUtilisateurByEmail(Connection connection,String email) {
+	public Utilisateur getUtilisateurByEmail(Connection connection,String email) throws SQLException {
 		String sql = "SELECT id, email, motDePasse FROM Utilisateur WHERE email=? ";
 
 		PreparedStatement statement = connection.prepareStatement(sql);
 		statement.setString(1, email);
 		ResultSet resultat = statement.executeQuery();
 		
+		//on place le curseur sur le dernier tuple 
+		resultat.last(); 
+		//on récupère le numéro de la ligne 
+		int nombreLignes = resultat.getRow(); 
+		if (nombreLignes != 1) {
+			return null;
+		}
 		
+        int id  = resultat.getInt("id");
+        String motDePasse = resultat.getString("motDePasse");
+
+		return new Utilisateur(id,email,motDePasse);
+	}
+
+	public Utilisateur getUtilisateurByEmail(String email) throws SQLException {
 		
-		return new Utilisateur();
+		Utilisateur utilisateur = null;
+		
+		try {
+			Connection connection = getConnexion();
+			utilisateur =  getUtilisateurByEmail(connection, email);
+		} catch (Exception e) {
+			log.error("Impossible de récupérer un utilisateur à partir de son email : {}", e);
+		}
+		return utilisateur;
 	}
 
 }
