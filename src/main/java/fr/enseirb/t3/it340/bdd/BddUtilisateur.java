@@ -31,10 +31,10 @@ public class BddUtilisateur {
 
 	}
 
-	public void ajout(String email, String password) {
+	public void ajout(String email, String motDePasse) {
 		try {
 			Connection connection = getConnexion();
-			ajout(connection, email, password);
+			ajout(connection, email, motDePasse);
 		} catch (Exception e) {
 			log.error("Impossible d'insérer un utilisateur dans la base de données : {}", e);
 		}
@@ -64,19 +64,27 @@ public class BddUtilisateur {
 
 	}
 	
-	public boolean authentification(String email, String password) {
+	public boolean authentification(String email, String motDePasse) {
 		boolean authentification = false;
 		try {
 			Connection connection = getConnexion();
-			authentification = authentification(connection, email, password);
+			authentification = authentification(connection, email, motDePasse);
 		} catch (Exception e) {
 			log.error("Impossible d'insérer un utilisateur dans la base de données : {}", e);
 		}
 		return authentification;
 	}
 	
-//	public Utilisateur getUtilisateurByEmail(String email) {
-//
-//	}
+	public Utilisateur getUtilisateurByEmail(Connection connection,String email) {
+		String sql = "SELECT id, email, motDePasse FROM Utilisateur WHERE email=? ";
+
+		PreparedStatement statement = connection.prepareStatement(sql);
+		statement.setString(1, email);
+		ResultSet resultat = statement.executeQuery();
+		
+		
+		
+		return new Utilisateur();
+	}
 
 }
