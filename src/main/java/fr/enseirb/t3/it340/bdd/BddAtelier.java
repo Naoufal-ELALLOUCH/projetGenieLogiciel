@@ -33,5 +33,35 @@ private final org.slf4j.Logger log = LoggerFactory.getLogger(BddUtilisateur.clas
 			log.error("Connexion Impossible à la base de données | Impossible d'obtenir idAtelier", e);
 			return 0;
 		} 
-}	
+}
+	
+	public void ceerAtelier(int idLabo , String titre , String themes , String zone ,String orateurs , String partenaires , String cibles , String remarques ){
+
+		String creerReq = "INSERT INTO Atelier(idAtelier , idLabo , titre , themes , zone , orateurs , partenaires , cibles , remarques) VALUES(?,?,?,?,?,?,?)";
+
+		
+		try {
+			Connection connection = getConnexion();
+			PreparedStatement statement = connection.prepareStatement(creerReq);
+			int NouveauIdAtelier = getNouveauTdAtelier();
+					
+			statement.setInt(1 , NouveauIdAtelier);
+			statement.setInt(2 , idLabo);
+			statement.setString(3 , titre);
+			statement.setString(4 , themes);
+			statement.setString(5 , zone);
+			statement.setString(6 , orateurs);
+			statement.setString(7 , partenaires);
+			statement.setString(8 , cibles);
+			statement.setString(9 , remarques);
+			statement.executeQuery();
+			 
+				
+		} catch (Exception e) {
+			log.error("Connexion Impossible à la base de données", e);
+		} 
+		
+	}
+
+	
 }
