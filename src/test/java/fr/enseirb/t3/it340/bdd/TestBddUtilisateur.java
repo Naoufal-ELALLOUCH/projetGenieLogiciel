@@ -65,5 +65,30 @@ public class TestBddUtilisateur {
 		statement.execute("DROP TABLE Utilisateur");
 		statement.close();
 	}
+	@Test
+	public void testAuthentification() throws IOException, SQLException {
+		BddUtilisateur bddUtilisateur = new BddUtilisateur();
+		Connection connection = getConnection();
+
+		// Insertion
+		String email =  "charlie@heloise.com";
+		String motDePasseOriginal = "mdp";
+		bddUtilisateur.ajout(connection, email, motDePasseOriginal);
+
+		// Vérification
+		boolean res1 = bddUtilisateur.authentification(connection,email, motDePasseOriginal);
+		assertEquals(res1, true);
+		
+		boolean res2 = bddUtilisateur.authentification(connection,email, "mdperreur");
+		assertEquals(res2, false);
+		
+		boolean res3 = bddUtilisateur.authentification(connection,"mauvais email", motDePasseOriginal);
+		assertEquals(res3, false);
+
+		// Fermeture
+		Statement statement = connection.createStatement();
+		statement.execute("DROP TABLE Utilisateur");
+		statement.close();
+	}
 
 }

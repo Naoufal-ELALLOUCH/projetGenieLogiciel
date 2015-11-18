@@ -47,7 +47,7 @@ public class BddUtilisateur {
 		PreparedStatement statement = connection.prepareStatement(sql);
 		statement.setString(1, email);
 		statement.setString(2, motDePasse);
-		ResultSet resultat = statement.executeQuery(sql);
+		ResultSet resultat = statement.executeQuery();
 		
 		//on place le curseur sur le dernier tuple 
 		resultat.last(); 
