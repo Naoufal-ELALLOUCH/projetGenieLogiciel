@@ -39,7 +39,30 @@ public class BddUtilisateur {
 			log.error("Impossible d'insérer un utilisateur dans la base de données : {}", e);
 		}
 	}
+	
+	public boolean authentification(Connection connection, String email, String motDePasse) throws SQLException {
 
+		String sql = "SELECT email, motDePasse FROM Utilisateur WHERE email=? AND motDePasse=?";
+
+		PreparedStatement statement = connection.prepareStatement(sql);
+		statement.setString(1, email);
+		statement.setString(2, motDePasse);
+		ResultSet resultat = statement.executeQuery(sql);
+		
+		//on place le curseur sur le dernier tuple 
+		resultat.last(); 
+		//on récupère le numéro de la ligne 
+		int nombreLignes = resultat.getRow(); 
+
+		if (nombreLignes == 1) {
+			return true;
+			
+		}
+		
+		statement.close();
+		return false;
+
+	}
 //	public Utilisateur getUtilisateurByEmail(String email) {
 //
 //	}

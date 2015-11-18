@@ -37,7 +37,7 @@ public class TestBddUtilisateur {
 	}
 
 	@Test
-	public void testInsert() throws IOException, SQLException {
+	public void testAjout() throws IOException, SQLException {
 		BddUtilisateur bddUtilisateur = new BddUtilisateur();
 		Connection connection = getConnection();
 
