@@ -49,7 +49,6 @@
                 <version>2.7</version>
                 <configuration>
                     <format>xml</format>
-                    <maxmem>256</maxmem>
                     <aggregate>true</aggregate>
                 </configuration>
             </plugin>
