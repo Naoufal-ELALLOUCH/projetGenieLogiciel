@@ -7,6 +7,8 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <propertyFile.default>bdd.properties</propertyFile.default>
+        <propertyFile.test>bdd.test.properties</propertyFile.test>
     </properties>
 
     <dependencies>
@@ -41,6 +43,7 @@
     </dependencies>
 
     <build>
+        <!-- Plugins -->
         <plugins>
             <!-- Cobertura -->
             <plugin>
@@ -49,7 +52,9 @@
                 <version>2.7</version>
                 <configuration>
                     <format>xml</format>
+                    <format>html</format>
                     <aggregate>true</aggregate>
+                    <check/>
                 </configuration>
             </plugin>
 
@@ -67,6 +72,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
+                <version>1.4.0</version>
                 <executions>
                     <execution>
                         <goals>
@@ -76,6 +82,24 @@
                 </executions>
                 <configuration>
                     <mainClass>fr.enseirb.t3.it340.App</mainClass>
+                    <systemProperties>
+                        <systemProperty>
+                            <key>propertyFile</key>
+                            <value>${propertyFile.default}</value>
+                        </systemProperty>
+                    </systemProperties>
+                </configuration>
+            </plugin>
+
+            <!-- Test -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.12.4</version>
+                <configuration>
+                    <systemPropertyVariables>
+                        <propertyFile>${propertyFile.test}</propertyFile>
+                    </systemPropertyVariables>
                 </configuration>
             </plugin>
         </plugins>

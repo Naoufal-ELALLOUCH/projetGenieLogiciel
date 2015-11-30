@@ -14,86 +14,49 @@ public class BddUtilisateur {
 
 	private final Logger log = LoggerFactory.getLogger(BddUtilisateur.class);
 
-	private Connection getConnexion() throws SQLException, IOException, ClassNotFoundException {
-		return BddConnecteur.getInstance().getConnexion();
-	}
-
-	public void ajout(Connection connection, String email, String motDePasse) throws SQLException {
-
-		String sql = "INSERT INTO Utilisateur(email, motDePasse) VALUES(?,?)";
-
-		PreparedStatement statement = connection.prepareStatement(sql);
-		statement.setString(1, email);
-		statement.setString(2, motDePasse);
-		statement.executeUpdate();
-
-		statement.close();
-
-	}
-
 	public void ajout(String email, String motDePasse) {
 		try {
-			Connection connection = getConnexion();
-			ajout(connection, email, motDePasse);
+			Connection connection = BddConnecteur.getConnection();
+			String sql = "INSERT INTO Utilisateur(email, motDePasse) VALUES(?,?)";
+
+			PreparedStatement statement = connection.prepareStatement(sql);
+			statement.setString(1, email);
+			statement.setString(2, motDePasse);
+			statement.executeUpdate();
+
+			statement.close();
 		} catch (Exception e) {
 			log.error("Impossible d'insérer un utilisateur dans la base de données : {}", e);
 		}
 	}
 	
-	public boolean authentification(Connection connection, String email, String motDePasse) throws SQLException {
-
-		String sql = "SELECT email, motDePasse FROM Utilisateur WHERE email=? AND motDePasse=?";
-
-		PreparedStatement statement = connection.prepareStatement(sql);
-		statement.setString(1, email);
-		statement.setString(2, motDePasse);
-		ResultSet resultat = statement.executeQuery();
-		
-		//on place le curseur sur le dernier tuple 
-		resultat.last(); 
-		//on récupère le numéro de la ligne 
-		int nombreLignes = resultat.getRow(); 
-
-		if (nombreLignes == 1) {
-			return true;
-			
-		}
-		
-		statement.close();
-		return false;
-
-	}
-	
 	public boolean authentification(String email, String motDePasse) {
 		boolean authentification = false;
 		try {
-			Connection connection = getConnexion();
-			authentification = authentification(connection, email, motDePasse);
+			Connection connection = BddConnecteur.getConnection();
+			String sql = "SELECT email, motDePasse FROM Utilisateur WHERE email=? AND motDePasse=?";
+
+			PreparedStatement statement = connection.prepareStatement(sql);
+			statement.setString(1, email);
+			statement.setString(2, motDePasse);
+			ResultSet resultat = statement.executeQuery();
+
+			//on place le curseur sur le dernier tuple
+			resultat.last();
+			//on récupère le numéro de la ligne
+			int nombreLignes = resultat.getRow();
+
+			if (nombreLignes == 1) {
+				return true;
+
+			}
+
+			statement.close();
+			return false;
 		} catch (Exception e) {
 			log.error("Impossible d'authentifier un utilisateur à partir de la base de données : {}", e);
 		}
 		return authentification;
-	}
-	
-	public Utilisateur getUtilisateurByEmail(Connection connection,String email) throws SQLException {
-		String sql = "SELECT id, email, motDePasse FROM Utilisateur WHERE email=? ";
-
-		PreparedStatement statement = connection.prepareStatement(sql);
-		statement.setString(1, email);
-		ResultSet resultat = statement.executeQuery();
-		
-		//on place le curseur sur le dernier tuple 
-		resultat.last(); 
-		//on récupère le numéro de la ligne 
-		int nombreLignes = resultat.getRow(); 
-		if (nombreLignes != 1) {
-			return null;
-		}
-		
-        int id  = resultat.getInt("id");
-        String motDePasse = resultat.getString("motDePasse");
-
-		return new Utilisateur(id,email,motDePasse);
 	}
 
 	public Utilisateur getUtilisateurByEmail(String email) throws SQLException {
@@ -101,8 +64,25 @@ public class BddUtilisateur {
 		Utilisateur utilisateur = null;
 		
 		try {
-			Connection connection = getConnexion();
-			utilisateur =  getUtilisateurByEmail(connection, email);
+			Connection connection = BddConnecteur.getConnection();
+			String sql = "SELECT id, email, motDePasse FROM Utilisateur WHERE email=? ";
+
+			PreparedStatement statement = connection.prepareStatement(sql);
+			statement.setString(1, email);
+			ResultSet resultat = statement.executeQuery();
+
+			//on place le curseur sur le dernier tuple
+			resultat.last();
+			//on récupère le numéro de la ligne
+			int nombreLignes = resultat.getRow();
+			if (nombreLignes != 1) {
+				return null;
+			}
+
+			int id  = resultat.getInt("id");
+			String motDePasse = resultat.getString("motDePasse");
+
+			return new Utilisateur(id,email,motDePasse);
 		} catch (Exception e) {
 			log.error("Impossible de récupérer un utilisateur à partir de son email : {}", e);
 		}

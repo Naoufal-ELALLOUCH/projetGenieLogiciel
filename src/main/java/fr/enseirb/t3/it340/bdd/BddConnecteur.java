@@ -21,8 +21,6 @@ public class BddConnecteur {
 	private static BddConnecteur bddConnecteur = null;
 	private static JdbcConnectionPool pool;
 
-	private String propertiesFile = "bddProduction.properties";
-
 	public BddConnecteur() throws ClassNotFoundException, SQLException, IOException {
 
 		Properties properties = getProperties();
@@ -50,7 +48,12 @@ public class BddConnecteur {
 
 	private Properties getProperties() throws IOException {
 		// Récupération des paramètres de la base de données
-		InputStream is = getClass().getClassLoader().getResourceAsStream(propertiesFile);
+		String propertyFile = System.getProperty("propertyFile");
+
+		if (propertyFile == null)
+			propertyFile = "bdd.properties";
+
+		InputStream is = getClass().getClassLoader().getResourceAsStream(propertyFile);
 		Properties properties = new Properties();
 
 		if (is == null) {
@@ -78,5 +81,14 @@ public class BddConnecteur {
 			bddConnecteur = new BddConnecteur();
 		}
 		return bddConnecteur;
+	}
+
+	public static Connection getConnection() throws SQLException, IOException, ClassNotFoundException {
+		return BddConnecteur.getInstance().getConnexion();
+	}
+
+	public static void dispose() {
+		pool.dispose();
+		bddConnecteur = null;
 	}
 }
