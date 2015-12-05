@@ -5,63 +5,88 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.logging.Logger;
+import java.util.Map;
 
+import fr.enseirb.t3.it340.modeles.Atelier;
+import fr.enseirb.t3.it340.modeles.Creneau;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class BddAtelier {
-private final org.slf4j.Logger log = LoggerFactory.getLogger(BddUtilisateur.class);
-
+	private static final Logger log = LoggerFactory.getLogger(BddUtilisateur.class);
 	
-	private Connection getConnexion() throws SQLException, IOException, ClassNotFoundException {
-		return BddConnecteur.getInstance().getConnexion();
-	}
-	
-	public int getNouveauTdAtelier(){
-		
-		try {
-			String idAtelierReq = "SELECT * FROM Atelier ";
+	public static void ajoutAtelier(int idLabo, String titre, String themes, String zone, String orateurs, String partenaires, String cibles, String remarques, Map<Integer, Creneau> creneaux) {
 
-			Connection connection = getConnexion();
-			
-			PreparedStatement statement = connection.prepareStatement(idAtelierReq);
-			
-			ResultSet resultat = statement.executeQuery();
-			
-			return resultat.getFetchSize()+1;
-		} catch (Exception e) {
-			log.error("Connexion Impossible à la base de données | Impossible d'obtenir idAtelier", e);
-			return 0;
-		} 
-}
-	
-	public void ceerAtelier(int idLabo , String titre , String themes , String zone ,String orateurs , String partenaires , String cibles , String remarques ){
-
-		String creerReq = "INSERT INTO Atelier(idAtelier , idLabo , titre , themes , zone , orateurs , partenaires , cibles , remarques) VALUES(?,?,?,?,?,?,?)";
+		String sql = "INSERT INTO Atelier(idLabo, titre, themes, zone, orateurs, partenaires, cibles, remarques) VALUES(?,?,?,?,?,?,?,?)";
 
 		
 		try {
-			Connection connection = getConnexion();
-			PreparedStatement statement = connection.prepareStatement(creerReq);
-			int NouveauIdAtelier = getNouveauTdAtelier();
-					
-			statement.setInt(1 , NouveauIdAtelier);
-			statement.setInt(2 , idLabo);
-			statement.setString(3 , titre);
-			statement.setString(4 , themes);
-			statement.setString(5 , zone);
-			statement.setString(6 , orateurs);
-			statement.setString(7 , partenaires);
-			statement.setString(8 , cibles);
-			statement.setString(9 , remarques);
+			Connection connection = BddConnecteur.getConnection();
+			PreparedStatement statement = connection.prepareStatement(sql);
+
+			statement.setInt(1, idLabo);
+			statement.setString(2, titre);
+			statement.setString(3, themes);
+			statement.setString(4, zone);
+			statement.setString(5, orateurs);
+			statement.setString(6, partenaires);
+			statement.setString(7, cibles);
+			statement.setString(8, remarques);
+
+			// TODO creneaux
+
 			statement.executeQuery();
-			 
-				
+			statement.close();
+			connection.close();
+
 		} catch (Exception e) {
-			log.error("Connexion Impossible à la base de données", e);
+			log.error("Impossible d'ajouter un nouvel atelier {}", e);
 		} 
 		
 	}
 
+	public static Atelier getAtelierById(int idAtelier) {
+
+		Atelier atelier = null;
+
+		try {
+			Connection connection = BddConnecteur.getConnection();
+			String sql = "SELECT idLabo, titre, themes, zone, orateurs, partenaires, cibles, remarques FROM Atelier WHERE idAtelier = ?";
+
+			PreparedStatement statement = connection.prepareStatement(sql);
+			statement.setInt(1, idAtelier);
+			ResultSet resultat = statement.executeQuery();
+
+			if (!BddConnecteur.checkAccuracy(resultat, 1))
+				return null;
+
+			int idLabo  = resultat.getInt("idLabo");
+			String titre = resultat.getString("titre");
+			String themes = resultat.getString("themes");
+			String zone = resultat.getString("zone");
+			String orateurs = resultat.getString("orateurs");
+			String partenaires = resultat.getString("partenaires");
+			String cibles = resultat.getString("cibles");
+			String remarques = resultat.getString("remarques");
+
+			atelier = new Atelier(idAtelier, idLabo, titre);
+			atelier.setThemes(themes);
+			atelier.setZone(zone);
+			atelier.setOrateurs(orateurs);
+			atelier.setPartenaires(partenaires);
+			atelier.setCibles(cibles);
+
+			// TODO creneaux
+
+			statement.executeQuery();
+			statement.close();
+			connection.close();
+
+		} catch (Exception e) {
+			log.error("Impossible de rÃ©cupÃ©rer un utilisateur Ã  partir de son email : {}", e);
+		}
+
+		return atelier;
+	}
 	
 }

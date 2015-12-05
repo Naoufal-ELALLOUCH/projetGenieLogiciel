@@ -8,10 +8,7 @@ import org.slf4j.LoggerFactory;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.Properties;
 
 public class BddConnecteur {
@@ -90,5 +87,19 @@ public class BddConnecteur {
 	public static void dispose() {
 		pool.dispose();
 		bddConnecteur = null;
+	}
+
+	public static boolean checkAccuracy(ResultSet rs, int expectedResultNb) {
+		boolean check = false;
+		try {
+
+			//on place le curseur sur le dernier tuple
+			rs.last();
+			//on récupère le numéro de la ligne
+			int nombreLignes = rs.getRow();
+			check = (nombreLignes == expectedResultNb);
+
+		} catch(Exception e) {}
+		return check;
 	}
 }

@@ -2,7 +2,6 @@ package fr.enseirb.t3.it340.modeles;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 public class Laboratoire extends Utilisateur {
 
