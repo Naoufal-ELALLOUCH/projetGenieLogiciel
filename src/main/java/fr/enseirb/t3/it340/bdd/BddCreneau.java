@@ -63,4 +63,27 @@ public class BddCreneau {
 		
 	}
 	
+	// Supprimer un creneau
+	public static void supprCreneau(int idCreneau){
+
+	String supprReq = "DELETE FROM Creneau WHERE idCreneau=?";
+
+		
+		try {
+			Connection connection = BddConnecteur.getConnection();
+			PreparedStatement statement = connection.prepareStatement(supprReq);
+
+			statement.setInt(1, idCreneau);
+
+			statement.executeQuery();
+			statement.close();
+			connection.close();
+
+		} catch (Exception e) {
+			log.error("Impossible de supprimer cet creneau ", e);
+		}		
+		
+	}
+
+	
 }
