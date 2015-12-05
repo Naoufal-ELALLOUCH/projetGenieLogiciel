@@ -7,13 +7,13 @@ public class Atelier {
 	
 	private final int idAtelier;
 	private final int idLabo;
-	private String titre;
-	private String themes;
-	private String zone;
-	private String orateurs;
-	private String partenaires;
-	private String cibles;
-	private String remarques;
+	private String titre = "";
+	private String themes = "";
+	private String zone = "";
+	private String orateurs = "";
+	private String partenaires = "";
+	private String cibles = "";
+	private String remarques = "";
 	private Map<Integer, Creneau> creneaux = new HashMap<Integer, Creneau>();
 	private enum Status {PROPOSE , VALIDE , CLOTURE} ;
 
