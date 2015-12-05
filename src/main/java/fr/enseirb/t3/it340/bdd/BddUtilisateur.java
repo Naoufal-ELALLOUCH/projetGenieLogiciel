@@ -84,7 +84,7 @@ public class BddUtilisateur {
 			statement.close();
 			connection.close();
 
-			return new Utilisateur(idUtilisateur, email, motDePasse);
+			utilisateur = new Utilisateur(idUtilisateur, email, motDePasse);
 		} catch (Exception e) {
 			log.error("Impossible de récupérer un utilisateur à partir de son email : {}", e);
 		}
