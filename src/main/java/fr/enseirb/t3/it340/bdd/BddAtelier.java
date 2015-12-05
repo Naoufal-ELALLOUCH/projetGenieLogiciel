@@ -140,4 +140,28 @@ public class BddAtelier {
 		}		
 		
 	}
+	
+	public static void changeStatut(int idAtelier, String statut){
+
+	String changeStatReq = "UPDATE Atelier Set statut=? WHERE idAtelier=?";
+		
+		try {
+			Connection connection = BddConnecteur.getConnection();
+			PreparedStatement statement = connection.prepareStatement(changeStatReq);
+			
+			statement.setString(1, statut);
+			statement.setInt(2, idAtelier);
+
+			statement.executeQuery();
+			statement.close();
+			connection.close();
+
+		} catch (Exception e) {
+			log.error("Impossible de changer le statut de l'atelier ", e);
+		}		
+		
+		
+		
+	}
+	
 }
