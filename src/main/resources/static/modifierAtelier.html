@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Fête de la science</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  <script src="http://maps.googleapis.com/maps/api/js"></script>
+  <script src="static/js/bootstrap-datepicker.js" type="text/javascript"></script>
+  <script type="text/javascript" src="/bower_components/jquery/jquery.min.js"></script>
+  <script type="text/javascript" src="/bower_components/moment/min/moment.min.js"></script>
+  <script type="text/javascript" src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="/bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+  <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="/bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" />
+
+  <script>
+  function initialize() {
+    var mapProp = {
+      center:new google.maps.LatLng(44.807711, -0.606227),
+      zoom:15,
+      mapTypeId:google.maps.MapTypeId.ROADMAP
+    };
+    var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
+  }
+  google.maps.event.addDomListener(window, 'load', initialize);
+  </script>
+  <style>
+  /* Remove the navbar's default margin-bottom and rounded borders */ 
+  .navbar {
+    margin-bottom: 0;
+    border-radius: 0;
+    background-color: #F8F8F8;
+    border-color: #E7E7E7;
+  }
+
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>                        
+        </button>
+        <a class="navbar-brand" href="#">Logo</a>
+      </div>
+      <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav">
+
+          <li ><a href="file:///Users/Hassan/Desktop/science/Acceuil.html#">Acceuil</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Connexion</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+
+   <div class="row">
+
+    <h1>Modifier un atelier</h1>
+
+    <form role="form" action = "#" method ="">
+      <div class="col-lg-6">
+
+        <div class="form-group">
+          <label for="animateur">Animateurs/Conférenciers</label>
+          <div class="input-group">
+            <input type="text" class="form-control" id="animateur" >
+            <span class="input-group-addon"></span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="partenaire">Partenaires</label>
+          <div class="input-group">
+            <input type="text" class="form-control" id="partenaire" >
+            <span class="input-group-addon"></span>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="remarque">Remarque</label>
+          <div class="input-group">
+            <input type="text" class="form-control" id="remarque" >
+            <span class="input-group-addon"></span>
+          </div>
+        </div>
+        <input type="submit" name="submit" id="submit" value="Valider" class="btn btn-info pull-left">
+      </div>
+    </form>
+
+
+
+    
+      <h1> Créneaux </h1>
+
+
+      <form class="form-inline" role="form">
+        <div class="form-group">
+          <input type="date" class="form-control" id="date" value="date">
+        </div>
+        <div class="form-group">
+          <input type="time" class="form-control" id="heure" value ="Heure début">
+        </div>
+        <div class="form-group">
+          <input type="number" class="form-control" id="capacite" value="capacité ">
+        </div>
+        
+        <button type="text" class="btn btn-default">Valider</button>
+      </form>
+
+
+
+
+    </div>
+  </div>
+</div>
+
+</div>
+
+</body>
+</html>
