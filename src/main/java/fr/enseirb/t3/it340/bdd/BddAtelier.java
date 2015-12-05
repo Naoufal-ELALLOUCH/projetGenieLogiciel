@@ -113,9 +113,31 @@ public class BddAtelier {
 			connection.close();
 
 		} catch (Exception e) {
-			log.error("Impossible d'éditer l'atelier ", e);
+			log.error("Impossible d'ï¿½diter l'atelier ", e);
 		} 
 
+		
+	}
+	
+	// Supprimer un atelier 
+	public static void supprAtelier(int idAtelier){
+
+	String supprReq = "DELETE FROM Atelier WHERE idAtelier=?";
+
+		
+		try {
+			Connection connection = BddConnecteur.getConnection();
+			PreparedStatement statement = connection.prepareStatement(supprReq);
+
+			statement.setInt(1, idAtelier);
+
+			statement.executeQuery();
+			statement.close();
+			connection.close();
+
+		} catch (Exception e) {
+			log.error("Impossible de supprimer cet Atelier ", e);
+		}		
 		
 	}
 }
