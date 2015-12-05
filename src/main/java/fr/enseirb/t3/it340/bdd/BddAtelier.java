@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 
 public class BddAtelier {
 	private static final Logger log = LoggerFactory.getLogger(BddUtilisateur.class);
-	
+	// Ajout d'un atelier
 	public static void ajoutAtelier(int idLabo, String titre, String themes, String zone, String orateurs, String partenaires, String cibles, String remarques, Map<Integer, Creneau> creneaux) {
 
 		String sql = "INSERT INTO Atelier(idLabo, titre, themes, zone, orateurs, partenaires, cibles, remarques) VALUES(?,?,?,?,?,?,?,?)";
@@ -44,7 +44,7 @@ public class BddAtelier {
 		} 
 		
 	}
-
+// Obtenir un atelier en fonction de son id
 	public static Atelier getAtelierById(int idAtelier) {
 
 		Atelier atelier = null;
@@ -89,4 +89,33 @@ public class BddAtelier {
 		return atelier;
 	}
 	
+	// Modifier un atelier
+	public void editAtelier(int idAtelier, String titre, String themes, String zone, String orateurs, String partenaires, String cibles, String remarques, String status){
+		
+	String editReq = "UPDATE Atelier SET (titre=? , themes=?, zone=?, orateurs=?, partenaires=?, cibles=?, remarques=?) WHERE idAtelier=?";
+
+		
+		try {
+			Connection connection = BddConnecteur.getConnection();
+			PreparedStatement statement = connection.prepareStatement(editReq);
+
+			statement.setString(1, titre);
+			statement.setString(2, themes);
+			statement.setString(3, zone);
+			statement.setString(4, orateurs);
+			statement.setString(5, partenaires);
+			statement.setString(6, cibles);
+			statement.setString(7, remarques);
+			statement.setInt(8, idAtelier);
+
+			statement.executeQuery();
+			statement.close();
+			connection.close();
+
+		} catch (Exception e) {
+			log.error("Impossible d'éditer l'atelier ", e);
+		} 
+
+		
+	}
 }
