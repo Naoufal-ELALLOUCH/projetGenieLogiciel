@@ -10,6 +10,7 @@ public class Atelier {
 	private String titre = "";
 	private String themes = "";
 	private String zone = "";
+	private String adresse = "";
 	private String orateurs = "";
 	private String partenaires = "";
 	private String cibles = "";
@@ -88,6 +89,12 @@ public class Atelier {
 	}
 	public void setZone(String zone) {
 		this.zone = zone;
+	}
+	public String getAdresse() {
+		return adresse;
+	}
+	public void setAdresse(String adresse) {
+		this.adresse = adresse;
 	}
 	public String getOrateurs() {
 		return orateurs;
