@@ -92,10 +92,10 @@ public class BddAtelier {
 	// Modifier un atelier
 	public void editAtelier(int idAtelier, String titre, String themes, String zone, String orateurs, String partenaires, String cibles, String remarques, String status){
 		
-	String editReq = "UPDATE Atelier SET (titre=? , themes=?, zone=?, orateurs=?, partenaires=?, cibles=?, remarques=?) WHERE idAtelier=?";
-
+		String editReq = "UPDATE Atelier SET (titre=? , themes=?, zone=?, orateurs=?, partenaires=?, cibles=?, remarques=?) WHERE idAtelier=?";
 		
 		try {
+
 			Connection connection = BddConnecteur.getConnection();
 			PreparedStatement statement = connection.prepareStatement(editReq);
 
@@ -122,9 +122,8 @@ public class BddAtelier {
 	// Supprimer un atelier 
 	public static void supprAtelier(int idAtelier){
 
-	String supprReq = "DELETE FROM Atelier WHERE idAtelier=?";
+		String supprReq = "DELETE FROM Atelier WHERE idAtelier=?";
 
-		
 		try {
 			Connection connection = BddConnecteur.getConnection();
 			PreparedStatement statement = connection.prepareStatement(supprReq);
@@ -137,18 +136,18 @@ public class BddAtelier {
 
 		} catch (Exception e) {
 			log.error("Impossible de supprimer cet Atelier ", e);
-		}		
+		}
 		
 	}
 	
-	public static void changeStatut(int idAtelier, String statut){
+	public static void changeStatut(int idAtelier, String statut) {
 
-	String changeStatReq = "UPDATE Atelier Set statut=? WHERE idAtelier=?";
-		
+		String changeStatReq = "UPDATE Atelier Set statut=? WHERE idAtelier=?";
+
 		try {
 			Connection connection = BddConnecteur.getConnection();
 			PreparedStatement statement = connection.prepareStatement(changeStatReq);
-			
+
 			statement.setString(1, statut);
 			statement.setInt(2, idAtelier);
 
@@ -158,10 +157,8 @@ public class BddAtelier {
 
 		} catch (Exception e) {
 			log.error("Impossible de changer le statut de l'atelier ", e);
-		}		
-		
-		
-		
+		}
+
 	}
 	
 }

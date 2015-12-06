@@ -2,8 +2,10 @@ package fr.enseirb.t3.it340;
 import static spark.Spark.*;
 
 import fr.enseirb.t3.it340.servlets.VisualisationAccueil;
+import fr.enseirb.t3.it340.servlets.ateliers.CreationAtelier;
 import fr.enseirb.t3.it340.servlets.ateliers.VisualisationAtelier;
 import fr.enseirb.t3.it340.servlets.ateliers.VisualisationAteliers;
+import fr.enseirb.t3.it340.servlets.ateliers.VisualisationCreerAtelier;
 import fr.enseirb.t3.it340.servlets.authentification.Authentification;
 import freemarker.template.Configuration;
 import spark.template.freemarker.FreeMarkerEngine;
@@ -26,6 +28,7 @@ public class App {
 
 		get("/ateliers", new VisualisationAteliers(), engine);
 		get("/atelier/:idAtelier", new VisualisationAtelier());
+		get("/laboratoire/atelier/creer", new VisualisationCreerAtelier(), engine);
 
 		post("/laboratoire/atelier/creer", new CreationAtelier());
 		post("/authentification", new Authentification());

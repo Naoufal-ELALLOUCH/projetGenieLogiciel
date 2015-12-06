@@ -16,6 +16,7 @@ public class VisualisationAteliers implements TemplateViewRoute {
 	public ModelAndView handle(Request req, Response res) throws Exception {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		// TODO récupérer la liste des ateliers
 		List<Atelier> ateliers = new ArrayList<Atelier>();
 
 		ateliers.add(new Atelier(1, 1, "toto"));

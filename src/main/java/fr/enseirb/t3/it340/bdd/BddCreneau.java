@@ -13,16 +13,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class BddCreneau {
-	private static final Logger log = LoggerFactory.getLogger(BddUtilisateur.class);
+
+	private static final Logger log = LoggerFactory.getLogger(BddCreneau.class);
+
 	// Ajout d'un creneau
-	public static void ajoutCreneau(int idAtelier,String jour ,String heure ,int capacite) {
+	public static void ajoutCreneau(int idAtelier, String jour, String heure, int capacite) {
 
-		String ajoutCreneauReq = "INSERT INTO Creneau(idAtelier , jour , heure , capacite) VALUES(?,?,?,?)";
+		String sql = "INSERT INTO Creneau(idAtelier, jour, heure, capacite) VALUES(?,?,?,?)";
 
-		
 		try {
 			Connection connection = BddConnecteur.getConnection();
-			PreparedStatement statement = connection.prepareStatement(ajoutCreneauReq);
+			PreparedStatement statement = connection.prepareStatement(sql);
 
 			statement.setInt(1, idAtelier);
 			statement.setString(2, jour);
@@ -42,11 +43,11 @@ public class BddCreneau {
 	// Editer un creneau
 	public static void editCreneau(int idCreneau, String jour ,String heure ,int capacite) {
 
-		String editCreneauReq = "UPDATE Creneau SET (jour=? , heure=? , capacite=?) WHERE idCreneau=?";
+		String sql = "UPDATE Creneau SET (jour=? , heure=? , capacite=?) WHERE idCreneau=?";
 		
 		try {
 			Connection connection = BddConnecteur.getConnection();
-			PreparedStatement statement = connection.prepareStatement(editCreneauReq);
+			PreparedStatement statement = connection.prepareStatement(sql);
 
 			statement.setString(1, jour);
 			statement.setString(2, heure);
@@ -66,12 +67,12 @@ public class BddCreneau {
 	// Supprimer un creneau
 	public static void supprCreneau(int idCreneau){
 
-	String supprReq = "DELETE FROM Creneau WHERE idCreneau=?";
+	String sql = "DELETE FROM Creneau WHERE idCreneau=?";
 
 		
 		try {
 			Connection connection = BddConnecteur.getConnection();
-			PreparedStatement statement = connection.prepareStatement(supprReq);
+			PreparedStatement statement = connection.prepareStatement(sql);
 
 			statement.setInt(1, idCreneau);
 
