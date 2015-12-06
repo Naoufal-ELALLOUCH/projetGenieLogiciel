@@ -15,9 +15,9 @@ import org.slf4j.LoggerFactory;
 public class BddAtelier {
 	private static final Logger log = LoggerFactory.getLogger(BddUtilisateur.class);
 	// Ajout d'un atelier
-	public static void ajoutAtelier(int idLabo, String titre, String themes, String zone, String orateurs, String partenaires, String cibles, String remarques, Map<Integer, Creneau> creneaux) {
+	public static void ajoutAtelier(int idLabo, String titre, String themes, String zone, String adresse, String orateurs, String partenaires, String cibles, String remarques, Map<Integer, Creneau> creneaux) {
 
-		String sql = "INSERT INTO Atelier(idLabo, titre, themes, zone, orateurs, partenaires, cibles, remarques) VALUES(?,?,?,?,?,?,?,?)";
+		String sql = "INSERT INTO Atelier(idLabo, titre, themes, zone, adresse, orateurs, partenaires, cibles, remarques) VALUES(?,?,?,?,?,?,?,?,?)";
 
 		
 		try {
@@ -28,10 +28,11 @@ public class BddAtelier {
 			statement.setString(2, titre);
 			statement.setString(3, themes);
 			statement.setString(4, zone);
-			statement.setString(5, orateurs);
-			statement.setString(6, partenaires);
-			statement.setString(7, cibles);
-			statement.setString(8, remarques);
+			statement.setString(5, adresse);
+			statement.setString(6, orateurs);
+			statement.setString(7, partenaires);
+			statement.setString(8, cibles);
+			statement.setString(9, remarques);
 
 			// TODO creneaux
 
@@ -51,7 +52,7 @@ public class BddAtelier {
 
 		try {
 			Connection connection = BddConnecteur.getConnection();
-			String sql = "SELECT idLabo, titre, themes, zone, orateurs, partenaires, cibles, remarques FROM Atelier WHERE idAtelier = ?";
+			String sql = "SELECT idLabo, titre, themes, zone, adresse, orateurs, partenaires, cibles, remarques FROM Atelier WHERE idAtelier = ?";
 
 			PreparedStatement statement = connection.prepareStatement(sql);
 			statement.setInt(1, idAtelier);
@@ -64,6 +65,7 @@ public class BddAtelier {
 			String titre = resultat.getString("titre");
 			String themes = resultat.getString("themes");
 			String zone = resultat.getString("zone");
+			String adresse = resultat.getString("adresse");
 			String orateurs = resultat.getString("orateurs");
 			String partenaires = resultat.getString("partenaires");
 			String cibles = resultat.getString("cibles");
@@ -72,6 +74,7 @@ public class BddAtelier {
 			atelier = new Atelier(idAtelier, idLabo, titre);
 			atelier.setThemes(themes);
 			atelier.setZone(zone);
+			atelier.setAdresse(adresse);
 			atelier.setOrateurs(orateurs);
 			atelier.setPartenaires(partenaires);
 			atelier.setCibles(cibles);
@@ -90,9 +93,9 @@ public class BddAtelier {
 	}
 	
 	// Modifier un atelier
-	public void editAtelier(int idAtelier, String titre, String themes, String zone, String orateurs, String partenaires, String cibles, String remarques, String status){
+	public void editAtelier(int idAtelier, String titre, String themes, String zone, String adresse, String orateurs, String partenaires, String cibles, String remarques, String status){
 		
-		String editReq = "UPDATE Atelier SET (titre=? , themes=?, zone=?, orateurs=?, partenaires=?, cibles=?, remarques=?) WHERE idAtelier=?";
+		String editReq = "UPDATE Atelier SET (titre=? , themes=?, zone=?, orateurs=?, adresse=?, partenaires=?, cibles=?, remarques=?) WHERE idAtelier=?";
 		
 		try {
 
@@ -102,11 +105,12 @@ public class BddAtelier {
 			statement.setString(1, titre);
 			statement.setString(2, themes);
 			statement.setString(3, zone);
-			statement.setString(4, orateurs);
-			statement.setString(5, partenaires);
-			statement.setString(6, cibles);
-			statement.setString(7, remarques);
-			statement.setInt(8, idAtelier);
+			statement.setString(4, adresse);
+			statement.setString(5, orateurs);
+			statement.setString(6, partenaires);
+			statement.setString(7, cibles);
+			statement.setString(8, remarques);
+			statement.setInt(9, idAtelier);
 
 			statement.executeQuery();
 			statement.close();
