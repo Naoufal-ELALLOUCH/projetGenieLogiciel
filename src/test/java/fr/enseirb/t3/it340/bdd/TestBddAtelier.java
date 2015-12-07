@@ -12,6 +12,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import fr.enseirb.t3.it340.modeles.Atelier;
+import fr.enseirb.t3.it340.modeles.Utilisateur;
+
 public class TestBddAtelier {
 
 	private final String email = "charlie@heloise.com";
@@ -42,6 +45,29 @@ public class TestBddAtelier {
 		statement.close();
 		connection.close();
 	}
+	
+	@Test
+	public void testgetAtelierById() throws IOException, SQLException, ClassNotFoundException {
+
+		Connection connection = BddConnecteur.getConnection();
+	
+		Atelier atelier;
+		BddUtilisateur.ajout("labri@labri.fr", "labri");
+		BddLabo.ajout(1, "Labri");
+		// Test : récupération d'un objet null
+		atelier = BddAtelier.getAtelierById(1);
+		assertNull(atelier);
+	
+		// Insertion
+
+		BddAtelier.ajoutAtelier(1, "A la poursuite d'ennemis invisibles", "Sciences de la vie ", "Campus Carreire (Hôpital Pellegrin)", "Labo MFP", "","", "","",null);
+	
+		// Test : récupération d'un atelier
+		atelier = BddAtelier.getAtelierById(1);
+		assertNotNull(atelier);
+		
+	}
+	
 	@After
 	public void dispose() throws SQLException, IOException, ClassNotFoundException {
 		Connection connection = BddConnecteur.getConnection();
