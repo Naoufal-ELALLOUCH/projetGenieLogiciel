@@ -3,6 +3,7 @@ package fr.enseirb.t3.it340.bdd;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -86,33 +87,29 @@ public class BddEnregistrement {
 		
 
 	}
-	
-//	public static List<Integer> getListeIdEnseignantByIdCreneau(String email) {
+	public static List<Integer> getListeIdEnseignantByIdCreneau(int idCreneau) {
 		
-//		Utilisateur utilisateur = null;
-//		
-//		try {
-//			Connection connection = BddConnecteur.getConnection();
-//			String sql = "SELECT idUtilisateur, email, motDePasse FROM Utilisateur WHERE email=? ";
-//
-//			PreparedStatement statement = connection.prepareStatement(sql);
-//			statement.setString(1, email);
-//			ResultSet resultat = statement.executeQuery();
-//
-//			if (!BddConnecteur.checkAccuracy(resultat, 1))
-//				return null;
-//
-//			int idUtilisateur  = resultat.getInt("idUtilisateur");
-//			String motDePasse = resultat.getString("motDePasse");
-//
-//			resultat.close();
-//			statement.close();
-//			connection.close();
-//
-//			utilisateur = new Utilisateur(idUtilisateur, email, motDePasse);
-//		} catch (Exception e) {
-//			log.error("Impossible de récupérer un utilisateur à partir de son email : {}", e);
-//		}
-//		return utilisateur;
-//	}
+		List<Integer> idEnseignant =  new ArrayList<Integer>() ;
+		
+		try {
+			Connection connection = BddConnecteur.getConnection();
+			// Récupération de la liste des enseignants pour un créneau
+			String sql = "SELECT Enseignant.idEnseignant FROM Enseignant,Enregistrement WHERE Enregistrement.idCreneau=? AND Enregistrement.idEnseignant = Enseignant.idEnseignant ";
+
+			PreparedStatement statement = connection.prepareStatement(sql);
+			statement.setInt(1, idCreneau);
+			ResultSet resultat = statement.executeQuery();
+			while(resultat.next()) {
+				idEnseignant.add(resultat.getInt("idEnseignant"));
+			}
+
+			resultat.close();
+			statement.close();
+			connection.close();
+
+		} catch (Exception e) {
+			log.error("Impossible de récupérer la liste des idEnseignant : {}", e);
+		}
+		return idEnseignant;
+	}
 }

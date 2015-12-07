@@ -7,6 +7,9 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ListIterator;
 
 import org.junit.After;
 import org.junit.Test;
@@ -87,6 +90,43 @@ public class TestBddEnregistrement {
 		rs.close();
 		statement.close();
 		connection.close();
+	}
+	@Test
+	public void testGetListeIdEnseignantByIdCreneau() throws IOException, SQLException, ClassNotFoundException {
+		
+		Connection connection = BddConnecteur.getConnection();
+
+		List<Integer> idEnseignant =  new ArrayList<Integer>() ;
+
+		int idAtelier = 1;
+		String jour = "12/05/2015";
+		String heure = "13:00";
+		int capacite = 30;
+		BddUtilisateur.ajout("labri@labri.fr", "labri");
+		BddLabo.ajout(1, "Labri");
+		BddAtelier.ajoutAtelier(1, "A la poursuite d'ennemis invisibles", "Sciences de la vie ", "Campus Carreire (Hôpital Pellegrin)", "Labo MFP", "","", "","");
+		BddCreneau.ajoutCreneau(1, jour, heure, capacite);
+
+		BddUtilisateur.ajout("enseignant1@labri.fr", "labri");
+		BddEnseignant.ajout(2, "nom1", "prenom1");
+		
+		BddUtilisateur.ajout("enseignant2@labri.fr", "labri");
+		BddEnseignant.ajout(3, "nom2", "prenom2");
+		
+
+		BddEnregistrement.enregistrement(1, 1, 20);
+		BddEnregistrement.enregistrement(2, 1, 5);
+
+		// Récupération de la liste des enseignants pour un créneau
+		idEnseignant = BddEnregistrement.getListeIdEnseignantByIdCreneau(1);
+		
+		// Vérification
+		ListIterator<Integer> it = idEnseignant.listIterator() ;
+		Integer count =1;
+		 while(it.hasNext()) {
+			   assertEquals(it.next(), count);
+			   count ++;
+			}
 	}
 	@After
 	public void dispose() throws SQLException, IOException, ClassNotFoundException {
