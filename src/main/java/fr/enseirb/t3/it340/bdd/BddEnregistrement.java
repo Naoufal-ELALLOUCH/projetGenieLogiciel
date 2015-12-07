@@ -14,6 +14,10 @@ public class BddEnregistrement {
 	private static final Logger log = LoggerFactory.getLogger(BddEnregistrement.class);
 
 	public static void enregistrement(int idEnseignant, int idCreneau, int nbInscrits ) {
+		
+		//String sql = "SELECT email, motDePasse FROM Utilisateur WHERE email=? AND motDePasse=?";
+
+		
 		try {
 			Connection connection = BddConnecteur.getConnection();
 			String sql = "INSERT INTO Enregistrement(idEnseignant, idCreneau,nbInscrits) VALUES(?,?)";
