@@ -55,8 +55,8 @@ public class TestBddAtelier {
 		BddUtilisateur.ajout("labri@labri.fr", "labri");
 		BddLabo.ajout(1, "Labri");
 		// Test : récupération d'un objet null
-		//atelier = BddAtelier.getAtelierById(1);
-		//assertNull(atelier);
+		atelier = BddAtelier.getAtelierById(1);
+		assertNull(atelier);
 	
 		// Insertion
 
