@@ -15,9 +15,9 @@ import org.slf4j.LoggerFactory;
 public class BddAtelier {
 	private static final Logger log = LoggerFactory.getLogger(BddUtilisateur.class);
 	// Ajout d'un atelier
-	public static void ajoutAtelier(int idLabo, String titre, String themes, String zone, String adresse, String orateurs, String partenaires, String cibles, String remarques, Map<Integer, Creneau> creneaux) {
+	public static void ajoutAtelier(int idLabo, String titre, String themes, String zone, String adresse, String orateurs, String partenaires, String cible, String remarques, Map<Integer, Creneau> creneaux) {
 
-		String sql = "INSERT INTO Atelier(idLabo, titre, themes, zone, adresse, orateurs, partenaires, cibles, remarques) VALUES(?,?,?,?,?,?,?,?,?)";
+		String sql = "INSERT INTO Atelier(idLabo, titre, themes, zone, adresse, orateurs, partenaires, cible, remarques) VALUES(?,?,?,?,?,?,?,?,?)";
 
 		
 		try {
@@ -31,12 +31,12 @@ public class BddAtelier {
 			statement.setString(5, adresse);
 			statement.setString(6, orateurs);
 			statement.setString(7, partenaires);
-			statement.setString(8, cibles);
+			statement.setString(8, cible);
 			statement.setString(9, remarques);
 
 			// TODO creneaux
 
-			statement.executeQuery();
+			statement.executeUpdate();
 			statement.close();
 			connection.close();
 
