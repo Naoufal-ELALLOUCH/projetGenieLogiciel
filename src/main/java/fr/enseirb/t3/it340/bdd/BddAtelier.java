@@ -15,9 +15,9 @@ import org.slf4j.LoggerFactory;
 public class BddAtelier {
 	private static final Logger log = LoggerFactory.getLogger(BddUtilisateur.class);
 	// Ajout d'un atelier
-	public static void ajoutAtelier(int idLabo, String titre, String themes, String zone, String adresse, String orateurs, String partenaires, String cible, String remarques, Map<Integer, Creneau> creneaux) {
+	public static void ajoutAtelier(int idLabo, String titre, String themes, String zone, String adresse, String orateurs, String partenaires, String cible, String remarques) {
 
-		String sql = "INSERT INTO Atelier(idLabo, titre, themes, zone, adresse, orateurs, partenaires, cible, remarques) VALUES(?,?,?,?,?,?,?,?,?)";
+		String sql = "INSERT INTO Atelier(idLabo, titre, themes, zone, adresse, orateurs, partenaires, cible, remarques,statut) VALUES(?,?,?,?,?,?,?,?,?,?)";
 
 		
 		try {
@@ -33,6 +33,8 @@ public class BddAtelier {
 			statement.setString(7, partenaires);
 			statement.setString(8, cible);
 			statement.setString(9, remarques);
+			statement.setString(10,"PROPOSE");
+
 
 			// TODO creneaux
 
@@ -52,7 +54,7 @@ public class BddAtelier {
 
 		try {
 			Connection connection = BddConnecteur.getConnection();
-			String sql = "SELECT idLabo, titre, themes, zone, adresse, orateurs, partenaires, cible, remarques FROM Atelier WHERE idAtelier = ?";
+			String sql = "SELECT idLabo, titre, themes, zone, adresse, orateurs, partenaires, cible, remarques, statut FROM Atelier WHERE idAtelier = ?";
 
 			PreparedStatement statement = connection.prepareStatement(sql);
 			statement.setInt(1, idAtelier);
@@ -70,7 +72,9 @@ public class BddAtelier {
 			String partenaires = resultat.getString("partenaires");
 			String cible = resultat.getString("cible");
 			String remarques = resultat.getString("remarques");
+			String statut = resultat.getString("statut");
 
+			
 			atelier = new Atelier(idAtelier, idLabo, titre);
 			atelier.setThemes(themes);
 			atelier.setZone(zone);
@@ -78,7 +82,9 @@ public class BddAtelier {
 			atelier.setOrateurs(orateurs);
 			atelier.setPartenaires(partenaires);
 			atelier.setCibles(cible);
-
+			atelier.setRemarques(remarques);
+			atelier.setStatut(statut);
+			
 			// TODO creneaux
 
 			statement.executeQuery();
@@ -93,9 +99,9 @@ public class BddAtelier {
 	}
 	
 	// Modifier un atelier
-	public void editAtelier(int idAtelier, String titre, String themes, String zone, String adresse, String orateurs, String partenaires, String cibles, String remarques, String status){
+	public static void editAtelier(int idAtelier, String titre, String themes, String zone, String adresse, String orateurs, String partenaires, String cible, String remarques){
 		
-		String editReq = "UPDATE Atelier SET (titre=? , themes=?, zone=?, orateurs=?, adresse=?, partenaires=?, cibles=?, remarques=?) WHERE idAtelier=?";
+		String editReq = "UPDATE Atelier SET titre=? , themes=?, zone=?, orateurs=?, adresse=?, partenaires=?, cible=?, remarques=? WHERE idAtelier=?";
 		
 		try {
 
@@ -108,11 +114,11 @@ public class BddAtelier {
 			statement.setString(4, adresse);
 			statement.setString(5, orateurs);
 			statement.setString(6, partenaires);
-			statement.setString(7, cibles);
+			statement.setString(7, cible);
 			statement.setString(8, remarques);
 			statement.setInt(9, idAtelier);
 
-			statement.executeQuery();
+			statement.executeUpdate();
 			statement.close();
 			connection.close();
 
@@ -134,7 +140,7 @@ public class BddAtelier {
 
 			statement.setInt(1, idAtelier);
 
-			statement.executeQuery();
+			statement.executeUpdate();
 			statement.close();
 			connection.close();
 
@@ -145,7 +151,7 @@ public class BddAtelier {
 	}
 	
 	public static void changeStatut(int idAtelier, String statut) {
-
+		
 		String changeStatReq = "UPDATE Atelier Set statut=? WHERE idAtelier=?";
 
 		try {
@@ -154,8 +160,9 @@ public class BddAtelier {
 
 			statement.setString(1, statut);
 			statement.setInt(2, idAtelier);
-
-			statement.executeQuery();
+			
+			if(statut == "PROPOSE" || statut == "VALIDE"  || statut == "CLOTURE")
+				statement.executeUpdate();
 			statement.close();
 			connection.close();
 

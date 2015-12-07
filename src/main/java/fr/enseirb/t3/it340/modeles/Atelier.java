@@ -16,7 +16,9 @@ public class Atelier {
 	private String cible = "";
 	private String remarques = "";
 	private Map<Integer, Creneau> creneaux = new HashMap<Integer, Creneau>();
-	private enum Status {PROPOSE , VALIDE , CLOTURE} ;
+	private String statut = "";
+	
+	//private enum Statut {PROPOSE , VALIDE , CLOTURE} ;
 
 	public Atelier(int idAtelier, int idLabo, String titre) {
 		this.idAtelier = idAtelier;
@@ -125,5 +127,15 @@ public class Atelier {
 		return creneaux;
 	}
 	
+	public void setStatut(String statut) {
+		this.statut = statut;
+	}
+	public String getStatut() {
+		return statut;
+	}
+
+	public int getIdLabo() {
+		return idLabo;
+	}
 	
 }

@@ -17,7 +17,7 @@ public class TestBddCreneau {
 
 		BddUtilisateur.ajout("labri@labri.fr", "labri");
 		BddLabo.ajout(1, "Labri");
-		BddAtelier.ajoutAtelier(1, "A la poursuite d'ennemis invisibles", "Sciences de la vie ", "Campus Carreire (Hôpital Pellegrin)", "Labo MFP", "","", "","",null);
+		BddAtelier.ajoutAtelier(1, "A la poursuite d'ennemis invisibles", "Sciences de la vie ", "Campus Carreire (Hôpital Pellegrin)", "Labo MFP", "","", "","");
 
 		// Insertion
 		int idAtelier = 1;
@@ -61,7 +61,7 @@ public class TestBddCreneau {
 
 		BddUtilisateur.ajout("labri@labri.fr", "labri");
 		BddLabo.ajout(1, "Labri");
-		BddAtelier.ajoutAtelier(1, "A la poursuite d'ennemis invisibles", "Sciences de la vie ", "Campus Carreire (Hôpital Pellegrin)", "Labo MFP", "","", "","",null);
+		BddAtelier.ajoutAtelier(1, "A la poursuite d'ennemis invisibles", "Sciences de la vie ", "Campus Carreire (Hôpital Pellegrin)", "Labo MFP", "","", "","");
 
 		// Insertion
 		int idAtelier = 1;
@@ -102,7 +102,7 @@ public class TestBddCreneau {
 
 		BddUtilisateur.ajout("labri@labri.fr", "labri");
 		BddLabo.ajout(1, "Labri");
-		BddAtelier.ajoutAtelier(1, "A la poursuite d'ennemis invisibles", "Sciences de la vie ", "Campus Carreire (Hôpital Pellegrin)", "Labo MFP", "","", "","",null);
+		BddAtelier.ajoutAtelier(1, "A la poursuite d'ennemis invisibles", "Sciences de la vie ", "Campus Carreire (Hôpital Pellegrin)", "Labo MFP", "","", "","");
 
 		// Insertion
 		int idAtelier = 1;
