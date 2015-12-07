@@ -52,7 +52,7 @@ public class BddAtelier {
 
 		try {
 			Connection connection = BddConnecteur.getConnection();
-			String sql = "SELECT idLabo, titre, themes, zone, adresse, orateurs, partenaires, cibles, remarques FROM Atelier WHERE idAtelier = ?";
+			String sql = "SELECT idLabo, titre, themes, zone, adresse, orateurs, partenaires, cible, remarques FROM Atelier WHERE idAtelier = ?";
 
 			PreparedStatement statement = connection.prepareStatement(sql);
 			statement.setInt(1, idAtelier);
@@ -68,7 +68,7 @@ public class BddAtelier {
 			String adresse = resultat.getString("adresse");
 			String orateurs = resultat.getString("orateurs");
 			String partenaires = resultat.getString("partenaires");
-			String cibles = resultat.getString("cibles");
+			String cible = resultat.getString("cible");
 			String remarques = resultat.getString("remarques");
 
 			atelier = new Atelier(idAtelier, idLabo, titre);
@@ -77,7 +77,7 @@ public class BddAtelier {
 			atelier.setAdresse(adresse);
 			atelier.setOrateurs(orateurs);
 			atelier.setPartenaires(partenaires);
-			atelier.setCibles(cibles);
+			atelier.setCibles(cible);
 
 			// TODO creneaux
 
@@ -86,7 +86,7 @@ public class BddAtelier {
 			connection.close();
 
 		} catch (Exception e) {
-			log.error("Impossible de récupérer un utilisateur à partir de son email : {}", e);
+			log.error("Impossible de récupérer un atelier à partir de son id : {}", e);
 		}
 
 		return atelier;

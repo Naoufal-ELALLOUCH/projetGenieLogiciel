@@ -13,7 +13,7 @@ public class Atelier {
 	private String adresse = "";
 	private String orateurs = "";
 	private String partenaires = "";
-	private String cibles = "";
+	private String cible = "";
 	private String remarques = "";
 	private Map<Integer, Creneau> creneaux = new HashMap<Integer, Creneau>();
 	private enum Status {PROPOSE , VALIDE , CLOTURE} ;
@@ -108,11 +108,11 @@ public class Atelier {
 	public void setPartenaires(String partenaires) {
 		this.partenaires = partenaires;
 	}
-	public String getCibles() {
-		return cibles;
+	public String getCible() {
+		return cible;
 	}
-	public void setCibles(String cibles) {
-		this.cibles = cibles;
+	public void setCibles(String cible) {
+		this.cible = cible;
 	}
 	public String getRemarques() {
 		return remarques;
