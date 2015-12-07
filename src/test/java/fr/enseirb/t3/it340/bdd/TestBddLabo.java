@@ -1,52 +1,40 @@
 package fr.enseirb.t3.it340.bdd;
 
-import static org.junit.Assert.*;
-
 import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
 import java.sql.*;
 
-public class TestBddCreneau {
+import static org.junit.Assert.assertEquals;
+
+public class TestBddLabo {
 
 	@Test
-	public void testAjoutCreneau() throws SQLException, IOException, ClassNotFoundException {
+	public void testAjout() throws SQLException, IOException, ClassNotFoundException {
 		Connection connection = BddConnecteur.getConnection();
 
 		//BddAtelier.ajoutAtelier();
 
 		// Insertion
-		int idAtelier = 1;
-		String jour = "12/05/2015";
-		String heure = "13:00";
-		int capacite = 20;
-		BddCreneau.ajoutCreneau(idAtelier, jour, heure, capacite);
+		BddUtilisateur.ajout("labri@labri.fr", "labri");
+		BddLabo.ajout(1, "Labri");
 
 		// Vérification
-		String sql = "SELECT * FROM Creneau WHERE idAtelier='"+ idAtelier +"'";
+		String sql = "SELECT * FROM Labo WHERE idUtilisateur=1";
 		Statement statement = connection.createStatement();
 		ResultSet rs = statement.executeQuery(sql);
 
+		String nom = "";
 		int count = 0;
-		Date jourRecup;
-		Time heureRecup;
-		int capaciteRecup = 0;
 
 		while(rs.next()) {
-			jourRecup = rs.getDate("jour");
-			heureRecup = rs.getTime("heure");
-			capaciteRecup = rs.getInt("capacite");
-			System.out.println(heureRecup.toString());
+			nom = rs.getString("nom");
 			count++;
 		}
 
-
 		assertEquals(count, 1);
-		//assertEquals(jourRecup, jour);
-		// assertEquals(heureRecup, heure);
-		assertEquals(capaciteRecup, capacite);
+		assertEquals(nom, "Labri");
 
 		// Fermeture
 		rs.close();
@@ -58,10 +46,10 @@ public class TestBddCreneau {
 	public void dispose() throws SQLException, IOException, ClassNotFoundException {
 		Connection connection = BddConnecteur.getConnection();
 		Statement statement = connection.createStatement();
-		statement.execute("DROP TABLE Creneau");
+		statement.execute("DROP TABLE Utilisateur");
+		statement.execute("DROP TABLE Labo");
 		statement.close();
 		connection.close();
 		BddConnecteur.dispose();
 	}
-
 }

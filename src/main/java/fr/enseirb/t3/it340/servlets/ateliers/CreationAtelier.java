@@ -9,7 +9,6 @@ public class CreationAtelier implements Route {
 	public Void handle(Request request, Response response) throws Exception {
 
 
-
 		// TODO récupérer l'id et rediriger vers la page de l'atelier
 		response.redirect("/toto");
 

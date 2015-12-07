@@ -5,6 +5,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map;
 
 import fr.enseirb.t3.it340.modeles.Atelier;
@@ -25,12 +27,21 @@ public class BddCreneau {
 			Connection connection = BddConnecteur.getConnection();
 			PreparedStatement statement = connection.prepareStatement(sql);
 
+			// String to sqlDate
+			SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+			Date parsed = format.parse(jour);
+			java.sql.Date sqlDate = new java.sql.Date(parsed.getTime());
+
+			// String to sqlTime
+			SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
+			java.sql.Time timeValue = new java.sql.Time(formatter.parse(heure).getTime());
+
 			statement.setInt(1, idAtelier);
-			statement.setString(2, jour);
-			statement.setString(3, heure);
+			statement.setDate(2, sqlDate);
+			statement.setTime(3, timeValue);
 			statement.setInt(4, capacite);
 
-			statement.executeQuery();
+			statement.executeUpdate();
 			statement.close();
 			connection.close();
 
