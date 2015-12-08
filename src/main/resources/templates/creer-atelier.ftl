@@ -17,49 +17,49 @@
 	                <div class="form-group">
 	                    <label for="theme">Thème disciplinaire</label>
 	                    <div class="input-group">
-	                        <input type="text" class="form-control" id="theme">
+	                        <input type="text" class="form-control" name="themes" id="themes">
 	                        <span class="input-group-addon"></span>
 	                    </div>
 	                </div>
 	                <div class="form-group">
 	                    <label for="zone">Zone</label>
 	                    <div class="input-group">
-	                        <input type="text" class="form-control" id="zone">
+	                        <input type="text" class="form-control" name="zone" id="zone">
 	                        <span class="input-group-addon"></span>
 	                    </div>
 	                </div>
 	                <div class="form-group">
 	                    <label for="adresse">Adresse</label>
 	                    <div class="input-group">
-	                        <textarea  id="adresse" class="form-control" rows="2"></textarea>
+	                        <textarea  id="adresse" class="form-control" name="adresse" rows="2"></textarea>
 	                        <span class="input-group-addon"></span>
 	                    </div>
 	                </div>
 	                <div class="form-group">
 	                    <label for="animateurs">Animateurs/Conférenciers</label>
 	                    <div class="input-group">
-	                        <input type="text" class="form-control" id="animateurs">
+	                        <input type="text" class="form-control" name="orateurs" id="animateurs">
 	                        <span class="input-group-addon"></span>
 	                    </div>
 	                </div>
 	                <div class="form-group">
 	                    <label for="partenaires">Partenaires</label>
 	                    <div class="input-group">
-	                        <input type="text" class="form-control" id="partenaires">
+	                        <input type="text" class="form-control" name="partenaires" id="partenaires">
 	                        <span class="input-group-addon"></span>
 	                    </div>
 	                </div>
 	                <div class="form-group">
 	                    <label for="cibles">Public visé</label>
 	                    <div class="input-group">
-	                        <input type="text" class="form-control" id="cibles">
+	                        <input type="text" class="form-control" name="cible" id="cible">
 	                        <span class="input-group-addon"></span>
 	                    </div>
 	                </div>
 	                <div class="form-group">
 	                    <label for="remarques">Remarques</label>
 	                    <div class="input-group">
-	                        <input type="text" class="form-control" id="remarques">
+	                        <input type="text" class="form-control" name="remarques" id="remarques">
 	                        <span class="input-group-addon"></span>
 	                    </div>
 	                </div>

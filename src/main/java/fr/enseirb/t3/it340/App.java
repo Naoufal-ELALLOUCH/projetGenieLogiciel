@@ -27,7 +27,7 @@ public class App {
 		get("/", new VisualisationAccueil(), engine);
 
 		get("/ateliers", new VisualisationAteliers(), engine);
-		get("/atelier/:idAtelier", new VisualisationAtelier());
+		get("/atelier/:idAtelier", new VisualisationAtelier(), engine);
 		get("/laboratoire/atelier/creer", new VisualisationCreerAtelier(), engine);
 
 		post("/laboratoire/atelier/creer", new CreationAtelier());

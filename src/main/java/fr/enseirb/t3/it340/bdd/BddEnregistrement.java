@@ -14,7 +14,7 @@ import fr.enseirb.t3.it340.modeles.Utilisateur;
 public class BddEnregistrement {
 	private static final Logger log = LoggerFactory.getLogger(BddEnregistrement.class);
 
-	public static void enregistrement(int idEnseignant, int idCreneau, int nbAInscrire ) {
+	public static void enregistrement(int idEnseignant, int idCreneau, int nbAInscrire) {
 		try {
 		Connection connection = BddConnecteur.getConnection();
 
@@ -26,7 +26,6 @@ public class BddEnregistrement {
 		PreparedStatement statement2 = connection.prepareStatement(sql2);
 		statement2.setInt(1, idCreneau);
 		statement2.setInt(2, idEnseignant);
-
 
 		//statement.executeQuery();
 		ResultSet rs1 = statement1.executeQuery();
@@ -49,7 +48,7 @@ public class BddEnregistrement {
 			try {
 				connection = BddConnecteur.getConnection();
 
-				if (count==0){
+				if (count == 0){
 					String sql = "INSERT INTO Enregistrement(idEnseignant, idCreneau,nbInscrits) VALUES(?,?,?)";
 	
 					PreparedStatement statement = connection.prepareStatement(sql);
@@ -57,13 +56,13 @@ public class BddEnregistrement {
 					statement.setInt(2, idCreneau);
 					statement.setInt(3, nbAInscrire);
 					
-					if(nbInscrits+nbAInscrire<=capacite)
+					if(nbInscrits + nbAInscrire <= capacite)
 						statement.executeUpdate();
 
 					statement.close();
 					connection.close();
 				}
-				if (count!=0){
+				if (count != 0){
 					String sql = "UPDATE Enregistrement SET nbInscrits = ? WHERE idEnseignant = ? AND idCreneau = ?";
 	
 					PreparedStatement statement = connection.prepareStatement(sql);
@@ -71,7 +70,7 @@ public class BddEnregistrement {
 					statement.setInt(2, idEnseignant);
 					statement.setInt(3, idCreneau);
 				
-					if(nbInscrits+nbAInscrire<=capacite)
+					if(nbInscrits + nbAInscrire <= capacite)
 						statement.executeUpdate();
 					
 					statement.close();
@@ -94,7 +93,7 @@ public class BddEnregistrement {
 		try {
 			Connection connection = BddConnecteur.getConnection();
 			// Récupération de la liste des enseignants pour un créneau
-			String sql = "SELECT Enseignant.idEnseignant FROM Enseignant,Enregistrement WHERE Enregistrement.idCreneau=? AND Enregistrement.idEnseignant = Enseignant.idEnseignant ";
+			String sql = "SELECT Enseignant.idEnseignant FROM Enseignant, Enregistrement WHERE Enregistrement.idCreneau=? AND Enregistrement.idEnseignant = Enseignant.idEnseignant ";
 
 			PreparedStatement statement = connection.prepareStatement(sql);
 			statement.setInt(1, idCreneau);

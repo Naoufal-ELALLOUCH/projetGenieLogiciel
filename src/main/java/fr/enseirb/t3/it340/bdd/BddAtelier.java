@@ -17,9 +17,8 @@ public class BddAtelier {
 	// Ajout d'un atelier
 	public static void ajoutAtelier(int idLabo, String titre, String themes, String zone, String adresse, String orateurs, String partenaires, String cible, String remarques) {
 
-		String sql = "INSERT INTO Atelier(idLabo, titre, themes, zone, adresse, orateurs, partenaires, cible, remarques,statut) VALUES(?,?,?,?,?,?,?,?,?,?)";
+		String sql = "INSERT INTO Atelier(idLabo, titre, themes, zone, adresse, orateurs, partenaires, cible, remarques, statut) VALUES(?,?,?,?,?,?,?,?,?,?)";
 
-		
 		try {
 			Connection connection = BddConnecteur.getConnection();
 			PreparedStatement statement = connection.prepareStatement(sql);
@@ -74,7 +73,6 @@ public class BddAtelier {
 			String remarques = resultat.getString("remarques");
 			String statut = resultat.getString("statut");
 
-			
 			atelier = new Atelier(idAtelier, idLabo, titre);
 			atelier.setThemes(themes);
 			atelier.setZone(zone);
