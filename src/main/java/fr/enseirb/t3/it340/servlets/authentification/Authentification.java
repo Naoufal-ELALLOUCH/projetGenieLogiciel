@@ -11,7 +11,7 @@ public class Authentification implements Route {
 
 	private final Logger log = LoggerFactory.getLogger(Authentification.class);
 
-	public void checkAuthentication(Request request, Response response) {
+	public static void checkAuthentication(Request request, Response response) {
 		String email = request.session().attribute("email");
 		if (email == null)
 			response.redirect("/authentification");

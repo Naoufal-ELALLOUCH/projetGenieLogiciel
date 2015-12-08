@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import org.junit.After;
 import org.junit.Test;
 
 public class TestBddEnseignant {
@@ -43,5 +44,16 @@ public class TestBddEnseignant {
 		rs.close();
 		statement.close();
 		connection.close();
+	}
+
+	@After
+	public void dispose() throws SQLException, IOException, ClassNotFoundException {
+		Connection connection = BddConnecteur.getConnection();
+		Statement statement = connection.createStatement();
+		statement.execute("DROP TABLE Utilisateur");
+		statement.execute("DROP TABLE Enseignant");
+		statement.close();
+		connection.close();
+		BddConnecteur.dispose();
 	}
 }
