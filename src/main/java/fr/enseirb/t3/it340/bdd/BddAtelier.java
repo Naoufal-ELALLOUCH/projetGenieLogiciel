@@ -192,7 +192,7 @@ public class BddAtelier {
 		 String cible = result.getString(9);
 		 String remarques = result.getString(10);
 		 String statut = result.getString(11);
-		 Map<Integer, Creneau> creneaux; // = getCreneauxByIdAtelier();
+		 Map<Integer, Creneau> creneaux = getCreneauxByIdAtelier(idAtelier);
 		 
 		 Atelier atelier = new Atelier(idAtelier, idLabo, titre, themes, zone, adresse, orateurs, partenaires, cible, remarques, creneaux, statut);
 		 
