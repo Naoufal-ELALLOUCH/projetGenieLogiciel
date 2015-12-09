@@ -82,8 +82,6 @@ public class BddAtelier {
 			atelier.setCibles(cible);
 			atelier.setRemarques(remarques);
 			atelier.setStatut(statut);
-			
-			// TODO creneaux
 
 			statement.executeQuery();
 			statement.close();
@@ -169,5 +167,7 @@ public class BddAtelier {
 		}
 
 	}
+
+	
 	
 }
