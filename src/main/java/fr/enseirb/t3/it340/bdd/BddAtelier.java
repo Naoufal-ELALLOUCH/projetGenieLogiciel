@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.Map;
 
 import fr.enseirb.t3.it340.modeles.Atelier;
@@ -37,7 +38,7 @@ public class BddAtelier {
 
 			// TODO creneaux
 
-			statement.executeUpdate();
+			statement.executeQuery();
 			statement.close();
 			connection.close();
 
@@ -136,7 +137,7 @@ public class BddAtelier {
 
 			statement.setInt(1, idAtelier);
 
-			statement.executeUpdate();
+			statement.executeQuery();
 			statement.close();
 			connection.close();
 
@@ -168,6 +169,50 @@ public class BddAtelier {
 
 	}
 
-	
+	Map<Integer ,Atelier> getAteliers(){
+		
+		Map<Integer, Atelier> ateliers = new HashMap<Integer, Atelier>();
+		String getAteliersReq = "SELECT * FROM Atelier";
+
+		try {
+			Connection connection = BddConnecteur.getConnection();
+			PreparedStatement statement = connection.prepareStatement(getAteliersReq);
+
+			ResultSet result = statement.executeQuery();
+			
+			while(result.next()){
+		int idAtelier = result.getInt(1);
+		int idLabo = result.getInt(2);
+		 String titre = result.getString(3);
+		 String themes = result.getString(4);
+		 String zone = result.getString(5);
+		 String adresse = result.getString(6);
+		 String orateurs = result.getString(7);
+		 String partenaires = result.getString(8);
+		 String cible = result.getString(9);
+		 String remarques = result.getString(10);
+		 String statut = result.getString(11);
+		 Map<Integer, Creneau> creneaux; // = getCreneauxByIdAtelier();
+		 
+		 Atelier atelier = new Atelier(idAtelier, idLabo, titre, themes, zone, adresse, orateurs, partenaires, cible, remarques, creneaux, statut);
+		 
+		 ateliers.put(atelier.getIdAtelier(), atelier);
+			}
+			
+			statement.close();
+			connection.close();
+
+			return ateliers;
+			
+		} catch (Exception e) {
+			log.error("Impossible d'avoir la liste des tous les ateliers ", e);
+			return null;
+		}
+
+		
+		
+		
+		
+	}
 	
 }

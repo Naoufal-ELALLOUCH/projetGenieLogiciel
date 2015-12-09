@@ -20,10 +20,25 @@ public class Atelier {
 	
 	//private enum Statut {PROPOSE , VALIDE , CLOTURE} ;
 
-	public Atelier(int idAtelier, int idLabo, String titre) {
+	public Atelier(int idAtelier, int idLabo, String titre){
 		this.idAtelier = idAtelier;
 		this.idLabo = idLabo;
 		this.titre = titre;
+	}
+	
+	public Atelier(int idAtelier, int idLabo, String titre, String themes, String zone, String adresse, String orateurs, String partenaires, String cible, String remarques, Map<Integer, Creneau> creneaux, String statut) {
+		this.idAtelier = idAtelier;
+		this.idLabo = idLabo;
+		this.titre = titre;
+		this.themes = themes;
+		this.zone = zone;
+		this.adresse = adresse;
+		this.orateurs = orateurs;
+		this.partenaires = partenaires;
+		this.cible = cible;
+		this.remarques = remarques;
+		this.creneaux = creneaux;
+		this.statut = statut;
 	}
 
 	public void ajoutCreneau(Creneau creneau) {
@@ -35,40 +50,11 @@ public class Atelier {
 		if (idCreneau == creneau.getIdCreneau() || c == null)
 			creneaux.put(idCreneau, creneau);
 	}
-	
-	/*void modifierCreneau(int idCreneau , Date date , int capacite){
-		Iterator<Creneau> iterator = creneaux.iterator();
-		
-		while(iterator.hasNext()){
-			
-			Creneau creneau = iterator.next();
-			
-			if(creneau.getIdCreneau() == idCreneau){
-			creneau.setCapacite(capacite);
-			creneau.setDate(date);
-			break;
-			}
-		}
-		
-	}*/
 
 	public void supprimerCreneau(int idCreneau) {
 		creneaux.remove(idCreneau);
 	}
-	/*void supprimerCreneau(int idCreneau ){
-		Iterator<Creneau> iterator = creneaux.iterator();
-		
-		while(iterator.hasNext()){
-			
-			Creneau creneau = iterator.next();
-			
-			if(creneau.getIdCreneau() == idCreneau){
-			iterator.remove();
-			break;
-			}
-		}
-		
-	}*/
+	
 	
 	public int getIdAtelier() {
 		return idAtelier;
