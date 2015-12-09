@@ -205,7 +205,7 @@ public class BddAtelier {
 			return ateliers;
 			
 		} catch (Exception e) {
-			log.error("Impossible d'avoir la liste des tous les ateliers ", e);
+			log.error("Impossible d'avoir la liste de tous les ateliers ", e);
 			return null;
 		}
 

@@ -5,13 +5,16 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 import fr.enseirb.t3.it340.modeles.Atelier;
 import fr.enseirb.t3.it340.modeles.Creneau;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -78,6 +81,53 @@ public class BddCreneau {
 		} 
 		
 	}
+	
+	// récupérer créneau en focntion de idAtelier
+	
+	public static Map< Integer,Creneau> getCreneauxByIdAtelier(int idAtelier) {
+
+		Map<Integer, Creneau> creneaux = new HashMap<Integer, Creneau>();
+
+		try {
+			Connection connection = BddConnecteur.getConnection();
+			String sql = "SELECT * FROM Creneau WHERE idAtelier = ?";
+
+			PreparedStatement statement = connection.prepareStatement(sql);
+			statement.setInt(1, idAtelier);
+			ResultSet resultat = statement.executeQuery();
+
+			if (!BddConnecteur.checkAccuracy(resultat, 1))
+				return null;
+			
+			int idCreneau  = resultat.getInt("idCreneau");
+			Date jour = resultat.getDate("jour");
+			Time heure  = resultat.getTime("heure");
+			int capacite = resultat.getInt("capacite");
+			jour.setTime(heure.getTime());
+			
+			while(resultat.next()) {
+				Creneau creneau = new Creneau(idCreneau, jour, capacite);
+				creneaux.put(creneau.getIdCreneau(),creneau);
+			}
+		
+
+			statement.executeQuery();
+			statement.close();
+			connection.close();
+			
+			return creneaux;
+
+		} catch (Exception e) {
+			log.error("Impossible de récupérer un creneau à partir de  idAtelier : {}", e);
+			return null;
+			}
+
+		
+			
+		}
+	
+	
+	
 	
 	// Supprimer un creneau
 	public static void supprCreneau(int idCreneau){
