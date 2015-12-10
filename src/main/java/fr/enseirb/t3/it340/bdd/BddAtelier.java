@@ -38,7 +38,7 @@ public class BddAtelier {
 
 			// TODO creneaux
 
-			statement.executeQuery();
+			statement.executeUpdate();
 			statement.close();
 			connection.close();
 
@@ -137,7 +137,7 @@ public class BddAtelier {
 
 			statement.setInt(1, idAtelier);
 
-			statement.executeQuery();
+			statement.updateUpdate();
 			statement.close();
 			connection.close();
 
