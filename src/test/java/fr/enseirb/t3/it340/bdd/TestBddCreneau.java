@@ -6,8 +6,12 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import fr.enseirb.t3.it340.modeles.Creneau;
+
 import java.io.IOException;
 import java.sql.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class TestBddCreneau {
 
@@ -56,6 +60,32 @@ public class TestBddCreneau {
 	}
 
 	@Test
+	public void getCreneauxByIdAtelier() throws SQLException, IOException, ClassNotFoundException { 
+
+		BddUtilisateur.ajout("labri@labri.fr", "labri");
+		BddLabo.ajout(1, "Labri");
+		BddAtelier.ajoutAtelier(1, "A la poursuite d'ennemis invisibles", "Sciences de la vie ", "Campus Carreire (Hôpital Pellegrin)", "Labo MFP", "","", "","");
+		
+		Map<Integer, Creneau> creneaux = new HashMap<Integer, Creneau>();
+		
+		// Test : récupération d'un objet null
+		creneaux = BddCreneau.getCreneauxByIdAtelier(1);
+		assertNull(creneaux);
+			
+		// Insertion
+		int idAtelier = 1;
+		String jour = "12/10/2015";
+		String heure = "21:00";
+		int capacite = 20;
+		BddCreneau.ajoutCreneau(idAtelier, jour, heure, capacite);
+		
+		// Test : récupération de creneaux 
+		creneaux = BddCreneau.getCreneauxByIdAtelier(idAtelier);
+		assertNotNull(creneaux);
+			
+	}
+	
+	@Test
 	public void testEditCreneau() throws SQLException, IOException, ClassNotFoundException {
 		Connection connection = BddConnecteur.getConnection();
 
@@ -96,6 +126,9 @@ public class TestBddCreneau {
 		connection.close();
 	}
 
+	// test récuperation creneaux par idAtelier
+	
+	
 	@Test
 	public void testSupprCreneau() throws SQLException, IOException, ClassNotFoundException {
 		Connection connection = BddConnecteur.getConnection();
