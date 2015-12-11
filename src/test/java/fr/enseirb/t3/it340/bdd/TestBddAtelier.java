@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.After;
@@ -177,8 +178,6 @@ public class TestBddAtelier {
 
 	@Test
 	public void testGetAteliers() throws IOException, SQLException, ClassNotFoundException {
-
-		Connection connection = BddConnecteur.getConnection();
 		
 		BddUtilisateur.ajout(email, mdp);
 		BddUtilisateur.ajout("email2@aaa.com", "aaa");
@@ -186,12 +185,38 @@ public class TestBddAtelier {
 		BddLabo.ajout(1,"Labo1");
 		BddLabo.ajout(2, "Labo2");
 		
-		BddAtelier.ajoutAtelier(1, "", "", "", "", "", "", "", "");
+		BddAtelier.ajoutAtelier(1, "aaaa", "", "", "", "", "", "", "");
 		BddAtelier.ajoutAtelier(2, "", "", "", "", "", "", "", "");
-	Map<Integer, Atelier> ateliers = BddAtelier.getAteliers();
+		Map<Integer, Atelier> ateliers = BddAtelier.getAteliers();
 	
 	assertEquals(ateliers.size(),2);
 	
+	
+	}
+
+	@Test
+	public void testGetAteliersByIdLabo() throws IOException, SQLException, ClassNotFoundException {
+		
+		BddUtilisateur.ajout(email, mdp);
+		BddUtilisateur.ajout("email2@aaa.com", "aaa");
+		BddUtilisateur.ajout("email3@aaa.com", "aaa");
+		
+		BddLabo.ajout(1,"Labo1");
+		BddLabo.ajout(2, "Labo2");
+		BddLabo.ajout(3, "Labo2");
+		
+		BddAtelier.ajoutAtelier(1, "a", "", "", "", "", "", "", "");
+		BddAtelier.ajoutAtelier(2, "b", "", "", "", "", "", "", "");
+		BddAtelier.ajoutAtelier(3, "c", "", "", "", "", "", "", "");
+		BddAtelier.ajoutAtelier(3, "d", "", "", "", "", "", "", "");
+		
+		Map<Integer, Atelier> ateliers = BddAtelier.getAteliersByIdLabo(3);
+		
+	assertEquals(ateliers.size(),2);
+	assertEquals(ateliers.get(3).getIdLabo(),3);
+	assertEquals(ateliers.get(4).getIdLabo(),3);
+	assertEquals(ateliers.get(3).getTitre(),"c");
+	assertEquals(ateliers.get(4).getTitre(),"d");
 	
 	}
 
