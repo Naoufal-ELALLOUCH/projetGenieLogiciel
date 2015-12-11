@@ -14,6 +14,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import fr.enseirb.t3.it340.modeles.Atelier;
+import fr.enseirb.t3.it340.modeles.Laboratoire;
 import fr.enseirb.t3.it340.modeles.Utilisateur;
 
 public class TestBddAtelier {

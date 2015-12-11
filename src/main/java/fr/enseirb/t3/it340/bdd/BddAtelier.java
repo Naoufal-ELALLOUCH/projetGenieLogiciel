@@ -207,12 +207,49 @@ public class BddAtelier {
 		} catch (Exception e) {
 			log.error("Impossible d'avoir la liste de tous les ateliers ", e);
 			return null;
+		}		
+	}
+	
+	public static Map<Integer, Atelier> getAteliersByIdLabo(int idLaboArg){
+		Map<Integer, Atelier> ateliers = new HashMap<Integer, Atelier>();
+		String getAteliersByIdLaboReq = "SELECT * FROM Atelier WHERE idLabo=?";
+
+		try {
+			Connection connection = BddConnecteur.getConnection();
+			PreparedStatement statement = connection.prepareStatement(getAteliersByIdLaboReq);
+			statement.setInt(1, idLaboArg);
+			
+			ResultSet result = statement.executeQuery();
+			
+			while(result.next()){
+		int idAtelier = result.getInt(1);
+		int idLabo = result.getInt(2);
+		 String titre = result.getString(3);
+		 String themes = result.getString(4);
+		 String zone = result.getString(5);
+		 String adresse = result.getString(6);
+		 String orateurs = result.getString(7);
+		 String partenaires = result.getString(8);
+		 String cible = result.getString(9);
+		 String remarques = result.getString(10);
+		 String statut = result.getString(11);
+		 Map<Integer, Creneau> creneaux = BddCreneau.getCreneauxByIdAtelier(idAtelier);
+		 
+		 Atelier atelier = new Atelier(idAtelier, idLabo, titre, themes, zone, adresse, orateurs, partenaires, cible, remarques, creneaux, statut);
+		 
+		 ateliers.put(atelier.getIdAtelier(), atelier);
+			}
+			
+			statement.close();
+			connection.close();
+
+			return ateliers;
+			
+		} catch (Exception e) {
+			log.error("Impossible d'avoir la liste de tous les ateliers ", e);
+			return null;
 		}
 
-		
-		
-		
-		
 	}
 	
 }
