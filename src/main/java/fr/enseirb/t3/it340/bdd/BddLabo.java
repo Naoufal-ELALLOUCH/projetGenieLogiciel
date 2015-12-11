@@ -3,7 +3,11 @@ package fr.enseirb.t3.it340.bdd;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import fr.enseirb.t3.it340.modeles.Laboratoire;
+import fr.enseirb.t3.it340.modeles.Utilisateur;
+
 import javax.xml.transform.Result;
+
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -33,6 +37,46 @@ public class BddLabo {
 		}
 	}
 
+	
+	public static Laboratoire getLaboByIdLabo(int idLabo){
+		Laboratoire labo = null;
+		Utilisateur utilisateur = null;
+		try {
+			Connection connection = BddConnecteur.getConnection();
+			String sql = "SELECT idUtilisateur, nom WHERE idLabo = ?";
+
+			PreparedStatement statement = connection.prepareStatement(sql);
+			statement.setInt(1, idLabo);
+			ResultSet resultat = statement.executeQuery();
+
+			if (!BddConnecteur.checkAccuracy(resultat, 1))
+				return null;
+
+			int idUtilisateur = resultat.getInt("idUtilisateur");
+			String nom = resultat.getString("nom");
+			
+			//  récupération de l'utilisateur à partir de IdUtilisateur
+			utilisateur = BddUtilisateur.getUtilisateurByIdUtilisateur(idUtilisateur);
+			String email = utilisateur.getEmail();
+			String mpd = utilisateur.getMotDePasse();
+			labo = new Laboratoire(idUtilisateur, email, mpd, idLabo, nom);
+			
+			resultat.close();
+			statement.close();
+			connection.close();
+			
+			
+		} catch (Exception e) {
+			log.error("Impossible de récupérer un labo à partir de son id : {}", e);
+		}
+		return labo;
+	}
+		
+		
+
+	
+	
+	
 	public static boolean isLabo(int idUtilisateur) {
 		Connection connection = null;
 		ResultSet rs = null;
