@@ -34,34 +34,41 @@ public class Authentification implements Route {
 			request.session(true);
 		}
 
-		String email = request.queryParams("email");
-		String motDePasse = request.queryParams("motDePasse");
+		if (request.session().attribute("email") == null) {
 
-		boolean identifiantsOk = new BddUtilisateur().authentification(email, motDePasse);
+			String email = request.queryParams("email");
+			String motDePasse = request.queryParams("motDePasse");
 
-		if (identifiantsOk) {
+			boolean identifiantsOk = new BddUtilisateur().authentification(email, motDePasse);
 
-			Utilisateur utilisateur = BddUtilisateur.getUtilisateurByEmail(email);
-			int idUtilisateur = utilisateur.getIdUtilisateur();
+			if (identifiantsOk) {
 
-			// Permet de savoir dans une session si l'utilisateur est un laboratoire ou un enseignant
-			if (BddLabo.isLabo(idUtilisateur)) {
-				request.session().attribute("labo", "true");
-				log.info("L'utilisateur {} est un laboratoire", idUtilisateur);
-			} else if (BddEnseignant.isEnseignant(idUtilisateur)) {
-				request.session().attribute("enseignant", "true");
-				log.info("L'utilisateur {} est un enseignant", idUtilisateur);
+				Utilisateur utilisateur = BddUtilisateur.getUtilisateurByEmail(email);
+				int idUtilisateur = utilisateur.getIdUtilisateur();
+
+				// Permet de savoir dans une session si l'utilisateur est un laboratoire ou un enseignant
+				if (BddLabo.isLabo(idUtilisateur)) {
+					request.session().attribute("labo", "true");
+					log.info("L'utilisateur {} est un laboratoire", idUtilisateur);
+				} else if (BddEnseignant.isEnseignant(idUtilisateur)) {
+					request.session().attribute("enseignant", "true");
+					log.info("L'utilisateur {} est un enseignant", idUtilisateur);
+				}
+
+				request.session().attribute("email", email);
+				log.info("{} s'est connecté avec succès", request.session().attribute("email"));
+
+				// TODO la bonne redirection
+				response.redirect("/laboratoire/ateliers");
+
+
+			} else {
+				log.warn("{} a essayé de se connecter avec un mauvais mot de passe", email);
+				erreurIdentifiants(request, response);
 			}
-
-			request.session().attribute("email", email);
-			log.info("{} s'est connecté avec succès", request.session().attribute("email"));
-
-			// TODO la bonne redirection
-
-
 		} else {
-			log.warn("{} a essayé de se connecter avec un mauvais mot de passe", email);
-			erreurIdentifiants(request, response);
+			// TODO la bonne rediction
+			response.redirect("/laboratoire/ateliers");
 		}
 
 
