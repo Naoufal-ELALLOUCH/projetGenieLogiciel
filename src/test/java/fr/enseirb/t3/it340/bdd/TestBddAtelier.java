@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Map;
 
 import org.junit.After;
 import org.junit.Before;
@@ -172,6 +173,28 @@ public class TestBddAtelier {
 		}
 		assertEquals(statut2,"VALIDE");	
 	}
+
+	@Test
+	public void testGetAteliers() throws IOException, SQLException, ClassNotFoundException {
+
+		Connection connection = BddConnecteur.getConnection();
+		
+		BddUtilisateur.ajout(email, mdp);
+		BddUtilisateur.ajout("email2@aaa.com", "aaa");
+		
+		BddLabo.ajout(1,"Labo1");
+		BddLabo.ajout(2, "Labo2");
+		
+		BddAtelier.ajoutAtelier(1, "", "", "", "", "", "", "", "");
+		BddAtelier.ajoutAtelier(2, "", "", "", "", "", "", "", "");
+	Map<Integer, Atelier> ateliers = BddAtelier.getAteliers();
+	
+	assertEquals(ateliers.size(),2);
+	
+	
+	}
+
+	
 	@After
 	public void dispose() throws SQLException, IOException, ClassNotFoundException {
 		Connection connection = BddConnecteur.getConnection();
@@ -185,3 +208,4 @@ public class TestBddAtelier {
 	}
 
 }
+

@@ -169,7 +169,7 @@ public class BddAtelier {
 
 	}
 
-	Map<Integer ,Atelier> getAteliers(){
+	public static Map<Integer ,Atelier> getAteliers(){
 		
 		Map<Integer, Atelier> ateliers = new HashMap<Integer, Atelier>();
 		String getAteliersReq = "SELECT * FROM Atelier";
