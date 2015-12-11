@@ -4,11 +4,9 @@ import fr.enseirb.t3.it340.modeles.Utilisateur;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
 public class BddUtilisateur {
 
@@ -89,6 +87,35 @@ public class BddUtilisateur {
 			utilisateur = new Utilisateur(idUtilisateur, email, motDePasse);
 		} catch (Exception e) {
 			log.error("Impossible de récupérer un utilisateur à partir de son email : {}", e);
+		}
+		return utilisateur;
+	}
+	
+public static Utilisateur getUtilisateurByIdUtilisateur(int idUtilisateur) {
+		
+		Utilisateur utilisateur = null;
+		
+		try {
+			Connection connection = BddConnecteur.getConnection();
+			String sql = "SELECT idUtilisateur, email, motDePasse FROM Utilisateur WHERE idUtilisateur=? ";
+
+			PreparedStatement statement = connection.prepareStatement(sql);
+			statement.setInt(1, idUtilisateur);
+			ResultSet resultat = statement.executeQuery();
+
+			if (!BddConnecteur.checkAccuracy(resultat, 1))
+				return null;
+
+			String email  = resultat.getString("email");
+			String motDePasse = resultat.getString("motDePasse");
+
+			resultat.close();
+			statement.close();
+			connection.close();
+			utilisateur = new Utilisateur(idUtilisateur, email, motDePasse);
+			
+		} catch (Exception e) {
+			log.error("Impossible de récupérer un utilisateur à partir de son id : {}", e);
 		}
 		return utilisateur;
 	}
