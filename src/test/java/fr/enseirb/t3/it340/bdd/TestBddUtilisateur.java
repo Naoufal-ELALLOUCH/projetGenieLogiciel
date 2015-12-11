@@ -82,6 +82,26 @@ public class TestBddUtilisateur {
 		assertEquals(utilisateur.getEmail(), this.email);
 		assertEquals(utilisateur.getMotDePasse(), this.mdp);
 	}
+	
+	@Test
+	public void testGetUtilisateurByIdUtilisateur() throws SQLException, IOException, ClassNotFoundException {
+		Connection connection = BddConnecteur.getConnection();
+
+		Utilisateur utilisateur;
+
+		// Test : récupération d'un objet null
+		utilisateur = BddUtilisateur.getUtilisateurByIdUtilisateur(1);
+		assertNull(utilisateur);
+
+		// Insertion
+		BddUtilisateur.ajout(this.email, this.mdp);
+
+		// Test : récupération d'un utilisateur à partir de IdUtilisateur
+		utilisateur = BddUtilisateur.getUtilisateurByIdUtilisateur(1);
+		assertNotNull(utilisateur);
+		assertEquals(utilisateur.getEmail(), this.email);
+		assertEquals(utilisateur.getMotDePasse(), this.mdp);
+	}
 
 	@After
 	public void dispose() throws SQLException, IOException, ClassNotFoundException {
