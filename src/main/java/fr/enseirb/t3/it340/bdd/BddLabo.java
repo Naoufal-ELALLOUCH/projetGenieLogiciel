@@ -24,6 +24,8 @@ public class BddLabo {
 			statement.setString(2, nom);
 			statement.executeUpdate();
 
+			log.info("Nouveau labo : {}", nom);
+
 			statement.close();
 			connection.close();
 		} catch (Exception e) {

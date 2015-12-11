@@ -24,6 +24,8 @@ public class BddUtilisateur {
 			statement.setString(2, motDePasse);
 			statement.executeUpdate();
 
+			log.info("Nouvel utilisateur : {}", email);
+
 			statement.close();
 			connection.close();
 		} catch (Exception e) {

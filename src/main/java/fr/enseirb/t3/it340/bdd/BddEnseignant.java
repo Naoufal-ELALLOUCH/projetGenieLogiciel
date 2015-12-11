@@ -21,6 +21,8 @@ public class BddEnseignant {
 			statement.setString(3, prenom);
 			statement.executeUpdate();
 
+			log.info("Nouvel enseignant : {} {}", nom, prenom);
+
 			statement.close();
 			connection.close();
 		} catch (Exception e) {
