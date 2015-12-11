@@ -1,6 +1,8 @@
 package fr.enseirb.t3.it340.servlets.authentification;
 
+import fr.enseirb.t3.it340.bdd.BddLabo;
 import fr.enseirb.t3.it340.bdd.BddUtilisateur;
+import fr.enseirb.t3.it340.modeles.Utilisateur;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import spark.Request;
@@ -26,6 +28,8 @@ public class Authentification implements Route {
 			boolean identifiantsOk = new BddUtilisateur().authentification(email, motDePasse);
 
 			if (identifiantsOk) {
+				Utilisateur utilisateur = BddUtilisateur.getUtilisateurByEmail(email);
+				BddLabo.isLabo(utilisateur.getIdUtilisateur());
 				request.session().attribute("email", email);
 			} else {
 				// TODO :  message d'erreur

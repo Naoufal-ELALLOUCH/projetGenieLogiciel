@@ -6,7 +6,8 @@ import org.junit.Test;
 import java.io.IOException;
 import java.sql.*;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
+
 
 public class TestBddLabo {
 
@@ -39,6 +40,24 @@ public class TestBddLabo {
 		// Fermeture
 		rs.close();
 		statement.close();
+		connection.close();
+	}
+
+	@Test
+	public void testIsLabo() throws SQLException, IOException, ClassNotFoundException {
+		Connection connection = BddConnecteur.getConnection();
+
+		// Insertion
+		BddUtilisateur.ajout("labri@labri.fr", "labri");
+
+		// N'est pas encore labo
+		assertFalse(BddLabo.isLabo(1));
+
+		// Est labo
+		BddLabo.ajout(1, "Labri");
+
+		assertTrue(BddLabo.isLabo(1));
+
 		connection.close();
 	}
 

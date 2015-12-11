@@ -1,6 +1,6 @@
 package fr.enseirb.t3.it340.bdd;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -43,6 +43,24 @@ public class TestBddEnseignant {
 		// Fermeture
 		rs.close();
 		statement.close();
+		connection.close();
+	}
+
+	@Test
+	public void testIsEnseignant() throws SQLException, IOException, ClassNotFoundException {
+		Connection connection = BddConnecteur.getConnection();
+
+		// Insertion
+		BddUtilisateur.ajout("falleri@falleri.fr", "falleri");
+
+		// N'est pas encore enseignant
+		assertFalse(BddEnseignant.isEnseignant(1));
+
+		// Est enseignant
+		BddEnseignant.ajout(1, "Falleri", "Jean-Rémy");
+
+		assertTrue(BddEnseignant.isEnseignant(1));
+
 		connection.close();
 	}
 
