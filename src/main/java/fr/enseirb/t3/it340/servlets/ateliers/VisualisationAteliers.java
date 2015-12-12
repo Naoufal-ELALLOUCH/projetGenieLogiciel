@@ -16,6 +16,7 @@ import java.util.Map;
 public class VisualisationAteliers implements TemplateViewRoute {
 
 	public ModelAndView handle(Request req, Response res) throws Exception {
+
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		Map<Integer, Atelier> ateliersMap = BddAtelier.getAteliers();

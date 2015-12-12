@@ -3,19 +3,25 @@ package fr.enseirb.t3.it340.servlets.authentification;
 import fr.enseirb.t3.it340.bdd.BddEnseignant;
 import fr.enseirb.t3.it340.bdd.BddLabo;
 import fr.enseirb.t3.it340.bdd.BddUtilisateur;
+import fr.enseirb.t3.it340.modeles.Laboratoire;
 import fr.enseirb.t3.it340.modeles.Utilisateur;
+import fr.enseirb.t3.it340.servlets.VisualisationAccueil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 import spark.Route;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Authentification implements Route {
 
 	private final Logger log = LoggerFactory.getLogger(Authentification.class);
 
 	private static void erreurIdentifiants(Request request, Response response) {
-		request.session().attribute("erreur", "Identifiants invalides");
+		request.session().attribute("erreur", true);
 		response.redirect("/authentification");
 	}
 
@@ -26,6 +32,26 @@ public class Authentification implements Route {
 			return false;
 		}
 		return true;
+	}
+
+	public static ModelAndView checkLabo(Request request, Response response) throws Exception {
+		boolean access;
+		boolean access1 = true;
+		boolean access2 = true;
+
+		// On regarde si l'utilisateur a accès
+		access1 &= Authentification.checkLoggedIn(request, response);
+		access2 &= (request.session().attribute("labo") != null);
+		access = access1 & access2;
+
+		if (!access) {
+			request.session().attribute("erreur", true);
+			if (access1)
+				response.redirect("/");
+			return new VisualisationAccueil().handle(request, response);
+		}
+
+		return null;
 	}
 
 	public Object handle(Request request, Response response) throws Exception {
@@ -48,7 +74,8 @@ public class Authentification implements Route {
 
 				// Permet de savoir dans une session si l'utilisateur est un laboratoire ou un enseignant
 				if (BddLabo.isLabo(idUtilisateur)) {
-					request.session().attribute("labo", "true");
+					Laboratoire labo = BddLabo.getLaboByIdUtilisateur(idUtilisateur);
+					request.session().attribute("labo", labo.getIdLaboratoire());
 					log.info("L'utilisateur {} est un laboratoire", idUtilisateur);
 				} else if (BddEnseignant.isEnseignant(idUtilisateur)) {
 					request.session().attribute("enseignant", "true");

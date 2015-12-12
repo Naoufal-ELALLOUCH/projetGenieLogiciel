@@ -31,7 +31,7 @@
 					<td>${atelier.titre}</td>
 	                <td>Atelier scientifique</td>
 					<td>${atelier.themes}</td>
-					<td>${atelier.cibles}</td>
+					<td>${atelier.cible}</td>
 					<td>
 						<a class="btn btn-mini btn-primary" href="/laboratoire/ateliers/${atelier.idAtelier}/modifier" alt="Modifier">
 							<i class="icon-edit icon-white"></i>

@@ -12,7 +12,7 @@ public class VisualisationAuthentification implements TemplateViewRoute {
 		attributes.put("title", "Authentification");
 
 		if (request.session().attribute("erreur") != null) {
-			attributes.put("erreur", "Identifiants invalides");
+			attributes.put("erreur", "Utilisateur non connecté");
 			request.session().removeAttribute("erreur");
 		}
 

@@ -2,6 +2,8 @@ package fr.enseirb.t3.it340.servlets.ateliers;
 
 import fr.enseirb.t3.it340.bdd.BddAtelier;
 import fr.enseirb.t3.it340.bdd.BddUtilisateur;
+import fr.enseirb.t3.it340.servlets.authentification.Authentification;
+import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 import spark.Route;
@@ -10,8 +12,12 @@ public class CreationAtelier implements Route {
 
 	public Void handle(Request request, Response response) throws Exception {
 
-		String idLaboString = request.session().attribute("idLabo");
-		int idLabo = Integer.parseInt(idLaboString);
+		// On regarde si l'utilisateur a accès
+		ModelAndView modelAndView = Authentification.checkLabo(request, response);
+		if (modelAndView != null)
+			return null;
+
+		int idLabo = request.session().attribute("labo");
 
 		String titre = request.queryParams("titre");
 		String themes = request.queryParams("themes");
@@ -24,7 +30,7 @@ public class CreationAtelier implements Route {
 
 		BddAtelier.ajoutAtelier(idLabo, titre, themes, zone, adresse, orateurs, partenaires, cible, remarques);
 
-		response.redirect("/ateliers/" + idLaboString);
+		response.redirect("/ateliers/" + idLabo);
 
 		return null;
 	}

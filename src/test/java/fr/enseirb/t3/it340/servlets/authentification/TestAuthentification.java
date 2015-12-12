@@ -51,21 +51,21 @@ public class TestAuthentification {
 				attributes.put("labo", "true");
 				return null;
 			}
-		}).when(session).attribute("labo", "true");
+		}).when(session).attribute(Mockito.eq("labo"), Mockito.any());
 
 		Mockito.doAnswer(new Answer() {
 			public Void answer(InvocationOnMock invocation) throws Throwable {
 				attributes.put("enseignant", "true");
 				return null;
 			}
-		}).when(session).attribute("enseignant", "true");
+		}).when(session).attribute(Mockito.eq("enseignant"), Mockito.any());
 
 		Mockito.doAnswer(new Answer() {
 			public Void answer(InvocationOnMock invocation) throws Throwable {
 				attributes.put("redirection", "true");
 				return null;
 			}
-		}).when(response).redirect("/laboratoire/ateliers");
+		}).when(response).redirect(Mockito.anyString());
 	}
 
 	@Test
