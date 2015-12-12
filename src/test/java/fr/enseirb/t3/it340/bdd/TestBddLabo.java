@@ -51,7 +51,6 @@ public class TestBddLabo {
 		String motDePasse = "labri";
 		String nom = "Labri";
 
-
 		BddUtilisateur.ajout(email, motDePasse);
 		BddLabo.ajout(1, nom);
 
@@ -62,6 +61,20 @@ public class TestBddLabo {
 		assertEquals(laboratoire.getNom(), nom);
 	}
 
+	@Test
+	public void testGetLaboByIdLabo() throws SQLException, IOException, ClassNotFoundException {
+		
+		// Insertion utilisateur et labo
+		BddUtilisateur.ajout("labri@labri.fr", "labri");
+		BddLabo.ajout(1, "labri");
+
+		// Test : récupération d'un Labo à partir de son Id
+		Laboratoire labo = BddLabo.getLaboByIdLabo(1);
+		assertNotNull(labo);
+		//assertEquals(labo.getNom(), "labri");
+		
+	}
+	
 	@Test
 	public void testIsLabo() throws SQLException, IOException, ClassNotFoundException {
 		// Insertion
