@@ -20,7 +20,7 @@ public class Atelier {
 	
 	//private enum Statut {PROPOSE , VALIDE , CLOTURE} ;
 
-	public Atelier(int idAtelier, int idLabo, String titre){
+	public Atelier(int idAtelier, int idLabo, String titre) {
 		this.idAtelier = idAtelier;
 		this.idLabo = idLabo;
 		this.titre = titre;
@@ -37,7 +37,8 @@ public class Atelier {
 		this.partenaires = partenaires;
 		this.cible = cible;
 		this.remarques = remarques;
-		this.creneaux = creneaux;
+		if (creneaux != null)
+			this.creneaux.putAll(creneaux);
 		this.statut = statut;
 	}
 
@@ -112,7 +113,7 @@ public class Atelier {
 	public Map<Integer, Creneau> getCreneaux() {
 		return creneaux;
 	}
-	
+
 	public void setStatut(String statut) {
 		this.statut = statut;
 	}

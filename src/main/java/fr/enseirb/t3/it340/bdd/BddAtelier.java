@@ -120,7 +120,7 @@ public class BddAtelier {
 			connection.close();
 
 		} catch (Exception e) {
-			log.error("Impossible d'�diter l'atelier ", e);
+			log.error("Impossible d'éditer l'atelier ", e);
 		} 
 
 		
@@ -158,7 +158,7 @@ public class BddAtelier {
 			statement.setString(1, statut);
 			statement.setInt(2, idAtelier);
 			
-			if(statut == "PROPOSE" || statut == "VALIDE"  || statut == "CLOTURE")
+			if (statut.equals("PROPOSE") || statut.equals("VALIDE")  || statut.equals("CLOTURE"))
 				statement.executeUpdate();
 			statement.close();
 			connection.close();
@@ -166,90 +166,52 @@ public class BddAtelier {
 		} catch (Exception e) {
 			log.error("Impossible de changer le statut de l'atelier ", e);
 		}
-
 	}
 
-	public static Map<Integer ,Atelier> getAteliers(){
-		
+	private static Map<Integer, Atelier> getAteliers(String sql) {
 		Map<Integer, Atelier> ateliers = new HashMap<Integer, Atelier>();
-		String getAteliersReq = "SELECT * FROM Atelier";
 
 		try {
 			Connection connection = BddConnecteur.getConnection();
-			PreparedStatement statement = connection.prepareStatement(getAteliersReq);
+			PreparedStatement statement = connection.prepareStatement(sql);
 
 			ResultSet result = statement.executeQuery();
-			
-			while(result.next()){
-		int idAtelier = result.getInt(1);
-		int idLabo = result.getInt(2);
-		 String titre = result.getString(3);
-		 String themes = result.getString(4);
-		 String zone = result.getString(5);
-		 String adresse = result.getString(6);
-		 String orateurs = result.getString(7);
-		 String partenaires = result.getString(8);
-		 String cible = result.getString(9);
-		 String remarques = result.getString(10);
-		 String statut = result.getString(11);
-		 Map<Integer, Creneau> creneaux = BddCreneau.getCreneauxByIdAtelier(idAtelier);
-		 
-		 Atelier atelier = new Atelier(idAtelier, idLabo, titre, themes, zone, adresse, orateurs, partenaires, cible, remarques, creneaux, statut);
-		 
-		 ateliers.put(atelier.getIdAtelier(), atelier);
+
+			while(result.next()) {
+
+				int idAtelier = result.getInt(1);
+				int idLabo = result.getInt(2);
+				String titre = result.getString(3);
+				String themes = result.getString(4);
+				String zone = result.getString(5);
+				String adresse = result.getString(6);
+				String orateurs = result.getString(7);
+				String partenaires = result.getString(8);
+				String cible = result.getString(9);
+				String remarques = result.getString(10);
+				String statut = result.getString(11);
+				Map<Integer, Creneau> creneaux = BddCreneau.getCreneauxByIdAtelier(idAtelier);
+				Atelier atelier = new Atelier(idAtelier, idLabo, titre, themes, zone, adresse, orateurs, partenaires, cible, remarques, creneaux, statut);
+
+				ateliers.put(atelier.getIdAtelier(), atelier);
 			}
-			
+
 			statement.close();
 			connection.close();
 
-			return ateliers;
-			
 		} catch (Exception e) {
 			log.error("Impossible d'avoir la liste de tous les ateliers ", e);
-			return null;
-		}		
-	}
-	
-	public static Map<Integer, Atelier> getAteliersByIdLabo(int idLaboArg){
-		Map<Integer, Atelier> ateliers = new HashMap<Integer, Atelier>();
-		String getAteliersByIdLaboReq = "SELECT * FROM Atelier WHERE idLabo=?";
-
-		try {
-			Connection connection = BddConnecteur.getConnection();
-			PreparedStatement statement = connection.prepareStatement(getAteliersByIdLaboReq);
-			statement.setInt(1, idLaboArg);
-			
-			ResultSet result = statement.executeQuery();
-			
-			while(result.next()){
-		int idAtelier = result.getInt(1);
-		int idLabo = result.getInt(2);
-		 String titre = result.getString(3);
-		 String themes = result.getString(4);
-		 String zone = result.getString(5);
-		 String adresse = result.getString(6);
-		 String orateurs = result.getString(7);
-		 String partenaires = result.getString(8);
-		 String cible = result.getString(9);
-		 String remarques = result.getString(10);
-		 String statut = result.getString(11);
-		 Map<Integer, Creneau> creneaux = BddCreneau.getCreneauxByIdAtelier(idAtelier);
-		 
-		 Atelier atelier = new Atelier(idAtelier, idLabo, titre, themes, zone, adresse, orateurs, partenaires, cible, remarques, creneaux, statut);
-		 
-		 ateliers.put(atelier.getIdAtelier(), atelier);
-			}
-			
-			statement.close();
-			connection.close();
-
-			return ateliers;
-			
-		} catch (Exception e) {
-			log.error("Impossible d'avoir la liste de tous les ateliers ", e);
-			return null;
 		}
 
+		return ateliers;
+	}
+
+	public static Map<Integer, Atelier> getAteliers() {
+		return getAteliers("SELECT * FROM Atelier");
+	}
+	
+	public static Map<Integer, Atelier> getAteliersByIdLabo(int idLaboArg) {
+		return getAteliers("SELECT * FROM Atelier WHERE idLabo=" + idLaboArg);
 	}
 	
 }

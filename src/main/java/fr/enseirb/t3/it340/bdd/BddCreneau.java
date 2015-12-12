@@ -82,9 +82,8 @@ public class BddCreneau {
 		
 	}
 	
-	// récupérer créneau en focntion de idAtelier
-	
-	public static Map< Integer,Creneau> getCreneauxByIdAtelier(int idAtelier) {
+	// Récupérer créneaux en focntion de idAtelier
+	public static Map<Integer, Creneau> getCreneauxByIdAtelier(int idAtelier) {
 
 		Map<Integer, Creneau> creneaux = new HashMap<Integer, Creneau>();
 
@@ -98,36 +97,29 @@ public class BddCreneau {
 
 			if (!BddConnecteur.checkAccuracy(resultat, 1))
 				return null;
-			
-			int idCreneau  = resultat.getInt("idCreneau");
+
+			int idCreneau = resultat.getInt("idCreneau");
 			Date jour = resultat.getDate("jour");
-			Time heure  = resultat.getTime("heure");
+			Time heure = resultat.getTime("heure");
 			int capacite = resultat.getInt("capacite");
 			jour.setTime(heure.getTime());
-			
-			while(resultat.next()) {
+
+			while (resultat.next()) {
 				Creneau creneau = new Creneau(idCreneau, jour, capacite);
-				creneaux.put(creneau.getIdCreneau(),creneau);
+				creneaux.put(creneau.getIdCreneau(), creneau);
 			}
-		
 
 			statement.executeQuery();
 			statement.close();
 			connection.close();
-			
-			return creneaux;
 
 		} catch (Exception e) {
 			log.error("Impossible de récupérer un creneau à partir de  idAtelier : {}", e);
-			return null;
-			}
-
-		
-			
 		}
-	
-	
-	
+
+		return creneaux;
+
+	}
 	
 	// Supprimer un creneau
 	public static void supprCreneau(int idCreneau){

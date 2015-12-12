@@ -1,6 +1,8 @@
 package fr.enseirb.t3.it340.servlets.ateliers;
 
+import fr.enseirb.t3.it340.bdd.BddAtelier;
 import fr.enseirb.t3.it340.modeles.Atelier;
+import fr.enseirb.t3.it340.servlets.authentification.Authentification;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -16,11 +18,8 @@ public class VisualisationAteliers implements TemplateViewRoute {
 	public ModelAndView handle(Request req, Response res) throws Exception {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		// TODO récupérer la liste des ateliers
-		List<Atelier> ateliers = new ArrayList<Atelier>();
-
-		ateliers.add(new Atelier(1, 1, "toto"));
-		ateliers.add(new Atelier(2, 1, "tata"));
+		Map<Integer, Atelier> ateliersMap = BddAtelier.getAteliers();
+		List<Atelier> ateliers = new ArrayList<Atelier>(ateliersMap.values());
 
 		attributes.put("title", "Ateliers");
 		attributes.put("ateliers", ateliers);

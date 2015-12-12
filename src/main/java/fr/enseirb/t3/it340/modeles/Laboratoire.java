@@ -8,7 +8,7 @@ public class Laboratoire extends Utilisateur {
 	final private int idLaboratoire;
 	private String nom;
 	private Map<Integer, Atelier> ateliers = new HashMap<Integer, Atelier>();
-	
+
 	public Laboratoire(int idUtilisateur, String email, String password, int idLaboratoire, String nom) {
 		super(idUtilisateur, email, password);
 		this.idLaboratoire = idLaboratoire;

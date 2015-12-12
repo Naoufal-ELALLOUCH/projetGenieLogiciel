@@ -1,5 +1,6 @@
 package fr.enseirb.t3.it340.bdd;
 
+import fr.enseirb.t3.it340.modeles.Laboratoire;
 import org.junit.After;
 import org.junit.Test;
 
@@ -44,9 +45,25 @@ public class TestBddLabo {
 	}
 
 	@Test
-	public void testIsLabo() throws SQLException, IOException, ClassNotFoundException {
-		Connection connection = BddConnecteur.getConnection();
+	public void testGetLaboByIdUtilisateur() {
 
+		String email = "labri@labri.fr";
+		String motDePasse = "labri";
+		String nom = "Labri";
+
+
+		BddUtilisateur.ajout(email, motDePasse);
+		BddLabo.ajout(1, nom);
+
+		Laboratoire laboratoire = BddLabo.getLaboByIdUtilisateur(1);
+
+		assertEquals(laboratoire.getEmail(), email);
+		assertEquals(laboratoire.getMotDePasse(), motDePasse);
+		assertEquals(laboratoire.getNom(), nom);
+	}
+
+	@Test
+	public void testIsLabo() throws SQLException, IOException, ClassNotFoundException {
 		// Insertion
 		BddUtilisateur.ajout("labri@labri.fr", "labri");
 
@@ -57,8 +74,6 @@ public class TestBddLabo {
 		BddLabo.ajout(1, "Labri");
 
 		assertTrue(BddLabo.isLabo(1));
-
-		connection.close();
 	}
 
 	@After

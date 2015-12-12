@@ -37,7 +37,44 @@ public class BddLabo {
 		}
 	}
 
-	
+	public static Laboratoire getLaboByIdUtilisateur(int idUtilisateur) {
+		Laboratoire labo = null;
+		Utilisateur utilisateur = null;
+		try {
+			Connection connection = BddConnecteur.getConnection();
+			String sql =    "SELECT Utilisateur.email AS email, " +
+							"Utilisateur.motDePasse AS motDePasse, " +
+							"Labo.idLabo AS idLabo, " +
+							"Labo.nom AS nom " +
+							"FROM Utilisateur, Labo " +
+							"WHERE Utilisateur.idUtilisateur = Labo.idUtilisateur " +
+							"AND Utilisateur.idUtilisateur = ?";
+
+			PreparedStatement statement = connection.prepareStatement(sql);
+			statement.setInt(1, idUtilisateur);
+			ResultSet resultat = statement.executeQuery();
+
+			if (!BddConnecteur.checkAccuracy(resultat, 1))
+				return null;
+
+			int idLabo = resultat.getInt("idLabo");
+			String nom = resultat.getString("nom");
+			String email = resultat.getString("email");
+			String motDePasse = resultat.getString("motDePasse");
+
+			labo = new Laboratoire(idUtilisateur, email, motDePasse, idLabo, nom);
+
+			resultat.close();
+			statement.close();
+			connection.close();
+
+
+		} catch (Exception e) {
+			log.error("Impossible de récupérer un labo à partir de son id : {}", e);
+		}
+		return labo;
+	}
+
 	public static Laboratoire getLaboByIdLabo(int idLabo){
 		Laboratoire labo = null;
 		Utilisateur utilisateur = null;
@@ -71,10 +108,8 @@ public class BddLabo {
 		}
 		return labo;
 	}
-		
-		
 
-	
+
 	
 	
 	public static boolean isLabo(int idUtilisateur) {
