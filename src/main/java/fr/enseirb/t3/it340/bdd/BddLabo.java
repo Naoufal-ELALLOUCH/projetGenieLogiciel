@@ -80,7 +80,7 @@ public class BddLabo {
 		Utilisateur utilisateur = null;
 		try {
 			Connection connection = BddConnecteur.getConnection();
-			String sql = "SELECT idUtilisateur, nom WHERE idLabo = ?";
+			String sql = "SELECT * FROM Labo WHERE idLabo = ?";
 
 			PreparedStatement statement = connection.prepareStatement(sql);
 			statement.setInt(1, idLabo);
@@ -97,7 +97,7 @@ public class BddLabo {
 			String email = utilisateur.getEmail();
 			String mpd = utilisateur.getMotDePasse();
 			labo = new Laboratoire(idUtilisateur, email, mpd, idLabo, nom);
-			
+		
 			resultat.close();
 			statement.close();
 			connection.close();
