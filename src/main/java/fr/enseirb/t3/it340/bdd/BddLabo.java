@@ -1,5 +1,6 @@
 package fr.enseirb.t3.it340.bdd;
 
+import fr.enseirb.t3.it340.modeles.Atelier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,6 +14,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Map;
 
 public class BddLabo {
 
@@ -62,7 +64,9 @@ public class BddLabo {
 			String email = resultat.getString("email");
 			String motDePasse = resultat.getString("motDePasse");
 
-			labo = new Laboratoire(idUtilisateur, email, motDePasse, idLabo, nom);
+			Map<Integer, Atelier> ateliers = BddAtelier.getAteliersByIdLabo(idLabo);
+
+			labo = new Laboratoire(idUtilisateur, email, motDePasse, idLabo, nom, ateliers);
 
 			resultat.close();
 			statement.close();
@@ -96,7 +100,10 @@ public class BddLabo {
 			utilisateur = BddUtilisateur.getUtilisateurByIdUtilisateur(idUtilisateur);
 			String email = utilisateur.getEmail();
 			String mpd = utilisateur.getMotDePasse();
-			labo = new Laboratoire(idUtilisateur, email, mpd, idLabo, nom);
+
+			Map<Integer, Atelier> ateliers = BddAtelier.getAteliersByIdLabo(idLabo);
+
+			labo = new Laboratoire(idUtilisateur, email, mpd, idLabo, nom, ateliers);
 		
 			resultat.close();
 			statement.close();

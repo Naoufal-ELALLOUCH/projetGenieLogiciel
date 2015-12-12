@@ -33,11 +33,11 @@
 					<td>${atelier.themes}</td>
 					<td>${atelier.cible}</td>
 					<td>
-						<a class="btn btn-mini btn-primary" href="/laboratoire/ateliers/${atelier.idAtelier}/modifier" alt="Modifier">
+						<a class="btn btn-mini btn-primary" href="/laboratoire/atelier/${atelier.idAtelier}/modifier" alt="Modifier">
 							<i class="icon-edit icon-white"></i>
 							Modifier
 						</a>
-						<a class="btn btn-mini btn-danger" href="/laboratoire/ateliers/${atelier.idAtelier}/supprimer" alt="Supprimer">
+						<a class="btn btn-mini btn-danger" href="/laboratoire/atelier/${atelier.idAtelier}/supprimer" alt="Supprimer">
                             <i class="icon-remove icon-white"></i>
                             Supprimer
                         </a>

@@ -12,7 +12,7 @@ public class VisualisationCreerAtelier implements TemplateViewRoute {
 
 		// Configuration de la page
 		Map<String, Object> attributes = new HashMap<String, Object>();
-		attributes.put("title", "Création d'un atelier");
+		attributes.put("title", "Créer un atelier");
 		attributes.put("connected", (request.session().attribute("email") != null));
 
 		// On regarde si l'utilisateur a accès
@@ -20,6 +20,6 @@ public class VisualisationCreerAtelier implements TemplateViewRoute {
 		if (modelAndView != null)
 			return modelAndView;
 
-		return new ModelAndView(attributes, "creer-atelier.ftl");
+		return new ModelAndView(attributes, "editer-atelier.ftl");
 	}
 }

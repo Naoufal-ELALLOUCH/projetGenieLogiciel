@@ -8,7 +8,7 @@ import spark.Request;
 import spark.Response;
 import spark.Route;
 
-public class CreationAtelier implements Route {
+public class CreerAtelier implements Route {
 
 	public Void handle(Request request, Response response) throws Exception {
 

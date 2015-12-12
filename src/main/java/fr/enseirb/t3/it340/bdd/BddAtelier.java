@@ -35,9 +35,6 @@ public class BddAtelier {
 			statement.setString(9, remarques);
 			statement.setString(10,"PROPOSE");
 
-
-			// TODO creneaux
-
 			statement.executeUpdate();
 			statement.close();
 			connection.close();
@@ -74,15 +71,8 @@ public class BddAtelier {
 			String remarques = resultat.getString("remarques");
 			String statut = resultat.getString("statut");
 
-			atelier = new Atelier(idAtelier, idLabo, titre);
-			atelier.setThemes(themes);
-			atelier.setZone(zone);
-			atelier.setAdresse(adresse);
-			atelier.setOrateurs(orateurs);
-			atelier.setPartenaires(partenaires);
-			atelier.setCibles(cible);
-			atelier.setRemarques(remarques);
-			atelier.setStatut(statut);
+			Map<Integer, Creneau> creneaux = BddCreneau.getCreneauxByIdAtelier(idAtelier);
+			atelier = new Atelier(idAtelier, idLabo, titre, themes, zone, adresse, orateurs, partenaires, cible, remarques, creneaux, statut);
 
 			statement.executeQuery();
 			statement.close();
@@ -94,7 +84,20 @@ public class BddAtelier {
 
 		return atelier;
 	}
-	
+
+	public static void editAtelier(Atelier atelier) {
+		int idAtelier = atelier.getIdAtelier();
+		String titre = atelier.getTitre();
+		String themes = atelier.getThemes();
+		String zone = atelier.getZone();
+		String adresse = atelier.getAdresse();
+		String orateurs = atelier.getOrateurs();
+		String partenaires = atelier.getPartenaires();
+		String cible = atelier.getCible();
+		String remarques = atelier.getRemarques();
+		editAtelier(idAtelier, titre, themes, zone, adresse, orateurs, partenaires, cible, remarques);
+	}
+
 	// Modifier un atelier
 	public static void editAtelier(int idAtelier, String titre, String themes, String zone, String adresse, String orateurs, String partenaires, String cible, String remarques){
 		
@@ -130,6 +133,8 @@ public class BddAtelier {
 	public static void supprAtelier(int idAtelier){
 
 		String supprReq = "DELETE FROM Atelier WHERE idAtelier=?";
+
+		// TODO : supprimer les créneaux d'abord
 
 		try {
 			Connection connection = BddConnecteur.getConnection();
@@ -190,8 +195,9 @@ public class BddAtelier {
 				String cible = result.getString(9);
 				String remarques = result.getString(10);
 				String statut = result.getString(11);
-				Map<Integer, Creneau> creneaux = BddCreneau.getCreneauxByIdAtelier(idAtelier);
-				Atelier atelier = new Atelier(idAtelier, idLabo, titre, themes, zone, adresse, orateurs, partenaires, cible, remarques, creneaux, statut);
+				// optimise considérablement les ressources en commentant
+				// Map<Integer, Creneau> creneaux = BddCreneau.getCreneauxByIdAtelier(idAtelier);
+				Atelier atelier = new Atelier(idAtelier, idLabo, titre, themes, zone, adresse, orateurs, partenaires, cible, remarques, null, statut);
 
 				ateliers.put(atelier.getIdAtelier(), atelier);
 			}

@@ -50,7 +50,7 @@ public class TestBddAtelier {
 	}
 	
 	@Test
-	public void testgetAtelierById() throws IOException, SQLException, ClassNotFoundException {
+	public void testGetAtelierById() throws IOException, SQLException, ClassNotFoundException {
 
 		Connection connection = BddConnecteur.getConnection();
 	
@@ -70,6 +70,7 @@ public class TestBddAtelier {
 		assertNotNull(atelier);
 		
 	}
+
 	@Test
 	public void testEditAtelier() throws IOException, SQLException, ClassNotFoundException {
 
@@ -103,10 +104,55 @@ public class TestBddAtelier {
 		rs.close();
 		statement.close();
 		connection.close();
-//		
+
 	}
+
 	@Test
-	public void testsupprAtelier() throws IOException, SQLException, ClassNotFoundException {
+	public void testEditAtelierObjet() throws IOException, SQLException, ClassNotFoundException {
+
+		Connection connection = BddConnecteur.getConnection();
+
+		BddUtilisateur.ajout("labri@labri.fr", "labri");
+		BddLabo.ajout(1, "Labri");
+
+		// Insertion
+		BddAtelier.ajoutAtelier(1, "A la poursuite d'ennemis invisibles", "Sciences de la vie ", "Campus Carreire (Hôpital Pellegrin)", "Labo MFP", "", "", "", "");
+
+		// Récupération de l'objet Atelier
+		Atelier atelier = BddAtelier.getAtelierById(1);
+
+		// Édition
+		atelier.setTitre("Nouveau titre");
+
+		// Mise à jour
+		BddAtelier.editAtelier(atelier);
+
+		// Vérification
+		String sql = "SELECT titre FROM Atelier WHERE idAtelier=1";
+		Statement statement = connection.createStatement();
+		ResultSet rs = statement.executeQuery(sql);
+
+		int count = 0;
+		String titre = "";
+
+		while(rs.next()) {
+			titre = rs.getString("titre");
+			count++;
+		}
+
+		assertEquals(count, 1);
+		assertEquals(titre, "Nouveau titre");
+
+		// Fermeture
+		rs.close();
+		statement.close();
+		connection.close();
+	}
+
+
+
+	@Test
+	public void testSupprAtelier() throws IOException, SQLException, ClassNotFoundException {
 
 		Connection connection = BddConnecteur.getConnection();
 

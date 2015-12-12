@@ -39,8 +39,12 @@ public class App {
 		get("/laboratoire/ateliers", new VisualisationAteliersMonLabo(), engine);
 
 		get("/laboratoire/atelier/creer", new VisualisationCreerAtelier(), engine);
+		post("/laboratoire/atelier/creer", new CreerAtelier());
 
-		post("/laboratoire/atelier/creer", new CreationAtelier());
+		get("/laboratoire/atelier/:idAtelier/modifier", new VisualisationEditerAtelier(), engine);
+		post("/laboratoire/atelier/:idAtelier/modifier", new EditerAtelier());
+
+		//get("/atelier/:idAtelier/creneaux", new VisualisationEditerCreneau(), engine);
 
 	}
 

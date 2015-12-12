@@ -1,7 +1,9 @@
 package fr.enseirb.t3.it340;
 
 import fr.enseirb.t3.it340.bdd.BddAtelier;
+import fr.enseirb.t3.it340.bdd.BddLabo;
 import fr.enseirb.t3.it340.modeles.Atelier;
+import fr.enseirb.t3.it340.modeles.Laboratoire;
 import fr.enseirb.t3.it340.servlets.ateliers.VisualisationAteliersGenerator;
 import fr.enseirb.t3.it340.servlets.authentification.Authentification;
 import spark.*;
@@ -22,7 +24,8 @@ public class VisualisationAteliersMonLabo implements TemplateViewRoute {
 
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		Map<Integer, Atelier> ateliersMap = BddAtelier.getAteliersByIdLabo((Integer) request.session().attribute("labo"));
+		Laboratoire laboratoire = BddLabo.getLaboByIdLabo((Integer) request.session().attribute("labo"));
+		Map<Integer, Atelier> ateliersMap = laboratoire.getAteliers();
 		List<Atelier> ateliers = new ArrayList<Atelier>(ateliersMap.values());
 
 		VisualisationAteliersGenerator.getModelAndView(request, ateliers, attributes);

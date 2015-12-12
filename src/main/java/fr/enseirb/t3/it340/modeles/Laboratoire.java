@@ -9,10 +9,13 @@ public class Laboratoire extends Utilisateur {
 	private String nom;
 	private Map<Integer, Atelier> ateliers = new HashMap<Integer, Atelier>();
 
-	public Laboratoire(int idUtilisateur, String email, String password, int idLaboratoire, String nom) {
+	public Laboratoire(int idUtilisateur, String email, String password, int idLaboratoire, String nom, Map<Integer, Atelier> ateliers) {
 		super(idUtilisateur, email, password);
 		this.idLaboratoire = idLaboratoire;
 		this.nom = nom;
+
+		if (ateliers != null)
+			this.ateliers.putAll(ateliers);
 	}
 
 	public int getIdLaboratoire() {
