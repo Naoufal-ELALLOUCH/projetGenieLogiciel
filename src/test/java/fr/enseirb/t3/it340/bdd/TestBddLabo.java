@@ -1,6 +1,7 @@
 package fr.enseirb.t3.it340.bdd;
 
 import fr.enseirb.t3.it340.modeles.Laboratoire;
+
 import org.junit.After;
 import org.junit.Test;
 
@@ -47,14 +48,19 @@ public class TestBddLabo {
 	@Test
 	public void testGetLaboByIdUtilisateur() {
 
+		Laboratoire laboratoire;
 		String email = "labri@labri.fr";
 		String motDePasse = "labri";
 		String nom = "Labri";
 
 		BddUtilisateur.ajout(email, motDePasse);
+		// Test : récupération d'un objet null
+		laboratoire = BddLabo.getLaboByIdLabo(1);
+		assertNull(laboratoire);
+		
 		BddLabo.ajout(1, nom);
 
-		Laboratoire laboratoire = BddLabo.getLaboByIdUtilisateur(1);
+		 laboratoire = BddLabo.getLaboByIdUtilisateur(1);
 
 		assertEquals(laboratoire.getEmail(), email);
 		assertEquals(laboratoire.getMotDePasse(), motDePasse);
@@ -64,14 +70,23 @@ public class TestBddLabo {
 	@Test
 	public void testGetLaboByIdLabo() throws SQLException, IOException, ClassNotFoundException {
 		
+		Laboratoire labo;
+		
 		// Insertion utilisateur et labo
 		BddUtilisateur.ajout("labri@labri.fr", "labri");
+		
+		
+		// Test : récupération d'un objet null
+		labo = BddLabo.getLaboByIdLabo(1);
+		assertNull(labo);		
+		
+		// Insertion labo
 		BddLabo.ajout(1, "labri");
 
 		// Test : récupération d'un Labo à partir de son Id
-		Laboratoire labo = BddLabo.getLaboByIdLabo(1);
+		labo = BddLabo.getLaboByIdLabo(1);
 		assertNotNull(labo);
-		//assertEquals(labo.getNom(), "labri");
+		assertEquals(labo.getNom(), "labri");
 		
 	}
 	
