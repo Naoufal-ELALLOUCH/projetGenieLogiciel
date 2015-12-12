@@ -11,6 +11,7 @@ public class VisualisationAccueil implements TemplateViewRoute {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("title", "Accueil");
+		attributes.put("connected", (request.session().attribute("email") != null));
 		attributes.put("name", "Chocolat");
 
 		return new ModelAndView(attributes, "accueil.ftl");

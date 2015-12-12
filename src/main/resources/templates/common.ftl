@@ -31,13 +31,19 @@
 								<a href="#" alt="Contact">Contact</a>
 							</li>
 						</ul>
-						<!-- TODO -->
 						<ul class="nav navbar-nav navbar-right">
 							<li>
-								<a href="#" alt="Connexion">
-									<span class="glyphicon glyphicon-log-in"></span>
-									Connexion
-								</a>
+								<#if connected?? && connected>
+                                    <a href="/deconnexion" alt="Déconnexion">
+                                        <span class="glyphicon glyphicon-log-out"></span>
+                                        Déconnexion
+                                    </a>
+								<#else>
+                                    <a href="/authentification" alt="Connexion">
+                                        <span class="glyphicon glyphicon-log-in"></span>
+                                        Connexion
+                                    </a>
+								</#if>
 							</li>
 						</ul>
 					</div>

@@ -12,6 +12,7 @@ public class VisualisationInscription implements TemplateViewRoute {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("title", "Inscription");
+		attributes.put("connected", (request.session().attribute("email") != null));
 
 		return new ModelAndView(attributes, "inscription.ftl");
 	}

@@ -30,7 +30,7 @@ public class CreationAtelier implements Route {
 
 		BddAtelier.ajoutAtelier(idLabo, titre, themes, zone, adresse, orateurs, partenaires, cible, remarques);
 
-		response.redirect("/ateliers/" + idLabo);
+		response.redirect("/laboratoire/ateliers");
 
 		return null;
 	}

@@ -2,7 +2,6 @@ package fr.enseirb.t3.it340.servlets.ateliers;
 
 import fr.enseirb.t3.it340.bdd.BddAtelier;
 import fr.enseirb.t3.it340.modeles.Atelier;
-import fr.enseirb.t3.it340.servlets.authentification.Authentification;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -22,8 +21,7 @@ public class VisualisationAteliers implements TemplateViewRoute {
 		Map<Integer, Atelier> ateliersMap = BddAtelier.getAteliers();
 		List<Atelier> ateliers = new ArrayList<Atelier>(ateliersMap.values());
 
-		attributes.put("title", "Ateliers");
-		attributes.put("ateliers", ateliers);
+		VisualisationAteliersGenerator.getModelAndView(req, ateliers, attributes);
 
 		return new ModelAndView(attributes, "ateliers.ftl");
 	}

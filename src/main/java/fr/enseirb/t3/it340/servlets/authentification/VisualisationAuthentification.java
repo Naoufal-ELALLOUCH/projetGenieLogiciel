@@ -10,6 +10,7 @@ public class VisualisationAuthentification implements TemplateViewRoute {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("title", "Authentification");
+		attributes.put("connected", (request.session().attribute("email") != null));
 
 		if (request.session().attribute("erreur") != null) {
 			attributes.put("erreur", "Utilisateur non connecté");

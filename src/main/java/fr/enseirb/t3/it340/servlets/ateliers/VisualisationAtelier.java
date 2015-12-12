@@ -18,6 +18,8 @@ public class VisualisationAtelier  implements TemplateViewRoute {
 		Atelier atelier = BddAtelier.getAtelierById(idAtelier);
 
 		if (atelier != null) {
+			attributes.put("title", atelier.getTitre());
+			attributes.put("connected", (request.session().attribute("email") != null));
 			attributes.put("atelier", atelier);
 			return new ModelAndView(attributes, "atelier.ftl");
 		} else {
