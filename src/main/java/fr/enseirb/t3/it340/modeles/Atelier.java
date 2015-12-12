@@ -6,82 +6,56 @@ import java.util.*;
 public class Atelier {
 	
 	private final int idAtelier;
-	private String titre;
-	private Set<String> themes = new HashSet<String>();
-	private String zone;
-	private Set<String> orateurs = new HashSet<String>();
-	private Set<String> partenaires = new HashSet<String>();
-	private Set<String> cibles = new HashSet<String>();
-	private String remarques ;
+	private final int idLabo;
+	private String titre = "";
+	private String themes = "";
+	private String zone = "";
+	private String adresse = "";
+	private String orateurs = "";
+	private String partenaires = "";
+	private String cible = "";
+	private String remarques = "";
 	private Map<Integer, Creneau> creneaux = new HashMap<Integer, Creneau>();
-	private enum Status {PROPOSE , VALIDE , CLOTURE} ;
+	private String statut = "";
+	
+	//private enum Statut {PROPOSE , VALIDE , CLOTURE} ;
 
-	public Atelier(int idAtelier, String titre) {
+	public Atelier(int idAtelier, int idLabo, String titre) {
 		this.idAtelier = idAtelier;
+		this.idLabo = idLabo;
 		this.titre = titre;
 	}
-
-	/*public Atelier(String titre, Set<String> themes, String zone, Set<String> orateurs,
-			Set<String> partenaires, Set<String> cibles, String remarques, Set<Creneau> creneaux) {
+	
+	public Atelier(int idAtelier, int idLabo, String titre, String themes, String zone, String adresse, String orateurs, String partenaires, String cible, String remarques, Map<Integer, Creneau> creneaux, String statut) {
+		this.idAtelier = idAtelier;
+		this.idLabo = idLabo;
 		this.titre = titre;
 		this.themes = themes;
 		this.zone = zone;
+		this.adresse = adresse;
 		this.orateurs = orateurs;
 		this.partenaires = partenaires;
-		this.cibles = cibles;
+		this.cible = cible;
 		this.remarques = remarques;
-		this.creneaux = creneaux;
-	}*/
+		if (creneaux != null)
+			this.creneaux.putAll(creneaux);
+		this.statut = statut;
+	}
 
 	public void ajoutCreneau(Creneau creneau) {
 		creneaux.put(creneau.getIdCreneau(), creneau);
 	}
-	
-	/*void ajoutCreneau(Date date, int capacite) {
-		int id = creneaux.size() + 1;
-		Creneau creneau = new Creneau(id, date , capacite);
-		creneaux.add(creneau);
-	}*/
 
 	public void modifierCreneau(int idCreneau, Creneau creneau) {
 		Creneau c = creneaux.get(idCreneau);
 		if (idCreneau == creneau.getIdCreneau() || c == null)
 			creneaux.put(idCreneau, creneau);
 	}
-	
-	/*void modifierCreneau(int idCreneau , Date date , int capacite){
-		Iterator<Creneau> iterator = creneaux.iterator();
-		
-		while(iterator.hasNext()){
-			
-			Creneau creneau = iterator.next();
-			
-			if(creneau.getIdCreneau() == idCreneau){
-			creneau.setCapacite(capacite);
-			creneau.setDate(date);
-			break;
-			}
-		}
-		
-	}*/
 
 	public void supprimerCreneau(int idCreneau) {
 		creneaux.remove(idCreneau);
 	}
-	/*void supprimerCreneau(int idCreneau ){
-		Iterator<Creneau> iterator = creneaux.iterator();
-		
-		while(iterator.hasNext()){
-			
-			Creneau creneau = iterator.next();
-			
-			if(creneau.getIdCreneau() == idCreneau){
-			iterator.remove();
-			break;
-			}
-		}
-		
-	}*/
+	
 	
 	public int getIdAtelier() {
 		return idAtelier;
@@ -93,10 +67,10 @@ public class Atelier {
 	public void setTitre(String titre) {
 		this.titre = titre;
 	}
-	public Set<String> getThemes() {
+	public String getThemes() {
 		return themes;
 	}
-	public void setThemes(Set<String> themes) {
+	public void setThemes(String themes) {
 		this.themes = themes;
 	}
 	public String getZone() {
@@ -105,23 +79,29 @@ public class Atelier {
 	public void setZone(String zone) {
 		this.zone = zone;
 	}
-	public Set<String> getOrateurs() {
+	public String getAdresse() {
+		return adresse;
+	}
+	public void setAdresse(String adresse) {
+		this.adresse = adresse;
+	}
+	public String getOrateurs() {
 		return orateurs;
 	}
-	public void setOrateurs(Set<String> orateurs) {
+	public void setOrateurs(String orateurs) {
 		this.orateurs = orateurs;
 	}
-	public Set<String> getPartenaires() {
+	public String getPartenaires() {
 		return partenaires;
 	}
-	public void setPartenaires(Set<String> partenaires) {
+	public void setPartenaires(String partenaires) {
 		this.partenaires = partenaires;
 	}
-	public Set<String> getCibles() {
-		return cibles;
+	public String getCible() {
+		return cible;
 	}
-	public void setCibles(Set<String> cibles) {
-		this.cibles = cibles;
+	public void setCibles(String cible) {
+		this.cible = cible;
 	}
 	public String getRemarques() {
 		return remarques;
@@ -133,6 +113,16 @@ public class Atelier {
 	public Map<Integer, Creneau> getCreneaux() {
 		return creneaux;
 	}
-	
+
+	public void setStatut(String statut) {
+		this.statut = statut;
+	}
+	public String getStatut() {
+		return statut;
+	}
+
+	public int getIdLabo() {
+		return idLabo;
+	}
 	
 }

@@ -1,16 +1,31 @@
 package fr.enseirb.t3.it340.servlets.ateliers;
 
+import fr.enseirb.t3.it340.bdd.BddAtelier;
 import fr.enseirb.t3.it340.modeles.Atelier;
-import spark.Request;
-import spark.Response;
-import spark.Route;
+import spark.*;
 
-public class VisualisationAtelier implements Route {
+import java.util.HashMap;
+import java.util.Map;
 
-	public Object handle(Request request, Response response) throws Exception {
-		String idAtelier = request.params("idAtelier");
-		//Atelier atelier = new BddAtelier.getAtelier(idAtelier)
-		// TODO
+public class VisualisationAtelier  implements TemplateViewRoute {
+
+	public ModelAndView handle(Request request, Response response) throws Exception {
+		String idAtelierString = request.params("idAtelier");
+		int idAtelier = Integer.parseInt(idAtelierString); // TODO catch exception
+
+		Map<String, Object> attributes = new HashMap<String, Object>();
+
+		Atelier atelier = BddAtelier.getAtelierById(idAtelier);
+
+		if (atelier != null) {
+			attributes.put("title", atelier.getTitre());
+			attributes.put("connected", (request.session().attribute("email") != null));
+			attributes.put("atelier", atelier);
+			return new ModelAndView(attributes, "atelier.ftl");
+		} else {
+			response.status(403);
+		}
+
 		return null;
 	}
 }

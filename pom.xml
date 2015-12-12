@@ -40,6 +40,13 @@
             <version>4.12</version>
         </dependency>
 
+        <!-- Freemarker Engine -->
+        <dependency>
+            <groupId>com.sparkjava</groupId>
+            <artifactId>spark-template-freemarker</artifactId>
+            <version>2.3</version>
+        </dependency>
+
     </dependencies>
 
     <build>

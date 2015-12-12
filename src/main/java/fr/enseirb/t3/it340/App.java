@@ -1,10 +1,11 @@
 package fr.enseirb.t3.it340;
 import static spark.Spark.*;
 
-import fr.enseirb.t3.it340.bdd.BddConnecteur;
-import fr.enseirb.t3.it340.servlets.VisualisationAteliers;
-import fr.enseirb.t3.it340.servlets.ateliers.VisualisationAtelier;
-import fr.enseirb.t3.it340.servlets.authentification.Authentification;
+import fr.enseirb.t3.it340.servlets.VisualisationAccueil;
+import fr.enseirb.t3.it340.servlets.ateliers.*;
+import fr.enseirb.t3.it340.servlets.authentification.*;
+import freemarker.template.Configuration;
+import spark.template.freemarker.FreeMarkerEngine;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -13,11 +14,37 @@ public class App {
 
 	public static void main(String[] args) throws SQLException, ClassNotFoundException, IOException {
 
-		get("/ateliers", new VisualisationAteliers());
+		// Configuration du moteur de template
+		FreeMarkerEngine engine = new FreeMarkerEngine();
+		Configuration cfg = new Configuration();
+		cfg.setClassForTemplateLoading(App.class, "/templates/");
+		engine.setConfiguration(cfg);
 
-		get("/atelier/:idAtelier", new VisualisationAtelier());
+		// Gestion des urls
+		get("/", new VisualisationAccueil(), engine);
 
+		// Authentification
+		get("/inscription", new VisualisationInscription(), engine);
+		post("/inscription", new Inscription());
+
+		get("/authentification", new VisualisationAuthentification(), engine);
 		post("/authentification", new Authentification());
+
+		get("/deconnexion", new Deconnexion());
+
+		get("/ateliers", new VisualisationAteliers(), engine);
+		get("/ateliers/:idLabo", new VisualisationAteliersLabo(), engine);
+		get("/atelier/:idAtelier", new VisualisationAtelier(), engine);
+
+		get("/laboratoire/ateliers", new VisualisationAteliersMonLabo(), engine);
+
+		get("/laboratoire/atelier/creer", new VisualisationCreerAtelier(), engine);
+		post("/laboratoire/atelier/creer", new CreerAtelier());
+
+		get("/laboratoire/atelier/:idAtelier/modifier", new VisualisationEditerAtelier(), engine);
+		post("/laboratoire/atelier/:idAtelier/modifier", new EditerAtelier());
+
+		//get("/atelier/:idAtelier/creneaux", new VisualisationEditerCreneau(), engine);
 
 	}
 
