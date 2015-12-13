@@ -137,7 +137,28 @@ public class BddCreneau {
 			connection.close();
 
 		} catch (Exception e) {
-			log.error("Impossible de supprimer cet creneau ", e);
+			log.error("Impossible de supprimer ce creneau ", e);
+		}		
+		
+	}
+	public static void 	supprCreneauxByIdAtelier
+(int idAtelier){
+
+	String sql = "DELETE FROM Creneau WHERE idAtelier=?";
+
+		
+		try {
+			Connection connection = BddConnecteur.getConnection();
+			PreparedStatement statement = connection.prepareStatement(sql);
+
+			statement.setInt(1, idAtelier);
+
+			statement.executeUpdate();
+			statement.close();
+			connection.close();
+
+		} catch (Exception e) {
+			log.error("Impossible de supprimer ce creneau par idLabo", e);
 		}		
 		
 	}

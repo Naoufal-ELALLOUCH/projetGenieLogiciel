@@ -166,7 +166,44 @@ public class TestBddCreneau {
 		statement.close();
 		connection.close();
 	}
+	
+	@Test
+	public void testSupprCreneauxByIdAtelier() throws SQLException, IOException, ClassNotFoundException {
+		Connection connection = BddConnecteur.getConnection();
 
+		BddUtilisateur.ajout("labri@labri.fr", "labri");
+		BddLabo.ajout(1, "Labri");
+		BddAtelier.ajoutAtelier(1, "A la poursuite d'ennemis invisibles", "Sciences de la vie ", "Campus Carreire (Hôpital Pellegrin)", "Labo MFP", "","", "","");
+
+		// Insertion
+		int idAtelier = 1;
+		String jour = "2015-12-23";
+		String heure = "13:00";
+		int oldCapacite = 20;
+		int newCapacite = 40;
+		BddCreneau.ajoutCreneau(1, jour, heure, oldCapacite);
+
+		// Suppression
+		BddCreneau.supprCreneauxByIdAtelier(1);
+
+		// Vérification
+		String sql = "SELECT * FROM Creneau WHERE idAtelier='"+ idAtelier +"'";
+		Statement statement = connection.createStatement();
+		ResultSet rs = statement.executeQuery(sql);
+
+		int count = 0;
+
+		while(rs.next()) {
+			count++;
+		}
+
+		assertEquals(count, 0);
+
+		// Fermeture
+		rs.close();
+		statement.close();
+		connection.close();
+	}
 	@After
 	public void dispose() throws SQLException, IOException, ClassNotFoundException {
 		Connection connection = BddConnecteur.getConnection();

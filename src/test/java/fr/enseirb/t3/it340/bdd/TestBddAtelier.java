@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -47,8 +48,10 @@ public class TestBddAtelier {
 		rs.close();
 		statement.close();
 		connection.close();
+		
+		
 	}
-	
+
 	@Test
 	public void testGetAtelierById() throws IOException, SQLException, ClassNotFoundException {
 
