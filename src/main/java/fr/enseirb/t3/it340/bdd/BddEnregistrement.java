@@ -111,4 +111,27 @@ public class BddEnregistrement {
 		}
 		return idEnseignant;
 	}
+	
+	// Supprimer un enregitrement by idCreneau
+	public static void supprEnregistrementByIdCreneau(int idCreneau){
+
+		String supprReq = "DELETE FROM Enregistrement WHERE idCreneau=?";
+
+
+		try {
+			Connection connection = BddConnecteur.getConnection();
+			PreparedStatement statement = connection.prepareStatement(supprReq);
+			
+			statement.setInt(1, idCreneau);
+
+			statement.executeUpdate();
+			statement.close();
+			connection.close();
+
+			} catch (Exception e) {
+				log.error("Impossible de supprimer l'enregistrement ", e);
+			}
+			
+	}	
+	
 }
