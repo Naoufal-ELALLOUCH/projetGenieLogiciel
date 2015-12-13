@@ -7,6 +7,7 @@ import fr.enseirb.t3.it340.bdd.BddUtilisateur;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
@@ -41,28 +42,16 @@ public class TestAuthentification {
 
 		Mockito.doAnswer(new Answer() {
 			public Void answer(InvocationOnMock invocation) throws Throwable {
-				attributes.put("email", email);
+				Object[] arguments = invocation.getArguments();
+				attributes.put(arguments[0].toString(), arguments[1].toString());
 				return null;
 			}
-		}).when(session).attribute("email", email);
+		}).when(session).attribute(Mockito.anyString(), Mockito.any());
 
 		Mockito.doAnswer(new Answer() {
 			public Void answer(InvocationOnMock invocation) throws Throwable {
-				attributes.put("labo", "true");
-				return null;
-			}
-		}).when(session).attribute(Mockito.eq("labo"), Mockito.any());
-
-		Mockito.doAnswer(new Answer() {
-			public Void answer(InvocationOnMock invocation) throws Throwable {
-				attributes.put("enseignant", "true");
-				return null;
-			}
-		}).when(session).attribute(Mockito.eq("enseignant"), Mockito.any());
-
-		Mockito.doAnswer(new Answer() {
-			public Void answer(InvocationOnMock invocation) throws Throwable {
-				attributes.put("redirection", "true");
+				Object[] arguments = invocation.getArguments();
+				attributes.put("redirection", arguments[0].toString());
 				return null;
 			}
 		}).when(response).redirect(Mockito.anyString());
@@ -115,6 +104,54 @@ public class TestAuthentification {
 		authentification.handle(request, response);
 
 		assertNull(attributes.get("email"));
+	}
+
+	@Test
+	public void testCheckLabo1() throws Exception {
+		Mockito.when(session.attribute(Mockito.anyString())).thenReturn(null);
+		Authentification.checkLabo(request, response);
+		assertEquals(attributes.get("redirection"), "/authentification");
+	}
+
+	@Test
+	public void testCheckLabo2() throws Exception {
+		Mockito.when(session.attribute("email")).thenReturn("charlie@heloise.fr");
+		Authentification.checkLabo(request, response);
+		assertEquals(attributes.get("redirection"), "/");
+	}
+
+	@Test
+	public void testCheckLabo3() throws Exception {
+
+		Mockito.when(session.attribute("email")).thenReturn("charlie@heloise.fr");
+		Mockito.when(session.attribute("labo")).thenReturn(1);
+		Authentification.checkLabo(request, response);
+		assertEquals(attributes.get("redirection"), null);
+
+	}
+
+	@Test
+	public void testCheckEnseignant1() throws Exception {
+		Mockito.when(session.attribute(Mockito.anyString())).thenReturn(null);
+		Authentification.checkEnseignant(request, response);
+		assertEquals(attributes.get("redirection"), "/authentification");
+	}
+
+	@Test
+	public void testCheckEnseignant2() throws Exception {
+		Mockito.when(session.attribute("email")).thenReturn("charlie@heloise.fr");
+		Authentification.checkEnseignant(request, response);
+		assertEquals(attributes.get("redirection"), "/");
+	}
+
+	@Test
+	public void testCheckEnseignant3() throws Exception {
+
+		Mockito.when(session.attribute("email")).thenReturn("charlie@heloise.fr");
+		Mockito.when(session.attribute("enseignant")).thenReturn(1);
+		Authentification.checkEnseignant(request, response);
+		assertEquals(attributes.get("redirection"), null);
+
 	}
 
 	@After
