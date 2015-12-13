@@ -9,6 +9,7 @@ import fr.enseirb.t3.it340.servlets.creneau.CreerCreneau;
 import fr.enseirb.t3.it340.servlets.creneau.EditerCreneau;
 import fr.enseirb.t3.it340.servlets.creneau.VisualisationEditerCreneau;
 import fr.enseirb.t3.it340.servlets.creneaux.VisualisationCreneaux;
+import fr.enseirb.t3.it340.servlets.creneaux.VisualisationEnseignant;
 import freemarker.template.Configuration;
 import spark.template.freemarker.FreeMarkerEngine;
 
@@ -65,6 +66,9 @@ public class App {
 		// Créneau - modification
 		get("/atelier/:idAtelier/creneaux/:idCreneau", new VisualisationEditerCreneau(), engine);
 		post("/atelier/:idAtelier/creneaux/:idCreneau", new EditerCreneau());
+
+		// Enregistrements
+		get("/enseignant", new VisualisationEnseignant(), engine);
 
 	}
 

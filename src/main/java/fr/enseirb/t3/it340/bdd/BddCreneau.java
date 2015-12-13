@@ -163,5 +163,33 @@ public class BddCreneau {
 		
 	}
 
-	
+	public static Atelier getAtelierByIdCreneau(int idCreneau) {
+		String sql = "SELECT * FROM Creneau WHERE idCreneau = ?";
+		Atelier atelier = null;
+
+		try {
+			int idAtelier = 0;
+			Connection connection = BddConnecteur.getConnection();
+			PreparedStatement statement = connection.prepareStatement(sql);
+			statement.setInt(1, idCreneau);
+
+			ResultSet rs = statement.executeQuery();
+
+			while (rs.next()) {
+				idAtelier = rs.getInt("idAtelier");
+			}
+
+			if (idAtelier > 0)
+				atelier = BddAtelier.getAtelierById(idAtelier);
+
+			rs.close();
+			statement.close();
+			connection.close();
+
+		} catch (Exception e) {
+			log.error("Impossible d'avoir l'atelier le creneau", e);
+		}
+		return atelier;
+	}
+
 }

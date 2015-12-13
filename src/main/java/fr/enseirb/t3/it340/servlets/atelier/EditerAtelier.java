@@ -19,7 +19,7 @@ public class EditerAtelier implements Route {
 		// On regarde si l'utilisateur a accès
 		ModelAndView modelAndView = Authentification.checkLabo(request, response);
 		if (modelAndView != null)
-			return null;
+			return "";
 
 		// On vérifie si l'atelier appartient bien au labo
 		Atelier atelier = null;
