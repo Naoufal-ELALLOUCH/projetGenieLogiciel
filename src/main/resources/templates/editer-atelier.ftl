@@ -64,39 +64,41 @@
 	                    </div>
 	                </div>
 
-                    <div class="form-group">
-                        <label for="remarques">Liste des créneaux</label>
-	                    <a class="btn btn-mini btn-default" href="/atelier/${atelier.idAtelier}/creneaux" alt="Ajouter">Ajouter un créneau</a>
-	                    <table class="table table-hover">
-	                        <thead>
-	                        <tr>
-	                            <th>Jour</th>
-	                            <th>Heure</th>
-	                            <th>Capacité</th>
-								<th>Action</th>
-	                        </tr>
-	                        </thead>
-	                        <tbody>
-								<#list creneaux as c>
-	                            <tr>
-	                                <td>${c.date?date}</td>
-	                                <td>${c.date?string["HH:mm"]}</td>
-	                                <td>${c.capacite}</td>
-                                    <td>
-                                        <a class="btn btn-mini btn-primary" href="/atelier/${idAtelier}/creneaux/${c.idCreneau}" alt="Modifier">
-                                            <i class="icon-edit icon-white"></i>
-                                            Modifier
-                                        </a>
-                                        <a class="btn btn-mini btn-danger" href="/atelier/${idAtelier}/creneaux/${c.idCreneau}/supprimer" alt="Supprimer">
-                                            <i class="icon-remove icon-white"></i>
-                                            Supprimer
-                                        </a>
-                                    </td>
-	                            </tr>
-								</#list>
-	                        </tbody>
-	                    </table>
-                    </div>
+					<#if creneaux??>
+	                    <div class="form-group">
+	                        <label for="remarques">Liste des créneaux</label>
+		                    <a class="btn btn-mini btn-default" href="/atelier/${atelier.idAtelier}/creneaux" alt="Ajouter">Ajouter un créneau</a>
+		                    <table class="table table-hover">
+		                        <thead>
+		                        <tr>
+		                            <th>Jour</th>
+		                            <th>Heure</th>
+		                            <th>Capacité</th>
+									<th>Action</th>
+		                        </tr>
+		                        </thead>
+		                        <tbody>
+									<#list creneaux as c>
+		                            <tr>
+		                                <td>${c.date?date}</td>
+		                                <td>${c.date?string["HH:mm"]}</td>
+		                                <td>${c.capacite}</td>
+	                                    <td>
+	                                        <a class="btn btn-mini btn-primary" href="/atelier/${idAtelier}/creneaux/${c.idCreneau}" alt="Modifier">
+	                                            <i class="icon-edit icon-white"></i>
+	                                            Modifier
+	                                        </a>
+	                                        <a class="btn btn-mini btn-danger" href="/atelier/${idAtelier}/creneaux/${c.idCreneau}/supprimer" alt="Supprimer">
+	                                            <i class="icon-remove icon-white"></i>
+	                                            Supprimer
+	                                        </a>
+	                                    </td>
+		                            </tr>
+									</#list>
+		                        </tbody>
+		                    </table>
+	                    </div>
+					</#if>
 
 
 	                <input type="submit" name="submit" id="submit" value="Valider" class="btn btn-info pull-left">

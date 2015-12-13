@@ -1,4 +1,4 @@
-package fr.enseirb.t3.it340.servlets.ateliers;
+package fr.enseirb.t3.it340.servlets.atelier;
 
 import fr.enseirb.t3.it340.bdd.BddAtelier;
 import fr.enseirb.t3.it340.bdd.BddLabo;
