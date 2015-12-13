@@ -2,6 +2,7 @@ package fr.enseirb.t3.it340.bdd;
 
 import static org.junit.Assert.*;
 
+import fr.enseirb.t3.it340.modeles.Atelier;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -167,6 +168,67 @@ public class TestBddCreneau {
 		connection.close();
 	}
 
+	@Test
+	public void testGetAtelierByIdCreneau() throws SQLException, IOException, ClassNotFoundException {
+
+		BddUtilisateur.ajout("labri@labri.fr", "labri");
+		BddLabo.ajout(1, "Labri");
+		BddAtelier.ajoutAtelier(1, "A la poursuite d'ennemis invisibles", "Sciences de la vie ", "Campus Carreire (Hôpital Pellegrin)", "Labo MFP", "", "", "", "");
+		BddAtelier.ajoutAtelier(1, "A la poursuite d'ennemis invisibles", "Sciences de la vie ", "Campus Carreire (Hôpital Pellegrin)", "Labo MFP", "", "", "", "");
+
+		// Insertion
+		int idAtelier = 1;
+		String jour = "2015-12-23";
+		String heure = "13:00";
+		int capacite = 20;
+		BddCreneau.ajoutCreneau(1, jour, heure, capacite);
+		BddCreneau.ajoutCreneau(1, jour, heure, capacite);
+		BddCreneau.ajoutCreneau(2, jour, heure, capacite);
+
+		Atelier atelier = BddCreneau.getAtelierByIdCreneau(1);
+		assertEquals(atelier.getIdAtelier(), 1);
+
+		atelier = BddCreneau.getAtelierByIdCreneau(3);
+		assertEquals(atelier.getIdAtelier(), 2);
+	}
+
+	@Test
+	public void testSupprCreneauxByIdAtelier() throws SQLException, IOException, ClassNotFoundException {
+		Connection connection = BddConnecteur.getConnection();
+
+		BddUtilisateur.ajout("labri@labri.fr", "labri");
+		BddLabo.ajout(1, "Labri");
+		BddAtelier.ajoutAtelier(1, "A la poursuite d'ennemis invisibles", "Sciences de la vie ", "Campus Carreire (Hôpital Pellegrin)", "Labo MFP", "","", "","");
+
+		// Insertion
+		int idAtelier = 1;
+		String jour = "2015-12-23";
+		String heure = "13:00";
+		int oldCapacite = 20;
+		int newCapacite = 40;
+		BddCreneau.ajoutCreneau(1, jour, heure, oldCapacite);
+
+		// Suppression
+		BddCreneau.supprCreneauxByIdAtelier(1);
+
+		// Vérification
+		String sql = "SELECT * FROM Creneau WHERE idAtelier='"+ idAtelier +"'";
+		Statement statement = connection.createStatement();
+		ResultSet rs = statement.executeQuery(sql);
+
+		int count = 0;
+
+		while(rs.next()) {
+			count++;
+		}
+
+		assertEquals(count, 0);
+
+		// Fermeture
+		rs.close();
+		statement.close();
+		connection.close();
+	}
 	@After
 	public void dispose() throws SQLException, IOException, ClassNotFoundException {
 		Connection connection = BddConnecteur.getConnection();

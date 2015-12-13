@@ -34,14 +34,14 @@ public class Authentification implements Route {
 		return true;
 	}
 
-	public static ModelAndView checkLabo(Request request, Response response) throws Exception {
+	public static ModelAndView checkType(String type, Request request, Response response) throws Exception {
 		boolean access;
 		boolean access1 = true;
 		boolean access2 = true;
 
 		// On regarde si l'utilisateur a accès
 		access1 &= Authentification.checkLoggedIn(request, response);
-		access2 &= (request.session().attribute("labo") != null);
+		access2 &= (request.session().attribute(type) != null);
 		access = access1 & access2;
 
 		if (!access) {
@@ -52,6 +52,14 @@ public class Authentification implements Route {
 		}
 
 		return null;
+	}
+
+	public static ModelAndView checkLabo(Request request, Response response) throws Exception {
+		return checkType("labo", request, response);
+	}
+
+	public static ModelAndView checkEnseignant(Request request, Response response) throws Exception {
+		return checkType("enseignant", request, response);
 	}
 
 	public Object handle(Request request, Response response) throws Exception {

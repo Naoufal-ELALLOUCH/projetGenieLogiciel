@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -47,8 +48,10 @@ public class TestBddAtelier {
 		rs.close();
 		statement.close();
 		connection.close();
+		
+		
 	}
-	
+
 	@Test
 	public void testGetAtelierById() throws IOException, SQLException, ClassNotFoundException {
 
@@ -182,7 +185,38 @@ public class TestBddAtelier {
 		rs.close();
 		statement.close();
 		connection.close();
-//		
+	}
+	@Test
+	public void testSupprAtelierByIdLabo() throws IOException, SQLException, ClassNotFoundException {
+
+		Connection connection = BddConnecteur.getConnection();
+
+		BddUtilisateur.ajout("labri@labri.fr", "labri");
+		BddLabo.ajout(1, "Labri");
+
+		// Insertion
+		BddAtelier.ajoutAtelier(1, "A la poursuite d'ennemis invisibles", "Sciences de la vie ", "Campus Carreire (Hôpital Pellegrin)", "Labo MFP", "","", "","");
+
+		// Suppression
+		BddAtelier.supprAtelierByIdLabo(1);
+		
+		// Vérification
+		String sql = "SELECT idAtelier FROM Atelier WHERE idAtelier=1";
+		Statement statement = connection.createStatement();
+		ResultSet rs = statement.executeQuery(sql);
+
+		int count = 0;
+
+		while(rs.next()) {
+			count++;
+		}
+
+		assertEquals(count, 0);
+
+		// Fermeture
+		rs.close();
+		statement.close();
+		connection.close();
 	}
 	@Test
 	public void testChangeStatutAtelier() throws IOException, SQLException, ClassNotFoundException {

@@ -51,46 +51,47 @@ public class TestBddEnregistrement {
 		assertEquals(nbInscrits, 20 );
 		
 		//Insertion d'un nombre égal à la capcité
-				BddEnregistrement.enregistrement(1, 1, 10);
-				
-				// Vérification
-				sql = "SELECT nbInscrits FROM Enregistrement WHERE idEnregistrement=1";
-				statement = connection.createStatement();
-				rs = statement.executeQuery(sql);
+		BddEnregistrement.enregistrement(1, 1, 10);
 
-				count = 0;
-				nbInscrits = 0;
-				while(rs.next()) {
-					nbInscrits = rs.getInt("nbInscrits");
-					count++;
-				}
+		// Vérification
+		sql = "SELECT nbInscrits FROM Enregistrement WHERE idEnregistrement=1";
+		statement = connection.createStatement();
+		rs = statement.executeQuery(sql);
 
-				assertEquals(count, 1);
-				assertEquals(nbInscrits, 30 );
-				
-				//Insertion d'un nombre supérieur à la capcité
-				BddEnregistrement.enregistrement(1, 1, 10);
-				
-				// Vérification
-				sql = "SELECT nbInscrits FROM Enregistrement WHERE idEnregistrement=1";
-				statement = connection.createStatement();
-				rs = statement.executeQuery(sql);
+		count = 0;
+		nbInscrits = 0;
+		while(rs.next()) {
+			nbInscrits = rs.getInt("nbInscrits");
+			count++;
+		}
 
-				count = 0;
-				nbInscrits = 0;
-				while(rs.next()) {
-					nbInscrits = rs.getInt("nbInscrits");
-					count++;
-				}
+		assertEquals(count, 1);
+		assertEquals(nbInscrits, 30 );
 
-				assertEquals(count, 1);
-				assertEquals(nbInscrits, 30 );
+		//Insertion d'un nombre supérieur à la capcité
+		BddEnregistrement.enregistrement(1, 1, 10);
+
+		// Vérification
+		sql = "SELECT nbInscrits FROM Enregistrement WHERE idEnregistrement=1";
+		statement = connection.createStatement();
+		rs = statement.executeQuery(sql);
+
+		count = 0;
+		nbInscrits = 0;
+		while(rs.next()) {
+			nbInscrits = rs.getInt("nbInscrits");
+			count++;
+		}
+
+		assertEquals(count, 1);
+		assertEquals(nbInscrits, 30 );
 
 		// Fermeture
 		rs.close();
 		statement.close();
 		connection.close();
 	}
+
 	@Test
 	public void testGetListeIdEnseignantByIdCreneau() throws IOException, SQLException, ClassNotFoundException {
 		

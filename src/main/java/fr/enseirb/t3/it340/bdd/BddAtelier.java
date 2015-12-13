@@ -134,7 +134,7 @@ public class BddAtelier {
 
 		String supprReq = "DELETE FROM Atelier WHERE idAtelier=?";
 
-		// TODO : supprimer les créneaux d'abord
+		BddCreneau.supprCreneauxByIdAtelier(idAtelier);
 
 		try {
 			Connection connection = BddConnecteur.getConnection();
@@ -148,6 +148,26 @@ public class BddAtelier {
 
 		} catch (Exception e) {
 			log.error("Impossible de supprimer cet Atelier ", e);
+		}
+		
+	}
+
+	public static void supprAtelierByIdLabo(int idLabo){
+
+		String supprReq = "DELETE FROM Atelier WHERE idLabo=?";
+
+		try {
+			Connection connection = BddConnecteur.getConnection();
+			PreparedStatement statement = connection.prepareStatement(supprReq);
+
+			statement.setInt(1, idLabo);
+
+			statement.executeUpdate();
+			statement.close();
+			connection.close();
+
+		} catch (Exception e) {
+			log.error("Impossible de supprimer cet Atelier par idLabo ", e);
 		}
 		
 	}
@@ -211,6 +231,7 @@ public class BddAtelier {
 
 		return ateliers;
 	}
+	
 
 	public static Map<Integer, Atelier> getAteliers() {
 		return getAteliers("SELECT * FROM Atelier");

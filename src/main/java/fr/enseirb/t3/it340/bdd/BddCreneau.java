@@ -137,10 +137,59 @@ public class BddCreneau {
 			connection.close();
 
 		} catch (Exception e) {
-			log.error("Impossible de supprimer cet creneau ", e);
+			log.error("Impossible de supprimer ce creneau ", e);
+		}		
+		
+	}
+	public static void 	supprCreneauxByIdAtelier(int idAtelier) {
+
+		String sql = "DELETE FROM Creneau WHERE idAtelier=?";
+
+		// TODO supprimer les enregistrements d'abord
+
+		try {
+			Connection connection = BddConnecteur.getConnection();
+			PreparedStatement statement = connection.prepareStatement(sql);
+
+			statement.setInt(1, idAtelier);
+
+			statement.executeUpdate();
+			statement.close();
+			connection.close();
+
+		} catch (Exception e) {
+			log.error("Impossible de supprimer ce creneau par idLabo", e);
 		}		
 		
 	}
 
-	
+	public static Atelier getAtelierByIdCreneau(int idCreneau) {
+		String sql = "SELECT * FROM Creneau WHERE idCreneau = ?";
+		Atelier atelier = null;
+
+		try {
+			int idAtelier = 0;
+			Connection connection = BddConnecteur.getConnection();
+			PreparedStatement statement = connection.prepareStatement(sql);
+			statement.setInt(1, idCreneau);
+
+			ResultSet rs = statement.executeQuery();
+
+			while (rs.next()) {
+				idAtelier = rs.getInt("idAtelier");
+			}
+
+			if (idAtelier > 0)
+				atelier = BddAtelier.getAtelierById(idAtelier);
+
+			rs.close();
+			statement.close();
+			connection.close();
+
+		} catch (Exception e) {
+			log.error("Impossible d'avoir l'atelier le creneau", e);
+		}
+		return atelier;
+	}
+
 }
