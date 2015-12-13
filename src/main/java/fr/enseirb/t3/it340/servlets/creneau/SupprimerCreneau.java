@@ -45,7 +45,7 @@ public class SupprimerCreneau implements Route {
 				return "";
 			} else {
 				BddCreneau.supprCreneau(idCreneau);
-				response.redirect("atelier/" + atelier.getIdAtelier() + "/creneaux");
+				response.redirect("/atelier/" + atelier.getIdAtelier() + "/creneaux");
 			}
 		}
 
