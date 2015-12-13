@@ -28,7 +28,7 @@ public class EditerCreneau implements Route {
 		try {
 			idAtelier = Integer.parseInt(request.params("idAtelier"));
 			Atelier atelierTmp = BddAtelier.getAtelierById(idAtelier);
-			int idLabo = (Integer) request.session().attribute("labo");
+			int idLabo = request.session().attribute("labo");
 			idCreneau = Integer.parseInt(request.params("idCreneau"));
 			if (atelierTmp.getIdLabo() == idLabo) {
 				atelier = atelierTmp;

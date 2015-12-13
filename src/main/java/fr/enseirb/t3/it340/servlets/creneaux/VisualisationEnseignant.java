@@ -17,7 +17,7 @@ public class VisualisationEnseignant implements TemplateViewRoute {
 		if (modelAndView != null)
 			return modelAndView;
 
-		Integer idEnseignant = Integer.parseInt(request.session().attribute("enseignant"));
+		Integer idEnseignant = request.session().attribute("enseignant");
 		if (idEnseignant == null)
 			response.redirect("/");
 

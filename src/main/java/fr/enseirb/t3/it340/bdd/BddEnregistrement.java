@@ -102,7 +102,6 @@ public class BddEnregistrement {
 			ResultSet rs = statement.executeQuery();
 
 			while(rs.next()) {
-				Map<String, String> info = new HashMap<String, String>();
 				int nbInscrits = rs.getInt("nbInscrits");
 				int idCreneau = rs.getInt("idCreneau");
 
@@ -111,7 +110,7 @@ public class BddEnregistrement {
 				Date date = creneau.getDate();
 				SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy, HH:mm");
 
-				String dateFormat = info.put("date", format.format(date));
+				String dateFormat = format.format(date);
 
 				infos.add(new Enregistrement(nbInscrits, atelier, dateFormat));
 			}

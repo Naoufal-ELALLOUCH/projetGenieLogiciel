@@ -5,10 +5,7 @@ import fr.enseirb.t3.it340.servlets.VisualisationAccueil;
 import fr.enseirb.t3.it340.servlets.atelier.*;
 import fr.enseirb.t3.it340.servlets.ateliers.*;
 import fr.enseirb.t3.it340.servlets.authentification.*;
-import fr.enseirb.t3.it340.servlets.creneau.CreerCreneau;
-import fr.enseirb.t3.it340.servlets.creneau.EditerCreneau;
-import fr.enseirb.t3.it340.servlets.creneau.SupprimerCreneau;
-import fr.enseirb.t3.it340.servlets.creneau.VisualisationEditerCreneau;
+import fr.enseirb.t3.it340.servlets.creneau.*;
 import fr.enseirb.t3.it340.servlets.creneaux.VisualisationCreneaux;
 import fr.enseirb.t3.it340.servlets.creneaux.VisualisationEnseignant;
 import freemarker.template.Configuration;
@@ -71,9 +68,9 @@ public class App {
 		// Créneau - suppression
 		get("/atelier/:idAtelier/creneaux/:idCreneau/supprimer", new SupprimerCreneau());
 
-		// TODO Créneau - inscription
-		// get("/atelier/:idAtelier/creneaux/:idCreneau/inscription", new VisualisationInscrireCreneau(), engine);
-		// post("/atelier/:idAtelier/creneaux/:idCreneau/inscription", new InscrireCreneau());
+		// Créneau - inscription
+		get("/atelier/:idAtelier/creneaux/:idCreneau/inscrire", new VisualisationInscrireCreneau(), engine);
+		post("/atelier/:idAtelier/creneaux/:idCreneau/inscrire", new InscrireCreneau());
 
 		// Enregistrements
 		get("/enseignant", new VisualisationEnseignant(), engine);

@@ -39,7 +39,7 @@ public class VisualisationEditerCreneau implements TemplateViewRoute {
 		try {
 			int idAtelier = Integer.parseInt(request.params("idAtelier"));
 			Atelier atelierTmp = BddAtelier.getAtelierById(idAtelier);
-			int idLabo = (Integer) request.session().attribute("labo");
+			int idLabo = request.session().attribute("labo");
 			if (atelierTmp.getIdLabo() == idLabo) {
 				atelier = atelierTmp;
 				int idCreneau = Integer.parseInt(request.params("idCreneau"));

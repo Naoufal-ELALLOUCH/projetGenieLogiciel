@@ -3,6 +3,7 @@ package fr.enseirb.t3.it340.servlets.authentification;
 import fr.enseirb.t3.it340.bdd.BddEnseignant;
 import fr.enseirb.t3.it340.bdd.BddLabo;
 import fr.enseirb.t3.it340.bdd.BddUtilisateur;
+import fr.enseirb.t3.it340.modeles.Enseignant;
 import fr.enseirb.t3.it340.modeles.Laboratoire;
 import fr.enseirb.t3.it340.modeles.Utilisateur;
 import fr.enseirb.t3.it340.servlets.VisualisationAccueil;
@@ -68,42 +69,37 @@ public class Authentification implements Route {
 			request.session(true);
 		}
 
-		if (request.session().attribute("email") == null) {
+		String email = request.queryParams("email");
+		String motDePasse = request.queryParams("motDePasse");
 
-			String email = request.queryParams("email");
-			String motDePasse = request.queryParams("motDePasse");
+		boolean identifiantsOk = new BddUtilisateur().authentification(email, motDePasse);
 
-			boolean identifiantsOk = new BddUtilisateur().authentification(email, motDePasse);
+		if (identifiantsOk) {
 
-			if (identifiantsOk) {
+			Utilisateur utilisateur = BddUtilisateur.getUtilisateurByEmail(email);
+			int idUtilisateur = utilisateur.getIdUtilisateur();
 
-				Utilisateur utilisateur = BddUtilisateur.getUtilisateurByEmail(email);
-				int idUtilisateur = utilisateur.getIdUtilisateur();
+			request.session().attribute("email", email);
+			log.info("{} s'est connecté avec succès", email);
 
-				// Permet de savoir dans une session si l'utilisateur est un laboratoire ou un enseignant
-				if (BddLabo.isLabo(idUtilisateur)) {
-					Laboratoire labo = BddLabo.getLaboByIdUtilisateur(idUtilisateur);
-					request.session().attribute("labo", labo.getIdLaboratoire());
-					log.info("L'utilisateur {} est un laboratoire", idUtilisateur);
-				} else if (BddEnseignant.isEnseignant(idUtilisateur)) {
-					request.session().attribute("enseignant", "true");
-					log.info("L'utilisateur {} est un enseignant", idUtilisateur);
-				}
-
-				request.session().attribute("email", email);
-				log.info("{} s'est connecté avec succès", request.session().attribute("email"));
-
-				// TODO la bonne redirection
+			// Permet de savoir dans une session si l'utilisateur est un laboratoire ou un enseignant
+			if (BddLabo.isLabo(idUtilisateur)) {
+				Laboratoire labo = BddLabo.getLaboByIdUtilisateur(idUtilisateur);
+				request.session().attribute("labo", labo.getIdLaboratoire());
+				log.info("L'utilisateur {} est un laboratoire", idUtilisateur);
 				response.redirect("/laboratoire/ateliers");
 
-
-			} else {
-				log.warn("{} a essayé de se connecter avec un mauvais mot de passe", email);
-				erreurIdentifiants(request, response);
+			} else if (BddEnseignant.isEnseignant(idUtilisateur)) {
+				Enseignant enseignant = BddEnseignant.getEnseignantByIdUtilisateur(idUtilisateur);
+				request.session().attribute("enseignant", enseignant.getIdEnseignant());
+				log.info("L'utilisateur {} est un enseignant", idUtilisateur);
+				response.redirect("/enseignant");
 			}
+
+
 		} else {
-			// TODO la bonne rediction
-			response.redirect("/laboratoire/ateliers");
+			log.warn("{} a essayé de se connecter avec un mauvais mot de passe", email);
+			erreurIdentifiants(request, response);
 		}
 
 

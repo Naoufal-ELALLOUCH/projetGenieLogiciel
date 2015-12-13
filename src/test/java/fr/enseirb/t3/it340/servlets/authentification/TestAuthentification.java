@@ -117,21 +117,6 @@ public class TestAuthentification {
 		assertNull(attributes.get("email"));
 	}
 
-	@Test
-	public void testHandleRedirectIfAlreadyLogged() throws Exception {
-
-		BddUtilisateur.ajout(email, motDePasse);
-
-		Mockito.when(request.queryParams("email")).thenReturn(this.email);
-		Mockito.when(request.queryParams("motDePasse")).thenReturn(motDePasse);
-		Mockito.when(request.session()).thenReturn(session);
-		Mockito.when(session.isNew()).thenReturn(false);
-
-		authentification.handle(request, response);
-
-		assertNotNull(attributes.get("redirection"));
-	}
-
 	@After
 	public void dispose() throws SQLException, IOException, ClassNotFoundException {
 		attributes.clear();

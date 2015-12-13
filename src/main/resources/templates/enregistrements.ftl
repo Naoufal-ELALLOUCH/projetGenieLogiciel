@@ -20,17 +20,17 @@
         </thead>
         <tbody>
 			<#list enregistrements as enregistrement>
-            <tr>
-                <td>${enregistrement.atelier.titre}</td>
-                <td>${enregistrement.date}</td>
-                <td>${enregistrement.nbInscrits}</td>
-                <td>
-                    <a class="btn btn-mini btn-default" href="/atelier/${atelier.idAtelier}" alt="Détails">
-                        <i class="icon-info-sign icon-white"></i>
-                        Détails
-                    </a>
-                </td>
-            </tr>
+	            <tr>
+	                <td>${enregistrement.atelier.titre}</td>
+	                <td>${enregistrement.date}</td>
+	                <td>${enregistrement.nbInscrits}</td>
+	                <td>
+	                    <a class="btn btn-mini btn-default" href="/atelier/${enregistrement.atelier.idAtelier}" alt="Détails">
+	                        <i class="icon-info-sign icon-white"></i>
+	                        Détails
+	                    </a>
+	                </td>
+	            </tr>
 			</#list>
         </tbody>
     </table>
