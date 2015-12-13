@@ -98,7 +98,7 @@ public class TestBddEnregistrement {
 
 		List<Integer> idEnseignant =  new ArrayList<Integer>() ;
 
-		int idAtelier = 1;
+		
 		String jour = "2015-12-05";
 		String heure = "13:00";
 		int capacite = 30;
@@ -128,6 +128,52 @@ public class TestBddEnregistrement {
 			   count ++;
 			}
 	}
+	
+	@Test
+	public void testSupprEnregistrementByIdCreneau() throws IOException, SQLException, ClassNotFoundException {
+
+		Connection connection = BddConnecteur.getConnection();
+		
+		String jour = "2015-12-05";
+		String heure = "13:00";
+		String heure1 = "14:00";
+		int capacite = 30;
+		BddUtilisateur.ajout("labri@labri.fr", "labri");
+		BddLabo.ajout(1, "Labri");
+		BddAtelier.ajoutAtelier(1, "A la poursuite d'ennemis invisibles", "Sciences de la vie ", "Campus Carreire (Hôpital Pellegrin)", "Labo MFP", "","", "","");
+		BddCreneau.ajoutCreneau(1, jour, heure, capacite);
+		BddCreneau.ajoutCreneau(1, jour, heure1, capacite);
+
+		BddEnseignant.ajout(1, "nom1", "prenom1");
+		
+		// Insertion
+		BddEnregistrement.enregistrement(1, 1, 20);
+		BddEnregistrement.enregistrement(1, 2, 10);
+		
+		// Suppression
+		BddEnregistrement.supprEnregistrementByIdCreneau(1);
+		
+		// Vérification
+		String sql = "SELECT idEnseignant FROM Enregistrement WHERE idCreneau = 1 ";
+		Statement statement = connection.createStatement();
+		ResultSet rs = statement.executeQuery(sql);
+
+		int count = 0;
+		while(rs.next()) {
+			
+			count++;
+		}
+
+		assertEquals(count, 0);
+		
+		// Fermeture
+		rs.close();
+		statement.close();
+		connection.close();
+		
+	}
+	
+	
 	@After
 	public void dispose() throws SQLException, IOException, ClassNotFoundException {
 		Connection connection = BddConnecteur.getConnection();
