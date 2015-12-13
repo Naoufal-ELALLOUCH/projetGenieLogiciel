@@ -71,6 +71,10 @@ public class App {
 		// Créneau - suppression
 		get("/atelier/:idAtelier/creneaux/:idCreneau/supprimer", new SupprimerCreneau());
 
+		// TODO Créneau - inscription
+		// get("/atelier/:idAtelier/creneaux/:idCreneau/inscription", new VisualisationInscrireCreneau(), engine);
+		// post("/atelier/:idAtelier/creneaux/:idCreneau/inscription", new InscrireCreneau());
+
 		// Enregistrements
 		get("/enseignant", new VisualisationEnseignant(), engine);
 

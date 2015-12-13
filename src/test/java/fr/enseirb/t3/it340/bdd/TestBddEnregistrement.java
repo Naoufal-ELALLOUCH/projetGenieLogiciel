@@ -154,18 +154,28 @@ public class TestBddEnregistrement {
 		// Suppression
 		BddEnregistrement.supprEnregistrementByIdCreneau(1);
 		
-		// Vérification
+		// Vérification sur le créneau 1
 		String sql = "SELECT idEnseignant FROM Enregistrement WHERE idCreneau = 1 ";
 		Statement statement = connection.createStatement();
 		ResultSet rs = statement.executeQuery(sql);
 
 		int count = 0;
 		while(rs.next()) {
-			
 			count++;
 		}
 
 		assertEquals(count, 0);
+
+		// Vérification sur le créneau 2
+		sql = "SELECT idEnseignant FROM Enregistrement WHERE idCreneau = 2";
+		rs = statement.executeQuery(sql);
+
+		count = 0;
+		while(rs.next()) {
+			count++;
+		}
+
+		assertEquals(count, 1);
 		
 		// Fermeture
 		rs.close();
@@ -173,8 +183,65 @@ public class TestBddEnregistrement {
 		connection.close();
 		
 	}
-	
-	
+
+	@Test
+	public void testSupprEnregistrementByIdAtelier() throws SQLException, IOException, ClassNotFoundException {
+		Connection connection = BddConnecteur.getConnection();
+
+		String jour = "2015-12-05";
+		String heure = "13:00";
+		String heure1 = "14:00";
+		int capacite = 30;
+
+		// Labo : Labri
+		BddUtilisateur.ajout("labri@labri.fr", "labri");
+		BddLabo.ajout(1, "Labri");
+
+		// Ajout d'un atelier
+		BddAtelier.ajoutAtelier(1, "A la poursuite d'ennemis invisibles", "Sciences de la vie ", "Campus Carreire (Hôpital Pellegrin)", "Labo MFP", "","", "","");
+
+		// Ajout de deux créneaux
+		BddCreneau.ajoutCreneau(1, jour, heure, capacite);
+		BddCreneau.ajoutCreneau(1, jour, heure1, capacite);
+
+		BddEnseignant.ajout(1, "nom1", "prenom1");
+
+		// Insertion
+		BddEnregistrement.enregistrement(1, 1, 20);
+		BddEnregistrement.enregistrement(1, 2, 10);
+
+		// Suppression
+		BddEnregistrement.supprEnregistrementByIdAtelier(1);
+
+		// Vérification sur le créneau 1
+		String sql = "SELECT idEnseignant FROM Enregistrement WHERE idCreneau = 1 ";
+		Statement statement = connection.createStatement();
+		ResultSet rs = statement.executeQuery(sql);
+
+		int count = 0;
+		while(rs.next()) {
+			count++;
+		}
+
+		assertEquals(count, 0);
+
+		// Vérification sur le créneau 2
+		sql = "SELECT idEnseignant FROM Enregistrement WHERE idCreneau = 2";
+		rs = statement.executeQuery(sql);
+
+		count = 0;
+		while(rs.next()) {
+			count++;
+		}
+
+		assertEquals(count, 0);
+
+		// Fermeture
+		rs.close();
+		statement.close();
+		connection.close();
+	}
+
 	@After
 	public void dispose() throws SQLException, IOException, ClassNotFoundException {
 		Connection connection = BddConnecteur.getConnection();

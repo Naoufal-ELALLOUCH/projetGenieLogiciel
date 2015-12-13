@@ -123,8 +123,8 @@ public class BddCreneau {
 	// Supprimer un creneau
 	public static void supprCreneau(int idCreneau){
 
-	String sql = "DELETE FROM Creneau WHERE idCreneau=?";
-
+		BddEnregistrement.supprEnregistrementByIdCreneau(idCreneau);
+		String sql = "DELETE FROM Creneau WHERE idCreneau=?";
 		
 		try {
 			Connection connection = BddConnecteur.getConnection();
@@ -143,9 +143,10 @@ public class BddCreneau {
 	}
 	public static void 	supprCreneauxByIdAtelier(int idAtelier) {
 
-		String sql = "DELETE FROM Creneau WHERE idAtelier=?";
+		// D'abord on supprime les enregistrements
+		BddEnregistrement.supprEnregistrementByIdAtelier(idAtelier);
 
-		// TODO supprimer les enregistrements d'abord
+		String sql = "DELETE FROM Creneau WHERE idAtelier=?";
 
 		try {
 			Connection connection = BddConnecteur.getConnection();

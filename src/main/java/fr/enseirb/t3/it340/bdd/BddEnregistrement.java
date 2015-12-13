@@ -164,10 +164,32 @@ public class BddEnregistrement {
 			statement.close();
 			connection.close();
 
-			} catch (Exception e) {
-				log.error("Impossible de supprimer l'enregistrement ", e);
-			}
+		} catch (Exception e) {
+			log.error("Impossible de supprimer l'enregistrement ", e);
+		}
 			
-	}	
+	}
+
+	// Supprimer un enregitrement by idAtelier
+	public static void supprEnregistrementByIdAtelier(int idAtelier) {
+
+		String supprReq = "DELETE FROM Enregistrement WHERE idCreneau IN (SELECT idCreneau FROM Atelier WHERE idAtelier = ?)";
+
+
+		try {
+			Connection connection = BddConnecteur.getConnection();
+			PreparedStatement statement = connection.prepareStatement(supprReq);
+
+			statement.setInt(1, idAtelier);
+
+			statement.executeUpdate();
+			statement.close();
+			connection.close();
+
+		} catch (Exception e) {
+			log.error("Impossible de supprimer les enregistrements", e);
+		}
+
+	}
 	
 }

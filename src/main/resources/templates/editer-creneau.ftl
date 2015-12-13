@@ -15,6 +15,8 @@
 	                <th>Capacité</th>
 		            <#if modificationAutorisee?? && modificationAutorisee>
 		                <th>Action</th>
+		            <#elseif enseignant>
+                        <th>Action</th>
 		            </#if>
 	            </tr>
 	            </thead>
@@ -35,6 +37,13 @@
 	                                Supprimer
 	                            </a>
 	                        </td>
+					    <#elseif enseignant>
+					        <td>
+                                <a class="btn btn-mini btn-primary" href="/atelier/${idAtelier}/creneaux/${c.idCreneau}/inscrire" alt="Inscrire">
+                                    <i class="icon-edit icon-white"></i>
+                                    Inscrire
+                                </a>
+					        </td>
 					    </#if>
 	                </tr>
 				    </#list>

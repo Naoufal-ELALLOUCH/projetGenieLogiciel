@@ -45,6 +45,11 @@
 	                            <i class="icon-remove icon-white"></i>
 	                            Supprimer
 	                        </a>
+						<#elseif enseignant>
+                            <a class="btn btn-mini btn-default" href="/atelier/${atelier.idAtelier}/creneaux" alt="Inscrire">
+                                <i class="icon-remove icon-white"></i>
+                                Inscrire
+                            </a>
 						</#if>
 					</td>
 				</tr>
