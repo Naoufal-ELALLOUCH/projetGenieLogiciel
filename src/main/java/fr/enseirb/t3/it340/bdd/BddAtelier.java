@@ -101,7 +101,7 @@ public class BddAtelier {
 	// Modifier un atelier
 	public static void editAtelier(int idAtelier, String titre, String themes, String zone, String adresse, String orateurs, String partenaires, String cible, String remarques){
 		
-		String editReq = "UPDATE Atelier SET titre=? , themes=?, zone=?, orateurs=?, adresse=?, partenaires=?, cible=?, remarques=? WHERE idAtelier=?";
+		String editReq = "UPDATE Atelier SET titre=?, themes=?, zone=?, orateurs=?, adresse=?, partenaires=?, cible=?, remarques=? WHERE idAtelier=?";
 		
 		try {
 
@@ -111,8 +111,8 @@ public class BddAtelier {
 			statement.setString(1, titre);
 			statement.setString(2, themes);
 			statement.setString(3, zone);
-			statement.setString(4, adresse);
-			statement.setString(5, orateurs);
+			statement.setString(4, orateurs);
+			statement.setString(5, adresse);
 			statement.setString(6, partenaires);
 			statement.setString(7, cible);
 			statement.setString(8, remarques);

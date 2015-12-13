@@ -14,6 +14,8 @@ public class VisualisationCreerAtelier implements TemplateViewRoute {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 		attributes.put("title", "Créer un atelier");
 		attributes.put("connected", (request.session().attribute("email") != null));
+		attributes.put("labo", (request.session().attribute("labo") != null));
+		attributes.put("enseignant", (request.session().attribute("enseignant") != null));
 
 		// On regarde si l'utilisateur a accès
 		ModelAndView modelAndView = Authentification.checkLabo(request, response);

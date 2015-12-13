@@ -24,6 +24,8 @@ public class VisualisationEditerCreneau implements TemplateViewRoute {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 		attributes.put("title", "Éditer un créneau");
 		attributes.put("connected", (request.session().attribute("email") != null));
+		attributes.put("labo", (request.session().attribute("labo") != null));
+		attributes.put("enseignant", (request.session().attribute("enseignant") != null));
 
 		// On regarde si l'utilisateur a accès
 		ModelAndView modelAndView = Authentification.checkLabo(request, response);
@@ -51,6 +53,8 @@ public class VisualisationEditerCreneau implements TemplateViewRoute {
 			response.redirect("/laboratoire/ateliers");
 		else {
 			attributes.put("creneau", creneau);
+			attributes.put("subtitle", "Éditer un créneau");
+			attributes.put("modificationAutorisee", true);
 		}
 
 		return new ModelAndView(attributes, "editer-creneau.ftl");

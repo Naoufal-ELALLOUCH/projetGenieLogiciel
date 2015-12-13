@@ -21,9 +21,9 @@ public class VisualisationAteliers implements TemplateViewRoute {
 		Map<Integer, Atelier> ateliersMap = BddAtelier.getAteliers();
 		List<Atelier> ateliers = new ArrayList<Atelier>(ateliersMap.values());
 
-		VisualisationAteliersGenerator.getModelAndView(req, ateliers, attributes);
+		attributes.put("modificationAutorisee", false);
 
-		return new ModelAndView(attributes, "ateliers.ftl");
+		return VisualisationAteliersGenerator.getModelAndView(req, ateliers, attributes);
 	}
 
 }

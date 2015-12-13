@@ -25,11 +25,16 @@
 					<div class="collapse navbar-collapse" id="myNavBar">
 						<ul class="nav navbar-nav">
 							<li>
-								<a href="#" alt="Accueil">Accueil</a>
+								<a href="/" alt="Accueil">Accueil</a>
 							</li>
-							<li>
-								<a href="#" alt="Contact">Contact</a>
-							</li>
+                            <li>
+                                <a href="/ateliers" alt="Ateliers">Ateliers</a>
+                            </li>
+							<#if labo?? && labo>
+	                            <li>
+	                                <a href="/laboratoire/ateliers" alt="Mes ateliers">Mes ateliers</a>
+	                            </li>
+							</#if>
 						</ul>
 						<ul class="nav navbar-nav navbar-right">
 							<li>

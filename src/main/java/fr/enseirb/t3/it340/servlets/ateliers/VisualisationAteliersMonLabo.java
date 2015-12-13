@@ -28,6 +28,8 @@ public class VisualisationAteliersMonLabo implements TemplateViewRoute {
 		Map<Integer, Atelier> ateliersMap = laboratoire.getAteliers();
 		List<Atelier> ateliers = new ArrayList<Atelier>(ateliersMap.values());
 
+		attributes.put("modificationAutorisee", true);
+
 		VisualisationAteliersGenerator.getModelAndView(request, ateliers, attributes);
 
 		return new ModelAndView(attributes, "ateliers.ftl");

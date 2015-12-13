@@ -12,6 +12,8 @@ public class VisualisationAccueil implements TemplateViewRoute {
 
 		attributes.put("title", "Accueil");
 		attributes.put("connected", (request.session().attribute("email") != null));
+		attributes.put("labo", (request.session().attribute("labo") != null));
+		attributes.put("enseignant", (request.session().attribute("enseignant") != null));
 		attributes.put("name", "Chocolat");
 
 		return new ModelAndView(attributes, "accueil.ftl");
