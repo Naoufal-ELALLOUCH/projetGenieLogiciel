@@ -151,6 +151,26 @@ public class BddAtelier {
 		}
 		
 	}
+
+	public static void supprAtelierByIdLabo(int idLabo){
+
+		String supprReq = "DELETE FROM Atelier WHERE idLabo=?";
+
+		try {
+			Connection connection = BddConnecteur.getConnection();
+			PreparedStatement statement = connection.prepareStatement(supprReq);
+
+			statement.setInt(1, idLabo);
+
+			statement.executeUpdate();
+			statement.close();
+			connection.close();
+
+		} catch (Exception e) {
+			log.error("Impossible de supprimer cet Atelier par idLabo ", e);
+		}
+		
+	}
 	
 	public static void changeStatut(int idAtelier, String statut) {
 		
@@ -211,6 +231,7 @@ public class BddAtelier {
 
 		return ateliers;
 	}
+	
 
 	public static Map<Integer, Atelier> getAteliers() {
 		return getAteliers("SELECT * FROM Atelier");
