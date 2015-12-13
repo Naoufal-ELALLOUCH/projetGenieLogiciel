@@ -25,7 +25,7 @@ public class TestBddCreneau {
 
 		// Insertion
 		int idAtelier = 1;
-		String jour = "12/05/2015";
+		String jour = "2015-12-23";
 		String heure = "13:00";
 		int capacite = 20;
 		BddCreneau.ajoutCreneau(1, jour, heure, capacite);
@@ -70,18 +70,18 @@ public class TestBddCreneau {
 		
 		// Test : récupération d'un objet null
 		creneaux = BddCreneau.getCreneauxByIdAtelier(1);
-		assertNull(creneaux);
+		assertEquals(creneaux.size(), 0);
 			
 		// Insertion
 		int idAtelier = 1;
-		String jour = "12/10/2015";
+		String jour = "2015-12-23";
 		String heure = "21:00";
 		int capacite = 20;
 		BddCreneau.ajoutCreneau(idAtelier, jour, heure, capacite);
 		
 		// Test : récupération de creneaux 
 		creneaux = BddCreneau.getCreneauxByIdAtelier(idAtelier);
-		assertNotNull(creneaux);
+		assertEquals(creneaux.size(), 1);
 			
 	}
 	
@@ -95,7 +95,7 @@ public class TestBddCreneau {
 
 		// Insertion
 		int idAtelier = 1;
-		String jour = "12/05/2015";
+		String jour = "2015-12-23";
 		String heure = "13:00";
 		int oldCapacite = 20;
 		int newCapacite = 40;
@@ -139,7 +139,7 @@ public class TestBddCreneau {
 
 		// Insertion
 		int idAtelier = 1;
-		String jour = "12/05/2015";
+		String jour = "2015-12-23";
 		String heure = "13:00";
 		int oldCapacite = 20;
 		int newCapacite = 40;

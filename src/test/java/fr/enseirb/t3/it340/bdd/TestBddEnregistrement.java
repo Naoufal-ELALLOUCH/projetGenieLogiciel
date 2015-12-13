@@ -21,7 +21,7 @@ public class TestBddEnregistrement {
 		Connection connection = BddConnecteur.getConnection();
 
 		int idAtelier = 1;
-		String jour = "12/05/2015";
+		String jour = "2015-05-12";
 		String heure = "13:00";
 		int capacite = 30;
 		BddUtilisateur.ajout("labri@labri.fr", "labri");
@@ -99,7 +99,7 @@ public class TestBddEnregistrement {
 		List<Integer> idEnseignant =  new ArrayList<Integer>() ;
 
 		int idAtelier = 1;
-		String jour = "12/05/2015";
+		String jour = "2015-12-05";
 		String heure = "13:00";
 		int capacite = 30;
 		BddUtilisateur.ajout("labri@labri.fr", "labri");

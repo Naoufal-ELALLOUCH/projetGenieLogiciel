@@ -44,7 +44,11 @@ public class App {
 		get("/laboratoire/atelier/:idAtelier/modifier", new VisualisationEditerAtelier(), engine);
 		post("/laboratoire/atelier/:idAtelier/modifier", new EditerAtelier());
 
-		//get("/atelier/:idAtelier/creneaux", new VisualisationEditerCreneau(), engine);
+		get("atelier/:idAtelier/creneaux", new VisualisationCreerCreneau(), engine);
+		post("atelier/:idAtelier/creneaux", new CreerCreneau());
+
+		get("/atelier/:idAtelier/creneaux/:idCreneau", new VisualisationEditerCreneau(), engine);
+		post("/atelier/:idAtelier/creneaux/:idCreneau", new EditerCreneau());
 
 	}
 

@@ -24,9 +24,8 @@ public class BddCreneau {
 
 	public static java.sql.Date stringToDate(String stringDate) throws ParseException {
 		// String to sqlDate
-		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-		Date parsed = format.parse(stringDate);
-		return new java.sql.Date(parsed.getTime());
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		return new java.sql.Date(format.parse(stringDate).getTime());
 	}
 
 	public static java.sql.Time stringToTime(String stringTime) throws ParseException {
@@ -95,17 +94,17 @@ public class BddCreneau {
 			statement.setInt(1, idAtelier);
 			ResultSet resultat = statement.executeQuery();
 
-			if (!BddConnecteur.checkAccuracy(resultat, 1))
-				return null;
-
-			int idCreneau = resultat.getInt("idCreneau");
-			Date jour = resultat.getDate("jour");
-			Time heure = resultat.getTime("heure");
-			int capacite = resultat.getInt("capacite");
-			jour.setTime(heure.getTime());
-
 			while (resultat.next()) {
-				Creneau creneau = new Creneau(idCreneau, jour, capacite);
+
+				int idCreneau = resultat.getInt("idCreneau");
+				Date jour = resultat.getDate("jour");
+
+				Time heure = resultat.getTime("heure");
+				int capacite = resultat.getInt("capacite");
+
+				Date date = new Date(jour.getTime() + heure.getTime() + 3600000);
+
+				Creneau creneau = new Creneau(idCreneau, date, capacite);
 				creneaux.put(creneau.getIdCreneau(), creneau);
 			}
 
