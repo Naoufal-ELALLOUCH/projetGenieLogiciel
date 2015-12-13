@@ -170,12 +170,11 @@ public class TestBddCreneau {
 
 	@Test
 	public void testGetAtelierByIdCreneau() throws SQLException, IOException, ClassNotFoundException {
-		Connection connection = BddConnecteur.getConnection();
 
 		BddUtilisateur.ajout("labri@labri.fr", "labri");
 		BddLabo.ajout(1, "Labri");
 		BddAtelier.ajoutAtelier(1, "A la poursuite d'ennemis invisibles", "Sciences de la vie ", "Campus Carreire (Hôpital Pellegrin)", "Labo MFP", "", "", "", "");
-		BddAtelier.ajoutAtelier(2, "A la poursuite d'ennemis invisibles", "Sciences de la vie ", "Campus Carreire (Hôpital Pellegrin)", "Labo MFP", "", "", "", "");
+		BddAtelier.ajoutAtelier(1, "A la poursuite d'ennemis invisibles", "Sciences de la vie ", "Campus Carreire (Hôpital Pellegrin)", "Labo MFP", "", "", "", "");
 
 		// Insertion
 		int idAtelier = 1;

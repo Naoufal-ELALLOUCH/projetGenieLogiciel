@@ -134,7 +134,7 @@ public class BddAtelier {
 
 		String supprReq = "DELETE FROM Atelier WHERE idAtelier=?";
 
-		// TODO : supprimer les créneaux d'abord
+		BddCreneau.supprCreneauxByIdAtelier(idAtelier);
 
 		try {
 			Connection connection = BddConnecteur.getConnection();

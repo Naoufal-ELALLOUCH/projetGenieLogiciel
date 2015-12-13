@@ -52,7 +52,6 @@ public class BddEnregistrement {
 			rs2.close();
 			statement1.close();
 			statement2.close();
-			connection.close();
 
 			if (count == 0) {
 				String sql = "INSERT INTO Enregistrement(idEnseignant, idCreneau,nbInscrits) VALUES(?,?,?)";
@@ -81,8 +80,8 @@ public class BddEnregistrement {
 					statement.executeUpdate();
 
 				statement.close();
-				connection.close();
 			}
+			connection.close();
 
 		} catch (Exception e) {
 			log.error("Impossible de faire l'enregistrement : {}", e);

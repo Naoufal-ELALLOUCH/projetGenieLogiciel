@@ -7,6 +7,7 @@ import fr.enseirb.t3.it340.servlets.ateliers.*;
 import fr.enseirb.t3.it340.servlets.authentification.*;
 import fr.enseirb.t3.it340.servlets.creneau.CreerCreneau;
 import fr.enseirb.t3.it340.servlets.creneau.EditerCreneau;
+import fr.enseirb.t3.it340.servlets.creneau.SupprimerCreneau;
 import fr.enseirb.t3.it340.servlets.creneau.VisualisationEditerCreneau;
 import fr.enseirb.t3.it340.servlets.creneaux.VisualisationCreneaux;
 import fr.enseirb.t3.it340.servlets.creneaux.VisualisationEnseignant;
@@ -66,6 +67,9 @@ public class App {
 		// Créneau - modification
 		get("/atelier/:idAtelier/creneaux/:idCreneau", new VisualisationEditerCreneau(), engine);
 		post("/atelier/:idAtelier/creneaux/:idCreneau", new EditerCreneau());
+
+		// Créneau - suppression
+		get("/atelier/:idAtelier/creneaux/:idCreneau/supprimer", new SupprimerCreneau());
 
 		// Enregistrements
 		get("/enseignant", new VisualisationEnseignant(), engine);
