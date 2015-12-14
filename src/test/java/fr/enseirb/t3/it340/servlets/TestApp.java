@@ -44,7 +44,7 @@ public class TestApp {
 
 	@Test
 	public void testMainGetVisiteur() throws SQLException, IOException, ClassNotFoundException {
-		String format = "http://localhost:" + App.getPort() + "%s";
+		String format = "http://0.0.0.0:" + App.getPort() + "%s";
 		HttpGet request;
 		HttpResponse response;
 		Set<String> urls200 = new HashSet<String>();
@@ -97,7 +97,7 @@ public class TestApp {
 
 	@Test
 	public void testMainGetLabo() throws SQLException, IOException, ClassNotFoundException {
-		String format = "http://localhost:" + App.getPort() + "%s";
+		String format = "http://0.0.0.0:" + App.getPort() + "%s";
 		HttpGet request;
 		HttpResponse response;
 		Set<String> urls200 = new HashSet<String>();
@@ -158,7 +158,7 @@ public class TestApp {
 
 	@Test
 	public void testMainGetEnseignant() throws SQLException, IOException, ClassNotFoundException {
-		String format = "http://localhost:" + App.getPort() + "%s";
+		String format = "http://0.0.0.0:" + App.getPort() + "%s";
 		HttpGet request;
 		HttpResponse response;
 		Set<String> urls200 = new HashSet<String>();
