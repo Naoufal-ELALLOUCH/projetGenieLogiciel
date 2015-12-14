@@ -22,12 +22,18 @@ import java.sql.Statement;
 import java.util.*;
 
 import static org.junit.Assert.*;
-import static spark.Spark.stop;
+import static spark.Spark.*;
 
 public class TestApp {
 
+	String args[] = new String[1];
+
 	@Before
 	public void before() {
+		Random rn = new Random();
+		int min = 1025;
+		int max = 65535;
+		args[0] = Integer.toString(rn.nextInt((max - min) + 1) + min);
 		BddUtilisateur.ajout("labri@labri.com", "labri");
 		BddUtilisateur.ajout("charlie@heloise.com", "mdp");
 		BddLabo.ajout(1, "Labri");
@@ -44,7 +50,7 @@ public class TestApp {
 
 	@Test
 	public void testMainGetVisiteur() throws SQLException, IOException, ClassNotFoundException {
-		String format = "http://0.0.0.0:" + App.getPort() + "%s";
+		String format = "http://0.0.0.0:" + args[0] + "%s";
 		HttpGet request;
 		HttpResponse response;
 		Set<String> urls200 = new HashSet<String>();
@@ -70,7 +76,7 @@ public class TestApp {
 		urls302.add("/atelier/1/creneaux/1/inscrire");
 		urls302.add("/enseignant");
 
-		App.main(null);
+		App.main(args);
 		CloseableHttpClient client = HttpClientBuilder.create().disableRedirectHandling().build();
 
 		// Test 200 OK
@@ -97,13 +103,13 @@ public class TestApp {
 
 	@Test
 	public void testMainGetLabo() throws SQLException, IOException, ClassNotFoundException {
-		String format = "http://0.0.0.0:" + App.getPort() + "%s";
+		String format = "http://0.0.0.0:" +  args[0] + "%s";
 		HttpGet request;
 		HttpResponse response;
 		Set<String> urls200 = new HashSet<String>();
 		Set<String> urls302 = new HashSet<String>();
 
-		App.main(null);
+		App.main(args);
 		CloseableHttpClient client = HttpClientBuilder.create().disableRedirectHandling().build();
 
 		// Authentification en tant que labo
@@ -158,13 +164,13 @@ public class TestApp {
 
 	@Test
 	public void testMainGetEnseignant() throws SQLException, IOException, ClassNotFoundException {
-		String format = "http://0.0.0.0:" + App.getPort() + "%s";
+		String format = "http://0.0.0.0:" +  args[0] + "%s";
 		HttpGet request;
 		HttpResponse response;
 		Set<String> urls200 = new HashSet<String>();
 		Set<String> urls302 = new HashSet<String>();
 
-		App.main(null);
+		App.main(args);
 		CloseableHttpClient client = HttpClientBuilder.create().disableRedirectHandling().build();
 
 		// Authentification en tant qu'enseignant
