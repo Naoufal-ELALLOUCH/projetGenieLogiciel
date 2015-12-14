@@ -1,7 +1,6 @@
 package fr.enseirb.t3.it340;
 import static spark.Spark.*;
 
-import fr.enseirb.t3.it340.bdd.BddConnecteur;
 import fr.enseirb.t3.it340.servlets.VisualisationAccueil;
 import fr.enseirb.t3.it340.servlets.atelier.*;
 import fr.enseirb.t3.it340.servlets.ateliers.*;
@@ -10,11 +9,8 @@ import fr.enseirb.t3.it340.servlets.creneau.*;
 import fr.enseirb.t3.it340.servlets.creneaux.VisualisationCreneaux;
 import fr.enseirb.t3.it340.servlets.creneaux.VisualisationEnseignant;
 import freemarker.template.Configuration;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import spark.template.freemarker.FreeMarkerEngine;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
