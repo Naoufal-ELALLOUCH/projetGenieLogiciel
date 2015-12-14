@@ -1,6 +1,7 @@
 package fr.enseirb.t3.it340;
 import static spark.Spark.*;
 
+import fr.enseirb.t3.it340.bdd.BddConnecteur;
 import fr.enseirb.t3.it340.servlets.VisualisationAccueil;
 import fr.enseirb.t3.it340.servlets.atelier.*;
 import fr.enseirb.t3.it340.servlets.ateliers.*;
@@ -9,12 +10,25 @@ import fr.enseirb.t3.it340.servlets.creneau.*;
 import fr.enseirb.t3.it340.servlets.creneaux.VisualisationCreneaux;
 import fr.enseirb.t3.it340.servlets.creneaux.VisualisationEnseignant;
 import freemarker.template.Configuration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import spark.template.freemarker.FreeMarkerEngine;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.SQLException;
+import java.util.Properties;
 
 public class App {
+
+	public static Integer getPort() throws IOException, NumberFormatException {
+		Properties properties = new Properties();
+		InputStream is = App.class.getClassLoader().getResourceAsStream("application.properties");
+		properties.load(is);
+
+		return Integer.parseInt(properties.getProperty("port"));
+	}
 
 	public static void main(String[] args) throws SQLException, ClassNotFoundException, IOException {
 
@@ -23,6 +37,9 @@ public class App {
 		Configuration cfg = new Configuration();
 		cfg.setClassForTemplateLoading(App.class, "/templates/");
 		engine.setConfiguration(cfg);
+
+		// Choix du port
+		port(getPort());
 
 		// Gestion des urls
 		get("/", new VisualisationAccueil(), engine);

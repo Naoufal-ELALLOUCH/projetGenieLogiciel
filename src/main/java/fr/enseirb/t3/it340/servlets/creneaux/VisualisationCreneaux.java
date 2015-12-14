@@ -39,7 +39,7 @@ public class VisualisationCreneaux implements TemplateViewRoute {
 				}
 			}
 		} catch (Exception e) {
-			response.redirect("/laboratoire/ateliers");
+			response.redirect("/");
 		}
 
 		if (atelier != null) {
