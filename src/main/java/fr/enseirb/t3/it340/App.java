@@ -35,7 +35,7 @@ public class App {
 		engine.setConfiguration(cfg);
 
 		// Choix du port
-		port((args.length > 0) ? Integer.parseInt(args[0]) : getPort());
+		port(getPort());
 
 		// Gestion des urls
 		get("/", new VisualisationAccueil(), engine);

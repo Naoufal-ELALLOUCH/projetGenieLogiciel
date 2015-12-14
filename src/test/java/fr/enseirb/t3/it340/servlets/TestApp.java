@@ -10,9 +10,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicNameValuePair;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -22,18 +20,17 @@ import java.sql.Statement;
 import java.util.*;
 
 import static org.junit.Assert.*;
-import static spark.Spark.*;
+import static spark.Spark.stop;
 
 public class TestApp {
 
-	String args[] = new String[1];
+	@BeforeClass
+	public static void beforeClass() throws SQLException, IOException, ClassNotFoundException {
+		App.main(null);
+	}
 
 	@Before
 	public void before() {
-		Random rn = new Random();
-		int min = 1025;
-		int max = 65535;
-		args[0] = Integer.toString(rn.nextInt((max - min) + 1) + min);
 		BddUtilisateur.ajout("labri@labri.com", "labri");
 		BddUtilisateur.ajout("charlie@heloise.com", "mdp");
 		BddLabo.ajout(1, "Labri");
@@ -50,7 +47,7 @@ public class TestApp {
 
 	@Test
 	public void testMainGetVisiteur() throws SQLException, IOException, ClassNotFoundException {
-		String format = "http://0.0.0.0:" + args[0] + "%s";
+		String format = "http://localhost:" + App.getPort() + "%s";
 		HttpGet request;
 		HttpResponse response;
 		Set<String> urls200 = new HashSet<String>();
@@ -76,7 +73,6 @@ public class TestApp {
 		urls302.add("/atelier/1/creneaux/1/inscrire");
 		urls302.add("/enseignant");
 
-		App.main(args);
 		CloseableHttpClient client = HttpClientBuilder.create().disableRedirectHandling().build();
 
 		// Test 200 OK
@@ -103,13 +99,12 @@ public class TestApp {
 
 	@Test
 	public void testMainGetLabo() throws SQLException, IOException, ClassNotFoundException {
-		String format = "http://0.0.0.0:" +  args[0] + "%s";
+		String format = "http://localhost:" + App.getPort() + "%s";
 		HttpGet request;
 		HttpResponse response;
 		Set<String> urls200 = new HashSet<String>();
 		Set<String> urls302 = new HashSet<String>();
 
-		App.main(args);
 		CloseableHttpClient client = HttpClientBuilder.create().disableRedirectHandling().build();
 
 		// Authentification en tant que labo
@@ -164,13 +159,12 @@ public class TestApp {
 
 	@Test
 	public void testMainGetEnseignant() throws SQLException, IOException, ClassNotFoundException {
-		String format = "http://0.0.0.0:" +  args[0] + "%s";
+		String format = "http://localhost:" + App.getPort() + "%s";
 		HttpGet request;
 		HttpResponse response;
 		Set<String> urls200 = new HashSet<String>();
 		Set<String> urls302 = new HashSet<String>();
 
-		App.main(args);
 		CloseableHttpClient client = HttpClientBuilder.create().disableRedirectHandling().build();
 
 		// Authentification en tant qu'enseignant
@@ -225,7 +219,6 @@ public class TestApp {
 
 	@After
 	public void dispose() throws SQLException, IOException, ClassNotFoundException {
-		stop();
 		Connection connection = BddConnecteur.getConnection();
 		Statement statement = connection.createStatement();
 		statement.execute("DROP TABLE Enregistrement");
@@ -237,5 +230,10 @@ public class TestApp {
 		statement.close();
 		connection.close();
 		BddConnecteur.dispose();
+	}
+
+	@AfterClass
+	public static void disposeClass() {
+		stop();
 	}
 }
