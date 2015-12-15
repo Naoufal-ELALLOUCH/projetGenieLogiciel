@@ -1,4 +1,4 @@
-package fr.enseirb.t3.it340.servlets.ateliers;
+package fr.enseirb.t3.it340.servlets.atelier;
 
 import fr.enseirb.t3.it340.bdd.BddAtelier;
 import fr.enseirb.t3.it340.bdd.BddUtilisateur;
@@ -30,6 +30,7 @@ public class CreerAtelier implements Route {
 
 		BddAtelier.ajoutAtelier(idLabo, titre, themes, zone, adresse, orateurs, partenaires, cible, remarques);
 
+		// TODO redirect to ajout creneaux
 		response.redirect("/laboratoire/ateliers");
 
 		return null;

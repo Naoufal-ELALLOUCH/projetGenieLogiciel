@@ -3,6 +3,7 @@ package fr.enseirb.t3.it340.servlets.authentification;
 import fr.enseirb.t3.it340.bdd.BddEnseignant;
 import fr.enseirb.t3.it340.bdd.BddLabo;
 import fr.enseirb.t3.it340.bdd.BddUtilisateur;
+import fr.enseirb.t3.it340.modeles.Enseignant;
 import fr.enseirb.t3.it340.modeles.Laboratoire;
 import fr.enseirb.t3.it340.modeles.Utilisateur;
 import fr.enseirb.t3.it340.servlets.VisualisationAccueil;
@@ -34,14 +35,14 @@ public class Authentification implements Route {
 		return true;
 	}
 
-	public static ModelAndView checkLabo(Request request, Response response) throws Exception {
+	public static ModelAndView checkType(String type, Request request, Response response) throws Exception {
 		boolean access;
 		boolean access1 = true;
 		boolean access2 = true;
 
 		// On regarde si l'utilisateur a accès
 		access1 &= Authentification.checkLoggedIn(request, response);
-		access2 &= (request.session().attribute("labo") != null);
+		access2 &= (request.session().attribute(type) != null);
 		access = access1 & access2;
 
 		if (!access) {
@@ -54,48 +55,51 @@ public class Authentification implements Route {
 		return null;
 	}
 
+	public static ModelAndView checkLabo(Request request, Response response) throws Exception {
+		return checkType("labo", request, response);
+	}
+
+	public static ModelAndView checkEnseignant(Request request, Response response) throws Exception {
+		return checkType("enseignant", request, response);
+	}
+
 	public Object handle(Request request, Response response) throws Exception {
 
 		if (request.session().isNew()) {
 			request.session(true);
 		}
 
-		if (request.session().attribute("email") == null) {
+		String email = request.queryParams("email");
+		String motDePasse = request.queryParams("motDePasse");
 
-			String email = request.queryParams("email");
-			String motDePasse = request.queryParams("motDePasse");
+		boolean identifiantsOk = new BddUtilisateur().authentification(email, motDePasse);
 
-			boolean identifiantsOk = new BddUtilisateur().authentification(email, motDePasse);
+		if (identifiantsOk) {
 
-			if (identifiantsOk) {
+			Utilisateur utilisateur = BddUtilisateur.getUtilisateurByEmail(email);
+			int idUtilisateur = utilisateur.getIdUtilisateur();
 
-				Utilisateur utilisateur = BddUtilisateur.getUtilisateurByEmail(email);
-				int idUtilisateur = utilisateur.getIdUtilisateur();
+			request.session().attribute("email", email);
+			log.info("{} s'est connecté avec succès", email);
 
-				// Permet de savoir dans une session si l'utilisateur est un laboratoire ou un enseignant
-				if (BddLabo.isLabo(idUtilisateur)) {
-					Laboratoire labo = BddLabo.getLaboByIdUtilisateur(idUtilisateur);
-					request.session().attribute("labo", labo.getIdLaboratoire());
-					log.info("L'utilisateur {} est un laboratoire", idUtilisateur);
-				} else if (BddEnseignant.isEnseignant(idUtilisateur)) {
-					request.session().attribute("enseignant", "true");
-					log.info("L'utilisateur {} est un enseignant", idUtilisateur);
-				}
-
-				request.session().attribute("email", email);
-				log.info("{} s'est connecté avec succès", request.session().attribute("email"));
-
-				// TODO la bonne redirection
+			// Permet de savoir dans une session si l'utilisateur est un laboratoire ou un enseignant
+			if (BddLabo.isLabo(idUtilisateur)) {
+				Laboratoire labo = BddLabo.getLaboByIdUtilisateur(idUtilisateur);
+				request.session().attribute("labo", labo.getIdLaboratoire());
+				log.info("L'utilisateur {} est un laboratoire", idUtilisateur);
 				response.redirect("/laboratoire/ateliers");
 
-
-			} else {
-				log.warn("{} a essayé de se connecter avec un mauvais mot de passe", email);
-				erreurIdentifiants(request, response);
+			} else if (BddEnseignant.isEnseignant(idUtilisateur)) {
+				Enseignant enseignant = BddEnseignant.getEnseignantByIdUtilisateur(idUtilisateur);
+				request.session().attribute("enseignant", enseignant.getIdEnseignant());
+				log.info("L'utilisateur {} est un enseignant", idUtilisateur);
+				response.redirect("/enseignant");
 			}
+
+
 		} else {
-			// TODO la bonne rediction
-			response.redirect("/laboratoire/ateliers");
+			log.warn("{} a essayé de se connecter avec un mauvais mot de passe", email);
+			erreurIdentifiants(request, response);
 		}
 
 

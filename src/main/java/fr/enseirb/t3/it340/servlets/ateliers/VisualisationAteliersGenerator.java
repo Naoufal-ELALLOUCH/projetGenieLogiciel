@@ -18,6 +18,8 @@ public class VisualisationAteliersGenerator {
 		attributes.put("title", "Ateliers");
 		attributes.put("ateliers", ateliers);
 		attributes.put("connected", (req.session().attribute("email") != null));
+		attributes.put("labo", (req.session().attribute("labo") != null));
+		attributes.put("enseignant", (req.session().attribute("enseignant") != null));
 
 		return new ModelAndView(attributes, "ateliers.ftl");
 	}

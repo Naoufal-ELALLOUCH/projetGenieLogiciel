@@ -1,4 +1,4 @@
-package fr.enseirb.t3.it340;
+package fr.enseirb.t3.it340.servlets.ateliers;
 
 import fr.enseirb.t3.it340.bdd.BddAtelier;
 import fr.enseirb.t3.it340.bdd.BddLabo;
@@ -27,6 +27,8 @@ public class VisualisationAteliersMonLabo implements TemplateViewRoute {
 		Laboratoire laboratoire = BddLabo.getLaboByIdLabo((Integer) request.session().attribute("labo"));
 		Map<Integer, Atelier> ateliersMap = laboratoire.getAteliers();
 		List<Atelier> ateliers = new ArrayList<Atelier>(ateliersMap.values());
+
+		attributes.put("modificationAutorisee", true);
 
 		VisualisationAteliersGenerator.getModelAndView(request, ateliers, attributes);
 

@@ -1,0 +1,252 @@
+@startuml
+
+package "fr.enseirb.t2.it340.servlets" {
+	
+	package "atelier" {
+		class CreerAtelier
+		class EditerAtelier
+		class SupprimerAtelier
+		class VisualisationAtelier
+		class VisualisationCreerAtelier
+		class VisualisationEditerAtelier
+	}
+
+	package "ateliers" {
+		class VisualisationAteliersGenerator {
+			static ModelAndView getModelAndView(Request req, Response res)
+		}
+
+		class VisualisationAteliers --> VisualisationAteliersGenerator
+		class VisualisationAtelierLabo
+		class VisualisationAteliersMonLabo --> VisualisationAteliersGenerator
+	}
+
+	package "authentification" { 
+		class Authentification {
+			static void erreurIdentifiants(Request request, Response response)
+			static boolean checkLoggedIn(Request request, Response response)
+			static ModelAndView checkType(String type, Request request, Response response)
+			static ModelAndView checkLabo(Request request, Response response)
+			static ModelAndView checkEnseignant(Request request, Response response)
+		}
+
+		class Deconnexion
+		class Inscription
+		class VisualisationAuthentification
+		class VisualisationInscription
+	}
+
+	package "creneau" {
+		class CreerCreneau
+		class EditerCreneau
+		class InscrireCreneau
+		class SupprimerCreneau
+		class VisualisationEditerCreneau
+		class VisualisationInscrireCreneau
+	}
+
+	package "creneaux" {
+		class VisualisationCreneaux
+		class VisualisationEnseignant
+	}
+
+	class VisualisationAccueil
+}
+
+package "fr.enseirb.t2.it340.modeles" {
+	class Utilisateur {
+		int idUtilisateur
+		String email
+		String password
+
+		Utilisateur(int idUtilisateur, String email, String motDePasse)
+		getIdUtilisateur()
+		String getEmail()
+		void setEmail(String email)
+		String getMotDePasse()
+		setMotDePasse(String motDePasse)
+
+	}
+
+	class Laboratoire extends Utilisateur {
+		final int idLaboratoire;
+		private String nom;
+		private Map<Integer, Atelier> ateliers
+
+		Laboratoire(int idUtilisateur, String email, String password, int idLaboratoire, String nom, Map<Integer, Atelier> ateliers)
+		int getIdLaboratoire()
+
+		String getNom()
+		void setNom(String nom)
+		Map<Integer, Atelier> getAteliers()
+		void addAtelier(Atelier atelier)
+		void removeAtelier(int idAtelier)
+	}
+
+	class Atelier {
+		final int idAtelier
+		final int idLabo
+		String titre
+		String themes
+		String zone
+		String adresse
+		String orateurs
+		String partenaires
+		String cible
+		String remarques
+		Map<Integer, Creneau> creneaux
+		String statut
+
+		Atelier(int idAtelier, int idLabo, String titre)
+		Atelier(int idAtelier, int idLabo, String titre, String themes, String zone, String adresse, String orateurs, String partenaires, String cible, String remarques, Map<Integer, Creneau> creneaux, String statut)
+		void ajoutCreneau(Creneau creneau)
+		void supprimerCreneau(int idCreneau)
+		int getIdAtelier()
+		String getTitre()
+		void setTitre(String titre)
+		String getThemes()
+		void setThemes(String themes)
+		String getZone()
+		void setZone(String zone)
+		String getAdresse()
+		void setAdresse(String adresse)
+		String getOrateurs()
+		void setOrateurs(String orateurs)
+		String getPartenaires()
+		void setPartenaires(String partenaires)
+		String getCible()
+		void setCibles(String cible)
+		String getRemarques()
+		void setRemarques(String remarques)
+		Map<Integer, Creneau> getCreneaux()
+		void setStatut(String statut)
+		String getStatut()
+		int getIdLabo()
+	}
+
+	class Creneau {
+		int idCreneau
+		int capacite
+		Date date
+		Date getDate()
+		void setDate(Date date)
+		int getCapacite()
+		void setCapacite(int capacite)
+		Creneau (int idCreneau , Date date, int capacite)
+		int getIdCreneau()
+	}
+
+	class Enregistrement {
+		int nbInscrits
+		int getNbInscrits()
+		Atelier getAtelier()
+		String getDate()
+		final Atelier atelier
+		final String date
+
+		Enregistrement(int nbInscrits, Atelier atelier, String date)
+	}
+
+	class Enseignant {
+		final int idEnseignant;
+		int idUtilisateur;
+		String nom;
+		String prenom;
+	
+		Enseignant(int idEnseignant, int idUtilisateur, String nom, String prenom)
+		int getIdUtilisateur()
+		void setIdUtilisateur(int idUtilisateur)
+		String getNom()
+		void setNom(String nom)
+		String getPrenom()
+		void setPrenom(String prenom)
+		int getIdEnseignant()
+	}
+
+	Atelier o-- "0:✻" Creneau
+	Laboratoire o-- "0:✻" Atelier
+}
+
+package "fr.enseirb.t2.it340.bdd" {
+
+	class BddAtelier {
+		static void ajoutAtelier(int idLabo, String titre, String themes, String adresse, String orateurs, String partenaires, String cible, String remarques)
+
+		static Atelier getAtelierById(int idAtelier)
+		static void editAtelier(Atelier atelier)
+		static void editAtelier(int idAtelier, String titre, String themes, String zone, String adresse, String orateurs, String partenaires, String cible, String remarques)
+
+		static void supprAtelier(int idAtelier)
+		static void supprAtelierByIdLabo(int idLabo)
+		static void changeStatut(int idAtelier, String statut)
+		static Map<Integer, Atelier> getAteliers(String sql)
+		static Map<Integer, Atelier> getAtelirs()
+		static Map<Integer, Atelier> getAteliersByIdLabo(int idLaboArg)	
+	}
+
+	BddAtelier --> Atelier
+	BddAtelier --> Creneau
+
+	class BddConnecteur {
+		Properties getProperties()
+		Connection getConnexion()
+		static BddConnecteur getInstance()
+		static Connection getConnection()
+		static void dispose()
+		static boolean checkAccuracy(ResultSet rs, int expectedResultNb)
+	}
+	class BddCreneau {
+		static Date stringToDate(String date)
+		static Time stringToTime(String time)
+		static void ajoutCreneau(int idAtelier, String jour, String heure, int capacite)
+		public static void editCreneau(int idCreneau, String jour, String heure, int capacite)
+		public static Map<Integer, Creneau> getCreneauxByIdAtelier(int idAtelier)
+		static void supprCreneau(int idCreneau)
+		static void 	supprCreneauxByIdAtelier(int idAtelier)
+		static Atelier getAtelierByIdCreneau(int idCreneau)
+	}
+
+	BddCreneau --> Creneau
+	BddCreneau --> Atelier
+
+	class BddEnregistrement {
+		static void enregistrement(int idEnseignant, int idCreneau, int nbAInscrire)
+		static List<Enregistrement> getEnregistrementsByIdEnseignant(int idEnseignant)
+		static List<Integer> getListeIdEnseignantByIdCreneau(int idCreneau)
+		static void supprEnregistrementByIdCreneau(int idCreneau)
+		static void supprEnregistrementByIdAtelier(int idAtelier)
+	}
+
+	BddEnregistrement --> Enregistrement
+	BddEnregistrement --> Creneau
+	BddEnregistrement --> Atelier
+
+	class BddEnseignant {
+		static void ajout(int idUtilisateur, String nom, String prenom)
+		static Enseignant getEnseignantByIdEnseignant(int idEnseignant)
+		static Enseignant getEnseignantByIdUtilisateur(int idUtilisateur)
+		static boolean isEnseignant(int idUtilisateur)
+	}
+
+	BddEnseignant --> Enseignant
+
+	class BddLabo {
+		static void ajout(int idUtilisateur, String nom)
+		static Laboratoire getLaboByIdUtilisateur(int idUtilisateur)
+		static Laboratoire getLaboByIdLabo(int idLabo)
+		static boolean isLabo(int idUtilisateur)
+	}
+
+	BddLabo --> Laboratoire
+	BddLabo --> Utilisateur
+	BddUtilisateur --> Utilisateur
+
+	class BddUtilisateur {
+		static void ajout(String email, String motDePasse)
+		static boolean authentification(String email, String motDePasse)
+		static Utilisateur getUtilisateurByEmail(String email)
+		static Utilisateur getUtilisateurByIdUtilisateur(int idUtilisateur)
+	}
+}
+
+@enduml

@@ -20,16 +20,25 @@
 			<nav class="navbar navbar-inverse">
 				<div class="container-fluid">
 					<div class="navbar-header">
-						<a class="navbar-brand" href="#" alt="Logo">Logo</a>
+						<a class="navbar-brand" href="#" alt="Logo">Fête de la science</a>
 					</div>
 					<div class="collapse navbar-collapse" id="myNavBar">
 						<ul class="nav navbar-nav">
 							<li>
-								<a href="#" alt="Accueil">Accueil</a>
+								<a href="/" alt="Accueil">Accueil</a>
 							</li>
-							<li>
-								<a href="#" alt="Contact">Contact</a>
-							</li>
+                            <li>
+                                <a href="/ateliers" alt="Ateliers">Ateliers</a>
+                            </li>
+							<#if labo?? && labo>
+	                            <li>
+	                                <a href="/laboratoire/ateliers" alt="Mes ateliers">Mes ateliers</a>
+	                            </li>
+							<#elseif enseignant?? && enseignant>
+                                <li>
+                                    <a href="/enseignant" alt="Mes enregistrements">Mes enregistrements</a>
+                                </li>
+							</#if>
 						</ul>
 						<ul class="nav navbar-nav navbar-right">
 							<li>

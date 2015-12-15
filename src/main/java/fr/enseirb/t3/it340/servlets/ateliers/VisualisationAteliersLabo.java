@@ -13,15 +13,20 @@ public class VisualisationAteliersLabo implements TemplateViewRoute {
 	public ModelAndView handle(Request request, Response response) throws Exception {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 		int idLabo = 0;
+		boolean modificationAutorisee = false;
+
 		try {
 			idLabo = Integer.parseInt(request.params("idLabo"));
-		} catch (NumberFormatException e) {}
+			Integer myIdLabo = request.session().attribute("labo");
+			if (myIdLabo != null && myIdLabo.equals(idLabo))
+				modificationAutorisee = true;
+		} catch (Exception e) {}
 
 		Map<Integer, Atelier> ateliersMap = BddAtelier.getAteliersByIdLabo(idLabo);
 		List<Atelier> ateliers = new ArrayList<Atelier>(ateliersMap.values());
 
-		VisualisationAteliersGenerator.getModelAndView(request, ateliers, attributes);
+		attributes.put("modificationAutorisee", modificationAutorisee);
 
-		return new ModelAndView(attributes, "ateliers.ftl");
+		return VisualisationAteliersGenerator.getModelAndView(request, ateliers, attributes);
 	}
 }

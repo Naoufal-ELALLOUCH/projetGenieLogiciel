@@ -31,6 +31,8 @@ public class Inscription implements Route {
 		else
 			BddEnseignant.ajout(idUtilisateur, nom, prenom);
 
+		response.redirect("/");
+
 		return null;
 	}
 }

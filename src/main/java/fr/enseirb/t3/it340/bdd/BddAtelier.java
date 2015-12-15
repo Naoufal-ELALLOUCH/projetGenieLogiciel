@@ -101,7 +101,7 @@ public class BddAtelier {
 	// Modifier un atelier
 	public static void editAtelier(int idAtelier, String titre, String themes, String zone, String adresse, String orateurs, String partenaires, String cible, String remarques){
 		
-		String editReq = "UPDATE Atelier SET titre=? , themes=?, zone=?, orateurs=?, adresse=?, partenaires=?, cible=?, remarques=? WHERE idAtelier=?";
+		String editReq = "UPDATE Atelier SET titre=?, themes=?, zone=?, orateurs=?, adresse=?, partenaires=?, cible=?, remarques=? WHERE idAtelier=?";
 		
 		try {
 
@@ -111,8 +111,8 @@ public class BddAtelier {
 			statement.setString(1, titre);
 			statement.setString(2, themes);
 			statement.setString(3, zone);
-			statement.setString(4, adresse);
-			statement.setString(5, orateurs);
+			statement.setString(4, orateurs);
+			statement.setString(5, adresse);
 			statement.setString(6, partenaires);
 			statement.setString(7, cible);
 			statement.setString(8, remarques);
@@ -134,7 +134,7 @@ public class BddAtelier {
 
 		String supprReq = "DELETE FROM Atelier WHERE idAtelier=?";
 
-		// TODO : supprimer les créneaux d'abord
+		BddCreneau.supprCreneauxByIdAtelier(idAtelier);
 
 		try {
 			Connection connection = BddConnecteur.getConnection();
@@ -148,6 +148,26 @@ public class BddAtelier {
 
 		} catch (Exception e) {
 			log.error("Impossible de supprimer cet Atelier ", e);
+		}
+		
+	}
+
+	public static void supprAtelierByIdLabo(int idLabo){
+
+		String supprReq = "DELETE FROM Atelier WHERE idLabo=?";
+
+		try {
+			Connection connection = BddConnecteur.getConnection();
+			PreparedStatement statement = connection.prepareStatement(supprReq);
+
+			statement.setInt(1, idLabo);
+
+			statement.executeUpdate();
+			statement.close();
+			connection.close();
+
+		} catch (Exception e) {
+			log.error("Impossible de supprimer cet Atelier par idLabo ", e);
 		}
 		
 	}
@@ -211,6 +231,7 @@ public class BddAtelier {
 
 		return ateliers;
 	}
+	
 
 	public static Map<Integer, Atelier> getAteliers() {
 		return getAteliers("SELECT * FROM Atelier");
