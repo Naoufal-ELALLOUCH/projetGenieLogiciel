@@ -36,7 +36,7 @@ public class TestApp {
 		BddLabo.ajout(1, "Labri");
 		BddAtelier.ajoutAtelier(1, "Titre", "themes", "zone", "adresse", "orateurs", "partenaires", "cible", "remarques");
 		BddCreneau.ajoutCreneau(1, "2014-12-12", "12:34", 20);
-		BddEnseignant.ajout(1, "Heloise", "Charlie");
+		BddEnseignant.ajout(2, "Heloise", "Charlie");
 	}
 
 	@Test
@@ -182,12 +182,12 @@ public class TestApp {
 		urls200.add("/ateliers/1");
 		urls200.add("/atelier/1");
 		urls200.add("/atelier/1/creneaux");
+		urls200.add("/enseignant");
+		urls200.add("/atelier/1/creneaux/1/inscrire");
 
 		// URLs où on doit être redirigé
-		urls302.add("/enseignant"); // TODO unitariser ce test
 		urls302.add("/deconnexion");
 		urls302.add("/authentification");
-		urls302.add("/atelier/1/creneaux/1/inscrire"); // TODO unitariser ce test
 		urls302.add("/laboratoire/ateliers");
 		urls302.add("/laboratoire/atelier/creer");
 		urls302.add("/laboratoire/atelier/1/modifier");
